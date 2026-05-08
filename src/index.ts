@@ -22,6 +22,7 @@ import "./components/hex-quote.js";
 import "./components/hex-section.js";
 import "./components/hex-code.js";
 import "./components/hex-spoiler.js";
+import "./components/hex-alert.js";
 
 registerTokens();
 

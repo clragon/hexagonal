@@ -51,6 +51,7 @@ Without that stylesheet, the system falls back to the Verdana installed on the u
 | `<hex-section>` | Collapsible panel with title + optional badge |
 | `<hex-code>` | Inline `<code>` or `block` `<pre>` |
 | `<hex-spoiler>` | Censor that reveals on hover (desktop) or tap (mobile) |
+| `<hex-alert>` | Banner with variant tint, icon, heading, actions slot, close button |
 
 ## Develop
 

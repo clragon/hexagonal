@@ -287,6 +287,27 @@
           </p>
         </hex-card>
 
+        <h2>Alerts</h2>
+        <hex-card>
+          <div class="stack">
+            <hex-alert variant="success" heading="Deployment successful">
+              All 12 nodes updated to version 2.15.0
+              <hex-button slot="actions" variant="ghost" size="sm">View logs</hex-button>
+            </hex-alert>
+            <hex-alert variant="error" heading="Connection lost">
+              Failed to reach hex-prod-west. Last seen 3 minutes ago.
+              <hex-button slot="actions" variant="ghost" size="sm">Retry</hex-button>
+              <hex-button slot="actions" variant="ghost" size="sm">Details</hex-button>
+            </hex-alert>
+            <hex-alert variant="warning" heading="Capacity warning">
+              Cluster at 92% capacity. Consider scaling up.
+            </hex-alert>
+            <hex-alert variant="info" no-close>
+              Scheduled maintenance in 2 hours. Expect brief downtime.
+            </hex-alert>
+          </div>
+        </hex-card>
+
         <h2>Icons</h2>
         <hex-card>
           <div class="grid" id="icon-grid"></div>

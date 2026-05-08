@@ -61,6 +61,12 @@ export const iconPaths = {
   `,
   eye: svg`<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>`,
   lock: svg`<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>`,
+  "alert-circle": svg`<circle cx="12" cy="12" r="9"/><path d="M12 8v4m0 4h.01"/>`,
+  "alert-triangle": svg`
+    <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/>
+    <path d="M12 9v4m0 4h.01"/>
+  `,
+  "info-circle": svg`<circle cx="12" cy="12" r="9"/><path d="M12 16v-4m0-4h.01"/>`,
 } as const;
 
 export function renderIcon(name: IconName): SVGTemplateResult | null {
