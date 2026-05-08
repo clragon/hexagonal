@@ -104,6 +104,19 @@ export class HexAlert extends HexElement {
   @property({ type: String, reflect: true }) variant: HexAlertVariant = "info";
   @property({ type: Boolean, reflect: true, attribute: "no-close" }) noClose = false;
 
+  override connectedCallback() {
+    super.connectedCallback();
+    // Live-region role: errors interrupt (assertive); the others wait their
+    // turn (polite). Set on connect rather than in render so dynamically
+    // inserted alerts are announced immediately.
+    if (!this.hasAttribute("role")) {
+      this.setAttribute("role", this.variant === "error" ? "alert" : "status");
+    }
+    if (!this.hasAttribute("aria-live")) {
+      this.setAttribute("aria-live", this.variant === "error" ? "assertive" : "polite");
+    }
+  }
+
   private onClose = () => {
     const event = new CustomEvent("hex-dismiss", {
       bubbles: true,

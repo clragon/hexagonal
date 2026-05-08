@@ -1,5 +1,6 @@
 import { html, css, nothing } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
+import { ifDefined } from "lit/directives/if-defined.js";
 import { HexElement } from "../shared/base.js";
 import "./hex-icon.js";
 import type { IconName } from "../shared/icons.js";
@@ -12,7 +13,8 @@ export class HexInput extends HexElement {
       :host {
         display: block;
       }
-      .label {
+      label {
+        display: block;
         font-size: var(--hex-fs-xs);
         text-transform: uppercase;
         letter-spacing: 0.06em;
@@ -116,26 +118,30 @@ export class HexInput extends HexElement {
   };
 
   override render() {
+    const describedBy = this.error ? "error" : this.hint ? "hint" : undefined;
     return html`
-      ${this.label ? html`<div class="label">${this.label}</div>` : nothing}
+      ${this.label ? html`<label for="input">${this.label}</label>` : nothing}
       <div class="field">
         ${this.icon
           ? html`<span class="icon"><hex-icon name=${this.icon} size="14"></hex-icon></span>`
           : nothing}
         <input
+          id="input"
           .value=${this.value}
           type=${this.type}
           name=${this.name}
           placeholder=${this.placeholder}
           ?disabled=${this.disabled}
+          aria-describedby=${ifDefined(describedBy)}
+          aria-invalid=${this.error ? "true" : "false"}
           @input=${this.onInput}
           @change=${this.onChange}
         />
       </div>
       ${this.error
-        ? html`<div class="error">${this.error}</div>`
+        ? html`<div id="error" class="error" role="alert">${this.error}</div>`
         : this.hint
-          ? html`<div class="hint">${this.hint}</div>`
+          ? html`<div id="hint" class="hint">${this.hint}</div>`
           : nothing}
     `;
   }

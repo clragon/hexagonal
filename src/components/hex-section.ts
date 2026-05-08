@@ -76,9 +76,24 @@ export class HexSection extends HexElement {
     );
   };
 
+  private onKey = (e: KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      this.toggle();
+    }
+  };
+
   override render() {
     return html`
-      <div class="header" @click=${this.toggle} role="button" aria-expanded=${this.open}>
+      <div
+        class="header"
+        @click=${this.toggle}
+        @keydown=${this.onKey}
+        role="button"
+        tabindex="0"
+        aria-expanded=${this.open}
+        aria-controls="body"
+      >
         <div class="title">
           <svg
             class="chev"
@@ -90,6 +105,7 @@ export class HexSection extends HexElement {
             stroke-width="2"
             stroke-linecap="round"
             stroke-linejoin="round"
+            aria-hidden="true"
           >
             <polyline points="9 6 15 12 9 18" />
           </svg>
@@ -97,7 +113,7 @@ export class HexSection extends HexElement {
         </div>
         <slot name="trailing"></slot>
       </div>
-      <div class="body">
+      <div id="body" class="body" role="region">
         <div class="content"><slot></slot></div>
       </div>
     `;

@@ -179,6 +179,44 @@ export class HexButton extends HexElement {
   @property({ type: Boolean, reflect: true }) full = false;
   @property({ type: Boolean, reflect: true, attribute: "icon-only" }) iconOnly = false;
 
+  // ARIA attributes set on the host don't reach the focusable inner <button>
+  // by default. Forward the common interactive ones so screen readers
+  // announce icon-only buttons (and any popup wiring) correctly.
+  private static FORWARDED_ARIA = [
+    "aria-label",
+    "aria-describedby",
+    "aria-controls",
+    "aria-haspopup",
+    "aria-expanded",
+    "aria-pressed",
+  ];
+
+  private hostObserver?: MutationObserver;
+
+  override connectedCallback() {
+    super.connectedCallback();
+    this.hostObserver = new MutationObserver(() => this.requestUpdate());
+    this.hostObserver.observe(this, {
+      attributes: true,
+      attributeFilter: HexButton.FORWARDED_ARIA,
+    });
+  }
+
+  override disconnectedCallback() {
+    super.disconnectedCallback();
+    this.hostObserver?.disconnect();
+  }
+
+  override updated() {
+    const inner = this.shadowRoot?.querySelector("button");
+    if (!inner) return;
+    for (const name of HexButton.FORWARDED_ARIA) {
+      const v = this.getAttribute(name);
+      if (v !== null) inner.setAttribute(name, v);
+      else inner.removeAttribute(name);
+    }
+  }
+
   private onClick = (e: Event) => {
     if (this.disabled) {
       e.preventDefault();

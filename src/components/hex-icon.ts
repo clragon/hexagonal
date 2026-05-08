@@ -39,6 +39,7 @@ export class HexIcon extends HexElement {
         stroke-width=${this.strokeWidth}
         stroke-linecap="round"
         stroke-linejoin="round"
+        aria-hidden="true"
       >
         ${svg`${path}`}
       </svg>

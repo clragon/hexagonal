@@ -15,6 +15,7 @@ export class HexQuote extends HexElement {
     css`
       :host {
         display: block;
+        margin: 0;
         --hex-quote-stripe: var(--hex-color-secondary);
         background: var(--hex-color-section);
         border-left: 3px solid var(--hex-quote-stripe);
@@ -41,6 +42,11 @@ export class HexQuote extends HexElement {
         this.style.removeProperty("--hex-quote-stripe");
       }
     }
+  }
+
+  override connectedCallback() {
+    super.connectedCallback();
+    if (!this.hasAttribute("role")) this.setAttribute("role", "blockquote");
   }
 
   override render() {

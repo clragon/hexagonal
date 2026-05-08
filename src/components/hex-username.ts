@@ -73,7 +73,9 @@ export class HexUsername extends HexElement {
       ${this.href
         ? html`<a class="name" href=${this.href}>${inner}</a>`
         : html`<span class="name">${inner}</span>`}
-      ${this.verified ? html`<hex-chexagon size="14"></hex-chexagon>` : nothing}
+      ${this.verified
+        ? html`<hex-chexagon size="14" aria-label="Verified" role="img"></hex-chexagon>`
+        : nothing}
     `;
   }
 }

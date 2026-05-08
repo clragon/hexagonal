@@ -46,18 +46,41 @@ export class HexSpoiler extends HexElement {
 
   constructor() {
     super();
-    // Touch-only reveal toggle. On hover-capable devices CSS handles it.
-    this.addEventListener("click", () => {
-      if (!matchMedia("(hover: none)").matches) return;
-      this.revealed = !this.revealed;
-      this.dispatchEvent(
-        new CustomEvent("hex-toggle", {
-          detail: { revealed: this.revealed },
-          bubbles: true,
-          composed: true,
-        }),
-      );
-    });
+    if (!this.hasAttribute("role")) this.setAttribute("role", "button");
+    if (!this.hasAttribute("tabindex")) this.setAttribute("tabindex", "0");
+    if (!this.hasAttribute("aria-label")) this.setAttribute("aria-label", "Spoiler, hidden text");
+    this.addEventListener("click", this.onClick);
+    this.addEventListener("keydown", this.onKey);
+  }
+
+  override updated(changed: Map<string, unknown>) {
+    if (changed.has("revealed")) {
+      this.setAttribute("aria-expanded", String(this.revealed));
+    }
+  }
+
+  private onClick = () => {
+    // Hover-capable devices already reveal via CSS; only toggle on touch.
+    if (matchMedia("(hover: none)").matches) this.toggle();
+  };
+
+  private onKey = (e: KeyboardEvent) => {
+    // Keyboard users have no hover so always toggle on activation.
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      this.toggle();
+    }
+  };
+
+  private toggle() {
+    this.revealed = !this.revealed;
+    this.dispatchEvent(
+      new CustomEvent("hex-toggle", {
+        detail: { revealed: this.revealed },
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 
   override render() {

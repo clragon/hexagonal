@@ -1,5 +1,6 @@
 import { html, css, nothing } from "lit";
 import { customElement, property, query, state } from "lit/decorators.js";
+import { ifDefined } from "lit/directives/if-defined.js";
 import { HexElement } from "../shared/base.js";
 import "./hex-icon.js";
 import type { IconName } from "../shared/icons.js";
@@ -23,7 +24,8 @@ export class HexSelect extends HexElement {
       :host {
         display: block;
       }
-      .label {
+      label {
+        display: block;
         font-size: var(--hex-fs-xs);
         text-transform: uppercase;
         letter-spacing: 0.06em;
@@ -165,13 +167,21 @@ export class HexSelect extends HexElement {
   };
 
   override render() {
+    const describedBy = this.error ? "error" : this.hint ? "hint" : undefined;
     return html`
-      ${this.label ? html`<div class="label">${this.label}</div>` : nothing}
+      ${this.label ? html`<label for="select">${this.label}</label>` : nothing}
       <div class="field">
         ${this.icon
           ? html`<span class="icon"><hex-icon name=${this.icon} size="14"></hex-icon></span>`
           : nothing}
-        <select name=${this.name} ?disabled=${this.disabled} @change=${this.onChange}>
+        <select
+          id="select"
+          name=${this.name}
+          ?disabled=${this.disabled}
+          aria-describedby=${ifDefined(describedBy)}
+          aria-invalid=${this.error ? "true" : "false"}
+          @change=${this.onChange}
+        >
           ${this.placeholder
             ? html`
                 <option value="" disabled hidden ?selected=${!this.value}>
@@ -190,9 +200,9 @@ export class HexSelect extends HexElement {
         <span class="chev"><hex-icon name="chev-down" size="14"></hex-icon></span>
       </div>
       ${this.error
-        ? html`<div class="error">${this.error}</div>`
+        ? html`<div id="error" class="error" role="alert">${this.error}</div>`
         : this.hint
-          ? html`<div class="hint">${this.hint}</div>`
+          ? html`<div id="hint" class="hint">${this.hint}</div>`
           : nothing}
     `;
   }
