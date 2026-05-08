@@ -41,6 +41,7 @@
   "devDependencies": {
     "@types/node": "^22.9.0",
     "esbuild": "^0.24.0",
+    "marked": "^18.0.3",
     "oxfmt": "^0.48.0",
     "oxlint": "^1.63.0",
     "playwright": "^1.59.1",

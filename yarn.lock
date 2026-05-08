@@ -402,6 +402,11 @@ lit@^3.2.1:
     lit-element "^4.2.0"
     lit-html "^3.3.0"
 
+marked@^18.0.3:
+  version "18.0.3"
+  resolved "https://registry.yarnpkg.com/marked/-/marked-18.0.3.tgz#278b5ba89f1c7ccbaf0422f3ee8955928489220b"
+  integrity sha512-7VT90JOkDeaRWpfjOReRGPEKn0ecdARBkDGL+tT1wZY0efPPqkUxLUSmzy/C7TIylQYJC9STISEsCHrqb/7VIA==
+
 oxfmt@^0.48.0:
   version "0.48.0"
   resolved "https://registry.yarnpkg.com/oxfmt/-/oxfmt-0.48.0.tgz#c532c97e45ed0cb6f6f9e7272d43b957ec5548fd"

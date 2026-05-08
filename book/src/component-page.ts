@@ -1,7 +1,11 @@
 import { LitElement, html, css, nothing } from "lit";
 import { customElement, property } from "lit/decorators.js";
+import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import { marked } from "marked";
 import { findComponent, type ComponentEntry } from "./registry.js";
 import "./playground.js";
+
+const md = (text: string): string => marked.parseInline(text) as string;
 
 // One component's documentation page. Neutral typography; the playground
 // is where the brand styling lives.
@@ -107,7 +111,7 @@ export class ComponentPage extends LitElement {
 
     return html`
       <h1>${entry.title}<span class="tag-name">&lt;${entry.tag}&gt;</span></h1>
-      <p class="lead">${entry.description}</p>
+      <p class="lead">${unsafeHTML(md(entry.description))}</p>
 
       <h2>Playground</h2>
       <book-playground .entry=${entry}></book-playground>
@@ -132,7 +136,7 @@ export class ComponentPage extends LitElement {
                       <td><code>${p.name}</code></td>
                       <td>${this.formatType(p)}</td>
                       <td>${p.default !== undefined ? html`<code>${String(p.default)}</code>` : ""}</td>
-                      <td>${p.description ?? ""}</td>
+                      <td>${p.description ? unsafeHTML(md(p.description)) : ""}</td>
                     </tr>
                   `,
                 )}
