@@ -137,6 +137,20 @@
             <hex-checkbox>Notify on failure</hex-checkbox>
             <hex-checkbox disabled>Pinned setting</hex-checkbox>
           </div>
+          <h3>Select &amp; radio</h3>
+          <div class="grid">
+            <hex-select label="Region" value="us-east-1" hint="Pick the closest data center.">
+              <option value="us-east-1">US East (Virginia)</option>
+              <option value="us-west-2">US West (Oregon)</option>
+              <option value="eu-west-1">EU West (Ireland)</option>
+              <option value="ap-southeast-1">Asia Pacific (Singapore)</option>
+            </hex-select>
+            <hex-radio-group label="Client type" name="client-type" value="public">
+              <hex-radio value="public">Public client</hex-radio>
+              <hex-radio value="confidential">Confidential client</hex-radio>
+              <hex-radio value="internal" disabled>Internal (disabled)</hex-radio>
+            </hex-radio-group>
+          </div>
         </hex-card>
 
         <h2>Status &amp; chips</h2>

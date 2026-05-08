@@ -141,6 +141,49 @@ export const components: ComponentEntry[] = [
     ],
   },
   {
+    tag: "hex-select",
+    title: "Select",
+    group: "Form",
+    description:
+      "Native `<select>` styled to match the input. Options live as light-DOM `<option>` children for free keyboard nav, screen-reader behavior, and the mobile picker.",
+    defaultSlot: `
+      <option value="us-east-1">US East (Virginia)</option>
+      <option value="us-west-2">US West (Oregon)</option>
+      <option value="eu-west-1">EU West (Ireland)</option>
+      <option value="ap-southeast-1">Asia Pacific (Singapore)</option>`,
+    props: [
+      { name: "label", kind: "text", default: "Region" },
+      { name: "value", kind: "text", default: "" },
+      { name: "placeholder", kind: "text", default: "Choose a region" },
+      { name: "hint", kind: "text", default: "Pick the closest data center." },
+      { name: "error", kind: "text", default: "" },
+      { name: "icon", kind: "select", options: ICON_OPTIONS, default: "" },
+      { name: "disabled", kind: "boolean", default: false },
+    ],
+  },
+  {
+    tag: "hex-radio-group",
+    title: "Radio group",
+    group: "Form",
+    description:
+      "Container for `<hex-radio>` children. Manages selection via `value`, propagates `name` to children, and fires `hex-change` on selection change.",
+    defaultSlot: `
+      <hex-radio value="public">Public client</hex-radio>
+      <hex-radio value="confidential">Confidential client</hex-radio>
+      <hex-radio value="internal" disabled>Internal (disabled)</hex-radio>`,
+    props: [
+      { name: "label", kind: "text", default: "Client type" },
+      { name: "name", kind: "text", default: "client-type" },
+      { name: "value", kind: "text", default: "public" },
+      {
+        name: "direction",
+        kind: "select",
+        options: ["vertical", "horizontal"],
+        default: "vertical",
+      },
+    ],
+  },
+  {
     tag: "hex-icon",
     title: "Icon",
     group: "Brand",

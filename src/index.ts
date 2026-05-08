@@ -23,6 +23,9 @@ import "./components/hex-section.js";
 import "./components/hex-code.js";
 import "./components/hex-spoiler.js";
 import "./components/hex-alert.js";
+import "./components/hex-select.js";
+import "./components/hex-radio.js";
+import "./components/hex-radio-group.js";
 
 registerTokens();
 
