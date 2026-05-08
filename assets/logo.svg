@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 64" width="280" height="64">
+  <defs>
+    
+  </defs>
+  <g transform="translate(8, 8)">
+    <polygon points="24,0 44,12 44,36 24,48 4,36 4,12" fill="none" stroke="#e8c446" stroke-width="3" stroke-linejoin="round"></polygon>
+    <polygon points="24,12 36,19 36,29 24,36 12,29 12,19" fill="#e8c446"></polygon>
+  </g>
+  <text x="68" y="46" font-family="Paulistana Ipe, Verdana, sans-serif" font-size="36" fill="#ffffff">Hexagonal</text>
+</svg>

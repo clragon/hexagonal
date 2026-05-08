@@ -1,0 +1,107 @@
+import { html, css } from "lit";
+import { customElement, property } from "lit/decorators.js";
+import { HexElement } from "../shared/base.js";
+
+export type HexUserRole =
+  | "member"
+  | "privileged"
+  | "blocked"
+  | "former-staff"
+  | "janitor"
+  | "moderator"
+  | "admin";
+export type HexAvatarSize = "xs" | "sm" | "md" | "lg" | "xl";
+
+const SIZE_PX: Record<HexAvatarSize, number> = { xs: 20, sm: 28, md: 36, lg: 48, xl: 64 };
+
+// Stroke-only rounded-square avatar. Color is driven by `role` and the entire
+// element inherits that role color (so wrapping a username next to it keeps tone).
+// `src` shows an image instead of initials when set.
+
+@customElement("hex-avatar")
+export class HexAvatar extends HexElement {
+  static override styles = [
+    HexElement.styles,
+    css`
+      :host {
+        display: inline-flex;
+        --av-color: var(--hex-role-member);
+        color: var(--av-color);
+      }
+      :host([role-color="privileged"]) {
+        --av-color: var(--hex-role-privileged);
+      }
+      :host([role-color="blocked"]) {
+        --av-color: var(--hex-role-blocked);
+      }
+      :host([role-color="former-staff"]) {
+        --av-color: var(--hex-role-former-staff);
+      }
+      :host([role-color="janitor"]) {
+        --av-color: var(--hex-role-janitor);
+      }
+      :host([role-color="moderator"]) {
+        --av-color: var(--hex-role-moderator);
+      }
+      :host([role-color="admin"]) {
+        --av-color: var(--hex-role-admin);
+      }
+
+      .sq {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        border: 1.5px solid currentColor;
+        font-weight: var(--hex-font-weight-bold);
+        overflow: hidden;
+        font-family: var(--hex-font-family);
+      }
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+    `,
+  ];
+
+  @property({ type: String, reflect: true, attribute: "role-color" }) roleColor: HexUserRole =
+    "member";
+  @property({ type: String, reflect: true }) size: HexAvatarSize = "md";
+  @property({ type: String }) initials = "";
+  @property({ type: String }) src = "";
+  @property({ type: String }) alt = "";
+
+  private radiusFor(size: HexAvatarSize) {
+    if (size === "xs" || size === "sm") return 4;
+    if (size === "md" || size === "lg") return 6;
+    return 8;
+  }
+
+  private fontFor(size: HexAvatarSize) {
+    return ({ xs: 9, sm: 11, md: 13, lg: 16, xl: 22 } as const)[size];
+  }
+
+  override render() {
+    const px = SIZE_PX[this.size];
+    const radius = this.radiusFor(this.size);
+    const fontSize = this.fontFor(this.size);
+    return html`
+      <div
+        class="sq"
+        style=${`width:${px}px;height:${px}px;border-radius:${radius}px;font-size:${fontSize}px;`}
+      >
+        ${this.src
+          ? html`<img src=${this.src} alt=${this.alt} />`
+          : html`${this.initials.slice(0, 2).toUpperCase()}`}
+      </div>
+    `;
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    "hex-avatar": HexAvatar;
+  }
+}
