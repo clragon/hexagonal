@@ -25,6 +25,13 @@ export interface PropSpec {
   description?: string;
 }
 
+export interface UsageExample {
+  /** Guideline copy. Inline markdown supported (`code`, **bold**, *italic*, [link](url)). */
+  text: string;
+  /** Optional live demo markup rendered below the text. */
+  demo?: string;
+}
+
 export interface ComponentEntry {
   tag: string;
   title: string;
@@ -36,6 +43,8 @@ export interface ComponentEntry {
   /** Surface the playground should render on. Defaults to "card". */
   previewSurface?: PreviewSurface;
   props: PropSpec[];
+  /** When-to-use guidance. Each entry is a guideline + optional live demo. */
+  usage?: UsageExample[];
 }
 
 const userRoles = ["member", "privileged", "blocked", "former-staff", "janitor", "moderator", "admin"];
@@ -88,6 +97,32 @@ export const components: ComponentEntry[] = [
     description:
       "Action element. Three visual variants, three colors, three sizes, optional leading icon, and an icon-only mode.",
     defaultSlot: "Save changes",
+    usage: [
+      {
+        text: "Use the **solid primary** button for the main action of a view: save, submit, continue, run. Reserve it for the action you want the user to take.",
+        demo: '<hex-button>Save changes</hex-button>',
+      },
+      {
+        text: "Use **outline** for the cancel or alternative paired with a primary action. **Primary action goes on the right** so the visual flow ends on action, not on retreat.",
+        demo:
+          '<hex-button variant="outline" color="secondary">Cancel</hex-button> <hex-button>Save changes</hex-button>',
+      },
+      {
+        text: "Use **ghost** for tertiary or in-line actions where a full button would be too loud: in toolbars, alert footers, table rows.",
+        demo:
+          '<hex-button variant="ghost" color="secondary" icon="settings">Configure</hex-button> <hex-button variant="ghost" color="secondary" icon="refresh">Reload</hex-button>',
+      },
+      {
+        text: "Use `color=\"danger\"` to indicate **destructive actions** the user can't easily undo: delete, remove, revoke, force-restart. Pair with a confirmation step, and keep the destructive action on the right.",
+        demo:
+          '<hex-button variant="ghost" color="secondary">Cancel</hex-button> <hex-button color="danger" icon="trash">Delete cluster</hex-button>',
+      },
+      {
+        text: "Use **icon-only** for compact toolbars and action rails. Always pass `aria-label` so screen readers announce the action.",
+        demo:
+          '<hex-button icon-only icon="plus" aria-label="Add"></hex-button> <hex-button variant="outline" color="secondary" icon-only icon="refresh" aria-label="Reload"></hex-button> <hex-button variant="ghost" color="danger" icon-only icon="trash" aria-label="Delete"></hex-button>',
+      },
+    ],
     props: [
       {
         name: "variant",

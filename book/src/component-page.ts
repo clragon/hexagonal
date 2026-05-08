@@ -88,18 +88,37 @@ export class ComponentPage extends LitElement {
       color: #888;
       font-style: italic;
     }
-    pre.slot-sample {
-      margin: 0;
-      padding: 12px 14px;
-      background: #161616;
-      border: 1px solid #262626;
-      border-radius: 4px;
+    .usage-block {
+      margin-bottom: 20px;
+    }
+    .usage-text {
+      margin: 0 0 12px;
+      line-height: 1.55;
+      color: #d8d8d8;
+    }
+    .usage-text code {
       font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
       font-size: 12px;
-      color: #c8c8c8;
-      overflow-x: auto;
-      white-space: pre-wrap;
-      word-break: break-word;
+      background: #1f1f1f;
+      padding: 1px 6px;
+      border-radius: 3px;
+      color: #e6e6e6;
+    }
+    .usage-demo {
+      padding: 24px 20px;
+      border-radius: 4px;
+      background-color: var(--hex-bg-card);
+      background-image: var(--hex-texture);
+      background-repeat: repeat-x;
+      background-position: left top;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      color: var(--hex-fg-1);
+      font-family: var(--hex-font-family);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
     }
   `;
 
@@ -143,11 +162,17 @@ export class ComponentPage extends LitElement {
               </tbody>
             </table>
           `}
-      ${entry.defaultSlot
+      ${entry.usage && entry.usage.length > 0
         ? html`
-            <h2>Slot</h2>
-            <p>This component renders its default slot inline. Sample content used in the playground:</p>
-            <pre class="slot-sample">${entry.defaultSlot}</pre>
+            <h2>Usage</h2>
+            ${entry.usage.map(
+              (u) => html`
+                <div class="usage-block">
+                  <p class="usage-text">${unsafeHTML(md(u.text))}</p>
+                  ${u.demo ? html`<div class="usage-demo">${unsafeHTML(u.demo)}</div>` : nothing}
+                </div>
+              `,
+            )}
           `
         : nothing}
     `;
