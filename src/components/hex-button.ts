@@ -18,6 +18,11 @@ export class HexButton extends HexElement {
       :host {
         display: inline-flex;
         vertical-align: middle;
+        position: relative;
+        top: 0;
+      }
+      :host(:active:not([disabled])) {
+        top: 1px;
       }
       :host([full]) {
         display: flex;
@@ -31,6 +36,7 @@ export class HexButton extends HexElement {
       }
       button {
         all: unset;
+        box-sizing: border-box;
         font-family: inherit;
         font-size: var(--hex-fs-md);
         font-weight: var(--hex-font-weight-bold);
@@ -43,11 +49,11 @@ export class HexButton extends HexElement {
         gap: 6px;
         user-select: none;
         -webkit-user-select: none;
+        outline: none;
         transition:
           background var(--hex-dur-fast) var(--hex-ease),
           color var(--hex-dur-fast) var(--hex-ease),
           border-color var(--hex-dur-fast) var(--hex-ease),
-          transform var(--hex-dur-fast) var(--hex-ease),
           box-shadow var(--hex-dur-fast) var(--hex-ease);
         border: 1px solid transparent;
       }
@@ -60,7 +66,6 @@ export class HexButton extends HexElement {
         box-shadow: var(--hex-shadow-focus);
       }
       button:active {
-        transform: translateY(1px);
         box-shadow: var(--hex-shadow-sunken);
       }
       button:active:focus-visible {
@@ -82,20 +87,20 @@ export class HexButton extends HexElement {
         background: var(--hex-color-primary-dark);
       }
 
-      /* secondary (outline) */
+      /* secondary (outline)
+         outline variants stay at their hover colors on press; the only
+         press feedback comes from the 1px shift + inset sunken shadow on the
+         host so the button doesn't perceptually "grow" when clicked. */
       :host([variant="secondary"]) button {
         background: transparent;
         color: var(--hex-fg-1);
         border-color: var(--hex-border-strong);
       }
-      :host([variant="secondary"]) button:hover {
+      :host([variant="secondary"]) button:hover,
+      :host([variant="secondary"]) button:active {
         background: rgba(180, 199, 217, 0.14);
         color: var(--hex-color-secondary-light);
         border-color: var(--hex-color-secondary);
-      }
-      :host([variant="secondary"]) button:active {
-        background: rgba(180, 199, 217, 0.22);
-        border-color: var(--hex-color-secondary-light);
       }
 
       /* ghost (no border) */
@@ -103,12 +108,10 @@ export class HexButton extends HexElement {
         background: transparent;
         color: var(--hex-color-secondary);
       }
-      :host([variant="ghost"]) button:hover {
+      :host([variant="ghost"]) button:hover,
+      :host([variant="ghost"]) button:active {
         background: rgba(180, 199, 217, 0.1);
         color: var(--hex-color-secondary-light);
-      }
-      :host([variant="ghost"]) button:active {
-        background: rgba(180, 199, 217, 0.18);
       }
 
       /* text-primary (amber link-ish) */
@@ -117,12 +120,10 @@ export class HexButton extends HexElement {
         color: var(--hex-color-primary);
         padding: 8px 10px;
       }
-      :host([variant="text-primary"]) button:hover {
+      :host([variant="text-primary"]) button:hover,
+      :host([variant="text-primary"]) button:active {
         background: rgba(232, 196, 70, 0.12);
         color: var(--hex-color-primary-light);
-      }
-      :host([variant="text-primary"]) button:active {
-        background: rgba(232, 196, 70, 0.2);
       }
 
       /* danger */
@@ -152,6 +153,20 @@ export class HexButton extends HexElement {
       :host([size="lg"][variant="text-primary"]) button {
         padding: 10px 14px;
       }
+
+      /* icon-only: square padding, 1:1 aspect, no slot/gap */
+      :host([icon-only]) button {
+        padding: 8px;
+        aspect-ratio: 1 / 1;
+        justify-content: center;
+        gap: 0;
+      }
+      :host([icon-only][size="sm"]) button {
+        padding: 6px;
+      }
+      :host([icon-only][size="lg"]) button {
+        padding: 10px;
+      }
     `,
   ];
 
@@ -161,6 +176,7 @@ export class HexButton extends HexElement {
   @property({ type: String }) type: "button" | "submit" | "reset" = "button";
   @property({ type: Boolean, reflect: true }) disabled = false;
   @property({ type: Boolean, reflect: true }) full = false;
+  @property({ type: Boolean, reflect: true, attribute: "icon-only" }) iconOnly = false;
 
   private onClick = (e: Event) => {
     if (this.disabled) {
@@ -181,7 +197,7 @@ export class HexButton extends HexElement {
     return html`
       <button type=${this.type} ?disabled=${this.disabled} @click=${this.onClick}>
         ${this.icon ? html`<hex-icon name=${this.icon} size=${iconSize}></hex-icon>` : nothing}
-        <slot></slot>
+        ${this.iconOnly ? nothing : html`<slot></slot>`}
       </button>
     `;
   }
