@@ -47,36 +47,90 @@ export class BookPlayground extends LitElement {
       background-repeat: repeat;
       border: 1px solid #262626;
     }
-    /* Surface components default to filling viewport. In the preview they
+    /* Empty surface: no chrome at all. The component IS the surface (e.g.
+       hex-page which provides its own bg). Border is kept to delineate the
+       preview area. */
+    .preview.surface-empty {
+      background: transparent;
+      border: 1px solid #262626;
+      padding: 0;
+      overflow: hidden;
+    }
+    .preview.surface-empty > * {
+      width: 100%;
+    }
+    /* Surface components default to filling viewport. In the playground they
        should size to content so the demo doesn't tower over the page. */
     .preview hex-page,
     .preview hex-card,
     .preview hex-section,
     .preview hex-alert {
-      min-height: 0;
+      min-height: auto;
+      height: auto;
       width: 100%;
     }
     .panels {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
-      gap: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
       margin-top: 16px;
     }
-    .controls,
-    .snippet-pane {
+    .controls {
       background: #161616;
       border: 1px solid #262626;
       border-radius: 4px;
       padding: 16px 18px;
     }
-    .controls h3,
-    .snippet-pane h3 {
+    .controls h3 {
       font-size: 11px;
       text-transform: uppercase;
       letter-spacing: 0.06em;
       color: #888;
       font-weight: 700;
       margin: 0 0 12px;
+    }
+    .markup-toggle {
+      background: #161616;
+      border: 1px solid #262626;
+      border-radius: 4px;
+    }
+    .markup-toggle[open] {
+      padding-bottom: 12px;
+    }
+    .markup-toggle summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #888;
+      font-weight: 700;
+      user-select: none;
+    }
+    .markup-toggle summary::-webkit-details-marker {
+      display: none;
+    }
+    .markup-toggle summary::before {
+      content: "";
+      display: inline-block;
+      width: 0;
+      height: 0;
+      border: 4px solid transparent;
+      border-left-color: #888;
+      transition: transform 120ms;
+    }
+    .markup-toggle[open] summary::before {
+      transform: rotate(90deg);
+    }
+    .markup-toggle .summary-spacer {
+      flex: 1;
+    }
+    .markup-toggle .markup-body {
+      padding: 0 12px;
     }
     .control {
       display: grid;
@@ -122,6 +176,40 @@ export class BookPlayground extends LitElement {
       margin: 0;
       accent-color: #ffffff;
     }
+    .control textarea {
+      width: 100%;
+      box-sizing: border-box;
+      background: #0e0e0e;
+      color: #e6e6e6;
+      border: 1px solid #2e2e2e;
+      padding: 6px 8px;
+      border-radius: 3px;
+      font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+      font-size: 12px;
+      outline: none;
+      resize: vertical;
+      min-height: 32px;
+      line-height: 1.4;
+    }
+    .control textarea:focus {
+      border-color: #4a4a4a;
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.08);
+    }
+    .group-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #888;
+      font-weight: 700;
+      margin: 14px 0 8px;
+    }
+    .group-label:first-child {
+      margin-top: 0;
+    }
+    .control.slot-control {
+      grid-template-columns: 110px minmax(0, 1fr);
+      align-items: start;
+    }
     pre.snippet {
       margin: 0;
       font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
@@ -136,15 +224,6 @@ export class BookPlayground extends LitElement {
       word-break: break-word;
       line-height: 1.5;
     }
-    .pane-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 12px;
-    }
-    .pane-head h3 {
-      margin: 0;
-    }
     .copy {
       background: #1f1f1f;
       border: 1px solid #2e2e2e;
@@ -154,15 +233,15 @@ export class BookPlayground extends LitElement {
       padding: 3px 8px;
       border-radius: 3px;
       cursor: pointer;
+      text-transform: none;
+      letter-spacing: 0;
+      font-weight: 400;
     }
     .copy:hover {
       background: #2a2a2a;
       color: #ffffff;
     }
     @media (max-width: 720px) {
-      .panels {
-        grid-template-columns: 1fr;
-      }
       .control {
         grid-template-columns: 90px minmax(0, 1fr);
       }
@@ -172,6 +251,8 @@ export class BookPlayground extends LitElement {
   @property({ attribute: false }) entry?: ComponentEntry;
 
   @state() private values: Record<string, Value> = {};
+  // Slot contents. Empty key ("") is the default slot; other keys are named slots.
+  @state() private slots: Record<string, string> = {};
 
   override willUpdate(changed: Map<string, unknown>) {
     if (changed.has("entry") && this.entry) {
@@ -180,6 +261,12 @@ export class BookPlayground extends LitElement {
         next[p.name] = p.default ?? defaultFor(p.kind);
       }
       this.values = next;
+      const slots: Record<string, string> = {};
+      if (this.entry.defaultSlot !== undefined) slots[""] = this.entry.defaultSlot;
+      for (const [name, content] of Object.entries(this.entry.namedSlots ?? {})) {
+        slots[name] = content;
+      }
+      this.slots = slots;
     }
   }
 
@@ -187,27 +274,66 @@ export class BookPlayground extends LitElement {
     this.values = { ...this.values, [name]: value };
   }
 
+  private updateSlot(name: string, content: string) {
+    this.slots = { ...this.slots, [name]: content };
+  }
+
   override render() {
     if (!this.entry) return nothing;
-    const markup = buildMarkup(this.entry, this.values);
+    const markup = buildMarkup(this.entry, this.values, this.slots);
     const surface = this.entry.previewSurface ?? "card";
+    const slotKeys = Object.keys(this.slots);
     return html`
       <div class="preview surface-${surface}">${unsafeHTML(markup)}</div>
       <div class="panels">
         <div class="controls">
-          <h3>Controls</h3>
-          ${this.entry.props.map((p) => this.renderControl(p))}
-          ${this.entry.props.length === 0
-            ? html`<p style="margin: 0; font-size: 12px; color: #888">No props to tweak.</p>`
+          ${this.entry.props.length > 0
+            ? html`
+                <div class="group-label">Props</div>
+                ${this.entry.props.map((p) => this.renderControl(p))}
+              `
+            : nothing}
+          ${slotKeys.length > 0
+            ? html`
+                <div class="group-label">Slots</div>
+                ${slotKeys.map((name) => this.renderSlotControl(name))}
+              `
+            : nothing}
+          ${this.entry.props.length === 0 && slotKeys.length === 0
+            ? html`<p style="margin: 0; font-size: 12px; color: #888">Nothing to tweak.</p>`
             : nothing}
         </div>
-        <div class="snippet-pane">
-          <div class="pane-head">
-            <h3>Markup</h3>
-            <button class="copy" @click=${() => this.copy(markup)}>Copy</button>
-          </div>
-          <pre class="snippet">${prettyPrint(markup)}</pre>
-        </div>
+        <details class="markup-toggle">
+          <summary>
+            Markup
+            <span class="summary-spacer"></span>
+            <button
+              class="copy"
+              @click=${(e: Event) => {
+                e.preventDefault();
+                this.copy(markup);
+              }}
+            >
+              Copy
+            </button>
+          </summary>
+          <div class="markup-body"><pre class="snippet">${prettyPrint(markup)}</pre></div>
+        </details>
+      </div>
+    `;
+  }
+
+  private renderSlotControl(name: string) {
+    const label = name === "" ? "(default)" : name;
+    const value = this.slots[name] ?? "";
+    return html`
+      <div class="control slot-control">
+        <label>${label}</label>
+        <textarea
+          rows="2"
+          .value=${value}
+          @input=${(e: Event) => this.updateSlot(name, (e.target as HTMLTextAreaElement).value)}
+        ></textarea>
       </div>
     `;
   }
@@ -280,9 +406,11 @@ function defaultFor(kind: PropSpec["kind"]): Value {
   return "";
 }
 
-function buildMarkup(entry: ComponentEntry, values: Record<string, Value>): string {
-  // Emit any attribute that has a meaningful value; let the consumer see the
-  // full picture in the snippet rather than guessing what defaults exist.
+function buildMarkup(
+  entry: ComponentEntry,
+  values: Record<string, Value>,
+  slots: Record<string, string>,
+): string {
   const attrs: string[] = [];
   for (const p of entry.props) {
     const v = values[p.name];
@@ -294,8 +422,20 @@ function buildMarkup(entry: ComponentEntry, values: Record<string, Value>): stri
     attrs.push(`${p.name}="${escapeAttr(String(v))}"`);
   }
   const attrStr = attrs.length ? ` ${attrs.join(" ")}` : "";
-  const slot = entry.defaultSlot ?? "";
-  return `<${entry.tag}${attrStr}>${slot}</${entry.tag}>`;
+  const defaultSlot = slots[""] ?? "";
+  const namedSlotMarkup = Object.entries(slots)
+    .filter(([name, content]) => name !== "" && content)
+    .map(([name, content]) => wrapInNamedSlot(name, content))
+    .join("");
+  return `<${entry.tag}${attrStr}>${namedSlotMarkup}${defaultSlot}</${entry.tag}>`;
+}
+
+// If the slot content already carries `slot="name"` on its top-level tags
+// (e.g. `<hex-button slot="actions">...</hex-button>`), pass it through;
+// otherwise wrap it in a span with the slot attribute.
+function wrapInNamedSlot(name: string, content: string): string {
+  if (new RegExp(`slot=["']${name}["']`).test(content)) return content;
+  return `<span slot="${name}">${content}</span>`;
 }
 
 function escapeAttr(v: string): string {

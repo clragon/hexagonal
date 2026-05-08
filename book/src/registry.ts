@@ -4,7 +4,7 @@ const ICON_OPTIONS: string[] = ["", ...Object.keys(iconPaths)];
 
 export type ControlKind = "select" | "boolean" | "text" | "number";
 
-export type PreviewSurface = "page" | "card";
+export type PreviewSurface = "page" | "card" | "empty";
 
 export interface PropSpec {
   name: string;
@@ -19,7 +19,7 @@ export interface ComponentEntry {
   title: string;
   description: string;
   defaultSlot?: string;
-  /** Optional named slot content for slots like alert's "actions" */
+  /** Optional named slot content for slots like alert's "actions" or section's "heading" */
   namedSlots?: Record<string, string>;
   /** Surface the playground should render on. Defaults to "card". */
   previewSurface?: PreviewSurface;
@@ -35,9 +35,15 @@ export const components: ComponentEntry[] = [
     title: "Page",
     description:
       "Full-bleed page surface. Wraps a route or app shell with the brand navy background and tiled hex pattern.",
-    defaultSlot:
-      '<div style="padding: 24px; opacity: 0.85; font-style: italic;">⬡ content here ⬡</div>',
-    previewSurface: "page",
+    defaultSlot: `
+      <div style="text-align: center; padding: 36px 24px; max-width: 560px; margin: 0 auto;">
+        <hex-logo width="200"></hex-logo>
+        <p style="margin: 14px 0 0; opacity: 0.85; line-height: 1.5; font-size: 13px;">
+          A dark, navy-on-amber design system anchored in a repeating hexagonal tile pattern.
+          Utilitarian, slightly technical, and content-first.
+        </p>
+      </div>`,
+    previewSurface: "empty",
     props: [],
   },
   {
@@ -45,7 +51,16 @@ export const components: ComponentEntry[] = [
     title: "Card",
     description:
       "Standard card surface with the brand hex-texture watermark fading down from the top. Use for grouped content.",
-    defaultSlot: "Card content goes here. Cards have 24px internal padding by default.",
+    defaultSlot: `
+      <h3 style="margin: 0 0 8px; font-size: 16px; font-weight: 700;">Cluster configuration</h3>
+      <p style="margin: 0 0 12px; line-height: 1.55;">
+        Cards group related content on a textured surface. The hex-texture watermark fades
+        from dense at the top to clear at the bottom, giving each card a subtle visual anchor
+        without competing with the content.
+      </p>
+      <p style="margin: 0; line-height: 1.55; color: var(--hex-fg-2); font-size: 12px;">
+        Region us-east-1 &middot; 12 nodes &middot; Version 2.14.0
+      </p>`,
     previewSurface: "page",
     props: [
       { name: "dense", kind: "boolean", default: false, description: "Drops padding to 16px for dense data." },
@@ -113,27 +128,10 @@ export const components: ComponentEntry[] = [
     ],
   },
   {
-    tag: "hex-logo",
-    title: "Logo",
-    description:
-      "Brand wordmark. `mark-only` swaps to the standalone hex mark for tight spaces (favicons, avatar slots).",
-    previewSurface: "page",
-    props: [
-      { name: "width", kind: "number", default: 200 },
-      { name: "mark-only", kind: "boolean", default: false },
-    ],
-  },
-  {
     tag: "hex-chexagon",
     title: "Chexagon",
-    description: "Verification badge: hex shape with a checkmark. Default tone is the artist amber-orange.",
+    description: "Verification badge: hex shape with a checkmark, in the brand artist amber-orange.",
     props: [
-      {
-        name: "tone",
-        kind: "select",
-        options: ["primary", ...tagCategories, ...userRoles].filter((v, i, a) => a.indexOf(v) === i),
-        default: "artist",
-      },
       { name: "size", kind: "number", default: 18 },
     ],
   },
@@ -198,45 +196,39 @@ export const components: ComponentEntry[] = [
     props: [
       { name: "role-color", kind: "select", options: userRoles, default: "member" },
       { name: "verified", kind: "boolean", default: false },
-      {
-        name: "verified-as",
-        kind: "select",
-        options: ["primary", ...tagCategories, ...userRoles].filter((v, i, a) => a.indexOf(v) === i),
-        default: "artist",
-      },
       { name: "href", kind: "text", default: "" },
     ],
   },
   {
     tag: "hex-quote",
     title: "Quote",
-    description: "Inline rounded quote block with a left-side accent stripe.",
+    description:
+      "Inline rounded quote block with a left-side accent stripe. Set `stripe-color` (or the `--hex-quote-stripe` CSS variable) to use any CSS color.",
     defaultSlot: "The hex tile is the brand. Every full-page surface uses a tiled hex pattern.",
     props: [
-      { name: "variant", kind: "select", options: ["default", "alt", "warn"], default: "default" },
-      { name: "cite", kind: "text", default: "README.md, Visual Foundations" },
+      { name: "variant", kind: "select", options: ["default", "alt"], default: "default" },
+      { name: "stripe-color", kind: "text", default: "", description: "Any CSS color overriding the variant." },
     ],
   },
   {
     tag: "hex-section",
     title: "Section",
-    description: "Collapsible section with a heading, rotating chevron, and optional badge.",
+    description:
+      "Collapsible section. Slot any HTML into `name=\"heading\"` (badges, links, icons) and `name=\"trailing\"` for header-flush actions.",
     defaultSlot: "Region: us-east-1. Nodes: 12. Version: 2.14.0.",
+    namedSlots: {
+      heading:
+        'Cluster configuration <hex-chip pill style="font-size: 10px; padding: 2px 8px;">12</hex-chip>',
+    },
     previewSurface: "page",
-    props: [
-      { name: "heading", kind: "text", default: "Cluster configuration" },
-      { name: "badge", kind: "text", default: "12" },
-      { name: "open", kind: "boolean", default: true },
-    ],
+    props: [{ name: "open", kind: "boolean", default: true }],
   },
   {
     tag: "hex-code",
     title: "Code",
     description: "Monospace code element. Inline by default; set `block` for a preformatted block.",
-    defaultSlot: '--hex-color-primary',
-    props: [
-      { name: "block", kind: "boolean", default: false },
-    ],
+    defaultSlot: "--hex-color-primary",
+    props: [{ name: "block", kind: "boolean", default: false }],
   },
   {
     tag: "hex-spoiler",
@@ -249,8 +241,13 @@ export const components: ComponentEntry[] = [
     tag: "hex-alert",
     title: "Alert",
     description:
-      "Banner with variant tint, leading icon, optional heading, message body, action slot, and a close button.",
+      "Banner with variant tint, leading icon, heading slot, message body, action slot, and a close button. Click the close button to fire the `hex-dismiss` event; the element removes itself unless the event is `preventDefault()`'d.",
     defaultSlot: "All 12 nodes updated to version 2.15.0",
+    namedSlots: {
+      heading: "Deployment successful",
+      actions:
+        '<hex-button slot="actions" variant="ghost" size="sm">View logs</hex-button><hex-button slot="actions" variant="ghost" size="sm">Details</hex-button>',
+    },
     previewSurface: "page",
     props: [
       {
@@ -259,7 +256,6 @@ export const components: ComponentEntry[] = [
         options: ["success", "error", "warning", "info"],
         default: "success",
       },
-      { name: "heading", kind: "text", default: "Deployment successful" },
       { name: "no-close", kind: "boolean", default: false },
     ],
   },
