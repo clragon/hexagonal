@@ -1,9 +1,11 @@
-import { html, css, nothing } from "lit";
+import { html, css } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { HexElement } from "../shared/base.js";
 
-// Collapsible section (single-card, not a `<details>` clone): rotating chevron,
-// optional badge in the header, max-height transition for smooth open.
+// Collapsible section. The heading is whatever you slot into `name="heading"`
+// (so consumers can drop in their own badges, icons, links, etc.). A
+// `name="trailing"` slot sits flush right inside the header for actions or
+// metadata.
 
 @customElement("hex-section")
 export class HexSection extends HexElement {
@@ -37,8 +39,10 @@ export class HexSection extends HexElement {
         display: flex;
         align-items: center;
         gap: 8px;
+        min-width: 0;
       }
       .chev {
+        flex-shrink: 0;
         transition: transform var(--hex-dur-base) var(--hex-ease);
       }
       :host([open]) .chev {
@@ -60,21 +64,10 @@ export class HexSection extends HexElement {
         font-size: var(--hex-fs-md);
         line-height: var(--hex-line-normal);
       }
-      .badge {
-        background: rgba(232, 196, 70, 0.15);
-        color: var(--hex-color-primary);
-        font-size: 10px;
-        font-weight: var(--hex-font-weight-bold);
-        padding: 2px 6px;
-        border-radius: var(--hex-radius-pill);
-        margin-left: 6px;
-      }
     `,
   ];
 
   @property({ type: Boolean, reflect: true }) open = false;
-  @property({ type: String }) heading = "";
-  @property({ type: String }) badge = "";
 
   private toggle = () => {
     this.open = !this.open;
@@ -100,7 +93,7 @@ export class HexSection extends HexElement {
           >
             <polyline points="9 6 15 12 9 18" />
           </svg>
-          ${this.heading} ${this.badge ? html`<span class="badge">${this.badge}</span>` : nothing}
+          <slot name="heading"></slot>
         </div>
         <slot name="trailing"></slot>
       </div>

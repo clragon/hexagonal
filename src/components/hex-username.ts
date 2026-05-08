@@ -3,7 +3,6 @@ import { customElement, property } from "lit/decorators.js";
 import { HexElement } from "../shared/base.js";
 import "./hex-chexagon.js";
 import type { HexUserRole } from "./hex-avatar.js";
-import type { HexChexagonTone } from "./hex-chexagon.js";
 
 // Role-tinted username text. `blocked` adds a strike. When `verified` is set,
 // the chexagon (verified badge) is appended after the name.
@@ -67,7 +66,6 @@ export class HexUsername extends HexElement {
     "member";
   @property({ type: String }) href = "";
   @property({ type: Boolean, reflect: true }) verified = false;
-  @property({ type: String, attribute: "verified-as" }) verifiedAs: HexChexagonTone = "artist";
 
   override render() {
     const inner = html`<slot></slot>`;
@@ -75,9 +73,7 @@ export class HexUsername extends HexElement {
       ${this.href
         ? html`<a class="name" href=${this.href}>${inner}</a>`
         : html`<span class="name">${inner}</span>`}
-      ${this.verified
-        ? html`<hex-chexagon size="14" tone=${this.verifiedAs}></hex-chexagon>`
-        : nothing}
+      ${this.verified ? html`<hex-chexagon size="14"></hex-chexagon>` : nothing}
     `;
   }
 }

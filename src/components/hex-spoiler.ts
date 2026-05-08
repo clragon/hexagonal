@@ -14,7 +14,7 @@ export class HexSpoiler extends HexElement {
     css`
       :host {
         display: inline;
-        background: var(--hex-color-section);
+        background: #000000;
         color: transparent;
         border-radius: var(--hex-radius-sm);
         padding: 0;

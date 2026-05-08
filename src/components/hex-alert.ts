@@ -14,10 +14,11 @@ const VARIANT_ICON: Record<HexAlertVariant, IconName> = {
   info: "info-circle",
 };
 
-// Alert banner: tinted bg + colored left stripe + variant icon + optional
-// heading + message + actions slot + close button.
+// Alert banner: tinted bg + colored left stripe + variant icon + heading slot
+// + message body + actions slot + close button.
 //
 // Slots:
+// - heading: bold title above the message body (omit to hide)
 // - default: message body
 // - actions: ghost buttons rendered before the close button
 //
@@ -75,6 +76,9 @@ export class HexAlert extends HexElement {
         margin-bottom: 2px;
         color: var(--alert-color);
       }
+      .heading.empty {
+        display: none;
+      }
       .msg {
         font-size: var(--hex-fs-md);
         color: var(--hex-color-secondary-light);
@@ -95,7 +99,6 @@ export class HexAlert extends HexElement {
   ];
 
   @property({ type: String, reflect: true }) variant: HexAlertVariant = "info";
-  @property({ type: String }) heading = "";
   @property({ type: Boolean, reflect: true, attribute: "no-close" }) noClose = false;
 
   private onClose = () => {
@@ -108,12 +111,21 @@ export class HexAlert extends HexElement {
     if (allowed) this.remove();
   };
 
+  // Hide the heading container when nothing is slotted, so spacing collapses
+  // cleanly. We rely on `slotchange` to rerender when content arrives.
+  private headingHasContent(): boolean {
+    const slot = this.renderRoot.querySelector<HTMLSlotElement>('slot[name="heading"]');
+    return Boolean(slot && slot.assignedNodes({ flatten: true }).length > 0);
+  }
+
   override render() {
     const iconName = VARIANT_ICON[this.variant];
     return html`
       <span class="icon"><hex-icon name=${iconName} size="18" stroke-width="2"></hex-icon></span>
       <div class="content">
-        ${this.heading ? html`<div class="heading">${this.heading}</div>` : nothing}
+        <div class="heading ${this.headingHasContent() ? "" : "empty"}">
+          <slot name="heading" @slotchange=${() => this.requestUpdate()}></slot>
+        </div>
         <div class="msg"><slot></slot></div>
       </div>
       <div class="actions"><slot name="actions"></slot></div>

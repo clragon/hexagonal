@@ -246,21 +246,26 @@
             >Highlighted quote with the primary amber accent stripe.</hex-quote
           >
           <div style="height: 8px"></div>
-          <hex-quote variant="warn">
-            <strong>Warning:</strong> Deleting this cluster will remove all nodes and data. This
-            action cannot be undone.
+          <hex-quote stripe-color="#e69500">
+            Custom stripe color via the <code>stripe-color</code> attribute.
           </hex-quote>
 
           <h3 style="margin-top: 20px">Sections (collapsible)</h3>
           <div class="stack">
-            <hex-section heading="Cluster configuration" badge="12" open>
+            <hex-section open>
+              <span slot="heading">
+                Cluster configuration
+                <hex-chip pill style="font-size: 10px; padding: 2px 8px;">12</hex-chip>
+              </span>
               <p style="margin: 0 0 8px">Region: us-east-1 &middot; Nodes: 12 &middot; Version: 2.14.0</p>
               <p style="margin: 0">Auto-scaling enabled. Current capacity at 68%.</p>
             </hex-section>
-            <hex-section heading="Advanced settings">
+            <hex-section>
+              <span slot="heading">Advanced settings</span>
               Collapsed by default. Click to expand.
             </hex-section>
-            <hex-section heading="Logs &amp; telemetry">
+            <hex-section>
+              <span slot="heading">Logs &amp; telemetry</span>
               Event stream and metrics live here.
             </hex-section>
           </div>
@@ -290,16 +295,19 @@
         <h2>Alerts</h2>
         <hex-card>
           <div class="stack">
-            <hex-alert variant="success" heading="Deployment successful">
+            <hex-alert variant="success">
+              <span slot="heading">Deployment successful</span>
               All 12 nodes updated to version 2.15.0
               <hex-button slot="actions" variant="ghost" size="sm">View logs</hex-button>
             </hex-alert>
-            <hex-alert variant="error" heading="Connection lost">
+            <hex-alert variant="error">
+              <span slot="heading">Connection lost</span>
               Failed to reach hex-prod-west. Last seen 3 minutes ago.
               <hex-button slot="actions" variant="ghost" size="sm">Retry</hex-button>
               <hex-button slot="actions" variant="ghost" size="sm">Details</hex-button>
             </hex-alert>
-            <hex-alert variant="warning" heading="Capacity warning">
+            <hex-alert variant="warning">
+              <span slot="heading">Capacity warning</span>
               Cluster at 92% capacity. Consider scaling up.
             </hex-alert>
             <hex-alert variant="info" no-close>
