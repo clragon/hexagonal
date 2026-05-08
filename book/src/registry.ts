@@ -6,6 +6,17 @@ export type ControlKind = "select" | "boolean" | "text" | "number";
 
 export type PreviewSurface = "page" | "card" | "empty";
 
+export type ComponentGroup = "Surfaces" | "Form" | "User" | "Tokens" | "Content" | "Brand";
+
+export const GROUP_ORDER: ComponentGroup[] = [
+  "Surfaces",
+  "Form",
+  "Content",
+  "Tokens",
+  "User",
+  "Brand",
+];
+
 export interface PropSpec {
   name: string;
   kind: ControlKind;
@@ -18,6 +29,7 @@ export interface ComponentEntry {
   tag: string;
   title: string;
   description: string;
+  group: ComponentGroup;
   defaultSlot?: string;
   /** Optional named slot content for slots like alert's "actions" or section's "heading" */
   namedSlots?: Record<string, string>;
@@ -33,6 +45,7 @@ export const components: ComponentEntry[] = [
   {
     tag: "hex-page",
     title: "Page",
+    group: "Surfaces",
     description:
       "Full-bleed page surface. Wraps a route or app shell with the brand navy background and tiled hex pattern.",
     defaultSlot: `
@@ -49,6 +62,7 @@ export const components: ComponentEntry[] = [
   {
     tag: "hex-card",
     title: "Card",
+    group: "Surfaces",
     description:
       "Standard card surface with the brand hex-texture watermark fading down from the top. Use for grouped content.",
     defaultSlot: `
@@ -70,8 +84,9 @@ export const components: ComponentEntry[] = [
   {
     tag: "hex-button",
     title: "Button",
+    group: "Form",
     description:
-      "Action element with two axes: visual `variant` (solid / outline / ghost) and tonal `color` (primary / secondary / danger). Three sizes; supports a leading icon and an icon-only mode.",
+      "Action element. Three visual variants, three colors, three sizes, optional leading icon, and an icon-only mode.",
     defaultSlot: "Save changes",
     props: [
       {
@@ -96,6 +111,7 @@ export const components: ComponentEntry[] = [
   {
     tag: "hex-input",
     title: "Input",
+    group: "Form",
     description: "Text input with optional label, hint, error, and leading icon.",
     props: [
       { name: "label", kind: "text", default: "Cluster name" },
@@ -116,6 +132,7 @@ export const components: ComponentEntry[] = [
   {
     tag: "hex-checkbox",
     title: "Checkbox",
+    group: "Form",
     description: "Boolean toggle with an inline label.",
     defaultSlot: "Enable autoscaling",
     props: [
@@ -126,6 +143,7 @@ export const components: ComponentEntry[] = [
   {
     tag: "hex-icon",
     title: "Icon",
+    group: "Brand",
     description: "Inline stroke icon. The full set of available names is exported as `iconPaths`.",
     props: [
       { name: "name", kind: "select", options: Object.keys(iconPaths) as IconName[], default: "settings" },
@@ -136,6 +154,7 @@ export const components: ComponentEntry[] = [
   {
     tag: "hex-chexagon",
     title: "Chexagon",
+    group: "Brand",
     description: "Verification badge: hex shape with a checkmark, in the brand artist amber-orange.",
     props: [
       { name: "size", kind: "number", default: 18 },
@@ -144,6 +163,7 @@ export const components: ComponentEntry[] = [
   {
     tag: "hex-chip",
     title: "Chip",
+    group: "Tokens",
     description: "Generic inline chip for filter tokens, removable selections, and small status pills.",
     defaultSlot: "filter: errors",
     props: [
@@ -156,6 +176,7 @@ export const components: ComponentEntry[] = [
   {
     tag: "hex-tag",
     title: "Tag",
+    group: "Tokens",
     description: "Category-tinted tag with a colored dot, used in tag clouds and listings.",
     defaultSlot: "rowan",
     props: [
@@ -170,6 +191,7 @@ export const components: ComponentEntry[] = [
   {
     tag: "hex-status-pill",
     title: "Status pill",
+    group: "Tokens",
     description: "Compact health indicator. Shows a label and colored dot per status.",
     props: [
       { name: "status", kind: "select", options: ["healthy", "degraded", "failing", "idle"], default: "healthy" },
@@ -178,6 +200,7 @@ export const components: ComponentEntry[] = [
   {
     tag: "hex-kbd",
     title: "Keyboard hint",
+    group: "Tokens",
     description: "Small monospace key cap. Use for keyboard shortcut hints in tooltips and help surfaces.",
     defaultSlot: "⌘K",
     props: [],
@@ -185,6 +208,7 @@ export const components: ComponentEntry[] = [
   {
     tag: "hex-avatar",
     title: "Avatar",
+    group: "User",
     description: "Stroke-only rounded square avatar. Tinted by user role. Falls back to two-letter initials.",
     props: [
       { name: "role-color", kind: "select", options: userRoles, default: "member" },
@@ -196,6 +220,7 @@ export const components: ComponentEntry[] = [
   {
     tag: "hex-username",
     title: "Username",
+    group: "User",
     description:
       "Role-tinted username text. Adds a strikethrough for blocked users and an optional verified chexagon badge.",
     defaultSlot: "rowan",
@@ -208,6 +233,7 @@ export const components: ComponentEntry[] = [
   {
     tag: "hex-quote",
     title: "Quote",
+    group: "Content",
     description:
       "Inline rounded quote block with a left-side accent stripe. Set `stripe-color` (or the `--hex-quote-stripe` CSS variable) to use any CSS color.",
     defaultSlot: "The hex tile is the brand. Every full-page surface uses a tiled hex pattern.",
@@ -219,6 +245,7 @@ export const components: ComponentEntry[] = [
   {
     tag: "hex-section",
     title: "Section",
+    group: "Surfaces",
     description:
       "Collapsible section. Slot any HTML into `name=\"heading\"` (badges, links, icons) and `name=\"trailing\"` for header-flush actions.",
     defaultSlot: "Region: us-east-1. Nodes: 12. Version: 2.14.0.",
@@ -232,6 +259,7 @@ export const components: ComponentEntry[] = [
   {
     tag: "hex-code",
     title: "Code",
+    group: "Content",
     description: "Monospace code element. Inline by default; set `block` for a preformatted block.",
     defaultSlot: "--hex-color-primary",
     props: [{ name: "block", kind: "boolean", default: false }],
@@ -239,6 +267,7 @@ export const components: ComponentEntry[] = [
   {
     tag: "hex-spoiler",
     title: "Spoiler",
+    group: "Content",
     description: "Inline censor that reveals on hover (desktop) or tap (mobile). Wraps cleanly across lines.",
     defaultSlot: "the Guardian of the Hexagon",
     props: [],
@@ -246,6 +275,7 @@ export const components: ComponentEntry[] = [
   {
     tag: "hex-alert",
     title: "Alert",
+    group: "Content",
     description:
       "Banner with variant tint, leading icon, heading slot, message body, action slot, and a close button. Click the close button to fire the `hex-dismiss` event; the element removes itself unless the event is `preventDefault()`'d.",
     defaultSlot: "All 12 nodes updated to version 2.15.0",

@@ -1,6 +1,6 @@
 import { LitElement, html, css } from "lit";
 import { customElement, state } from "lit/decorators.js";
-import { components } from "./registry.js";
+import { components, GROUP_ORDER, type ComponentGroup, type ComponentEntry } from "./registry.js";
 import "./component-page.js";
 
 // Neutral docs chrome: white background, black text, gray borders. The brand
@@ -32,9 +32,18 @@ export class BookShell extends LitElement {
       background: #161616;
     }
     .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
       padding: 0 8px 16px;
       margin-bottom: 8px;
       border-bottom: 1px solid #262626;
+    }
+    .brand-mark {
+      flex-shrink: 0;
+    }
+    .brand-text {
+      min-width: 0;
     }
     .brand-title {
       font-size: 18px;
@@ -56,6 +65,17 @@ export class BookShell extends LitElement {
     }
     nav li {
       margin-bottom: 1px;
+    }
+    nav .group-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #666;
+      font-weight: 700;
+      padding: 16px 10px 6px;
+    }
+    nav .group:first-child .group-label {
+      padding-top: 4px;
     }
     nav a {
       display: block;
@@ -120,16 +140,19 @@ export class BookShell extends LitElement {
     this.currentTag = target?.tag ?? components[0]?.tag ?? "";
   };
 
-  override render() {
-    return html`
-      <aside>
-        <div class="brand">
-          <div class="brand-title">Hexagonal</div>
-          <div class="brand-sub">Components</div>
-        </div>
-        <nav>
+  private renderGroups() {
+    const byGroup = new Map<ComponentGroup, ComponentEntry[]>();
+    for (const c of components) {
+      const list = byGroup.get(c.group) ?? [];
+      list.push(c);
+      byGroup.set(c.group, list);
+    }
+    return GROUP_ORDER.filter((g) => byGroup.has(g)).map(
+      (group) => html`
+        <div class="group">
+          <div class="group-label">${group}</div>
           <ul>
-            ${components.map((c) => {
+            ${(byGroup.get(group) ?? []).map((c) => {
               const slug = c.tag.replace(/^hex-/, "");
               return html`
                 <li>
@@ -140,6 +163,23 @@ export class BookShell extends LitElement {
               `;
             })}
           </ul>
+        </div>
+      `,
+    );
+  }
+
+  override render() {
+    return html`
+      <aside>
+        <div class="brand">
+          <hex-logo class="brand-mark" mark-only width="32"></hex-logo>
+          <div class="brand-text">
+            <div class="brand-title">Hexagonal</div>
+            <div class="brand-sub">Components</div>
+          </div>
+        </div>
+        <nav>
+          ${this.renderGroups()}
         </nav>
       </aside>
       <main>
