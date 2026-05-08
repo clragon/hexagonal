@@ -162,6 +162,18 @@ export const components: ComponentEntry[] = [
     ],
   },
   {
+    tag: "hex-switch",
+    title: "Switch",
+    group: "Form",
+    description:
+      "Toggle switch. Use for boolean settings where the on/off state is the point. The native checkbox underneath gets `role=\"switch\"` so assistive tech announces it correctly.",
+    defaultSlot: "Enable telemetry",
+    props: [
+      { name: "checked", kind: "boolean", default: true },
+      { name: "disabled", kind: "boolean", default: false },
+    ],
+  },
+  {
     tag: "hex-radio-group",
     title: "Radio group",
     group: "Form",
