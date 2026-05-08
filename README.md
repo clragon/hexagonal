@@ -57,9 +57,8 @@ Without that stylesheet, the system falls back to the Verdana installed on the u
 
 ```sh
 yarn install
-yarn build         # build dist/hexagonal.js + .min.js + types + fonts.css
-yarn build:watch   # esbuild watch mode (no .d.ts emit)
-yarn serve         # serve demo at http://localhost:47312
+yarn dev           # watch mode + serve the book at http://localhost:47312
+yarn build         # build dist/hexagonal.js + .min.js + types + fonts.css + book.js
 yarn check         # fmt:check + lint + typecheck
 yarn fmt           # apply oxfmt formatting
 yarn lint          # oxlint
