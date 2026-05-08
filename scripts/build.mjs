@@ -40,19 +40,35 @@ const baseOptions = {
   logLevel: "info",
 };
 
+const bookOptions = {
+  entryPoints: [resolve(root, "book/src/main.ts")],
+  bundle: true,
+  format: "esm",
+  target: "es2022",
+  plugins: [assetPlugin],
+  logLevel: "info",
+};
+
 mkdirSync(resolve(root, "dist"), { recursive: true });
 
 const watch = process.argv.includes("--watch");
 
 if (watch) {
-  const ctx = await context({
+  const libCtx = await context({
     ...baseOptions,
     outfile: resolve(root, "dist/hexagonal.js"),
     sourcemap: true,
     minify: false,
   });
-  await ctx.watch();
-  console.log("[esbuild] watching src/ ...");
+  const bookCtx = await context({
+    ...bookOptions,
+    outfile: resolve(root, "dist/book.js"),
+    sourcemap: true,
+    minify: false,
+  });
+  await libCtx.watch();
+  await bookCtx.watch();
+  console.log("[esbuild] watching src/ + book/ ...");
 } else {
   await build({
     ...baseOptions,
@@ -76,7 +92,13 @@ if (watch) {
 `;
   writeFileSync(resolve(root, "dist/hexagonal-fonts.css"), fontsCss);
 
-  console.log("[esbuild] built dist/hexagonal.js + .min.js + hexagonal-fonts.css");
+  await build({
+    ...bookOptions,
+    outfile: resolve(root, "dist/book.js"),
+    minify: false,
+  });
+
+  console.log("[esbuild] built dist/hexagonal.js + .min.js + hexagonal-fonts.css + book.js");
 
   console.log("[tsc] emitting .d.ts ...");
   const tscBin = process.platform === "win32" ? "tsc.cmd" : "tsc";
