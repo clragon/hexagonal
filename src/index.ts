@@ -27,6 +27,7 @@ import "./components/hex-select.js";
 import "./components/hex-radio.js";
 import "./components/hex-radio-group.js";
 import "./components/hex-switch.js";
+import "./components/hex-dialog.js";
 
 registerTokens();
 

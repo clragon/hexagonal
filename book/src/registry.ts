@@ -42,10 +42,21 @@ export interface ComponentEntry {
   namedSlots?: Record<string, string>;
   /** Surface the playground should render on. Defaults to "card". */
   previewSurface?: PreviewSurface;
+  /** Fixed height (in px) of the playground iframe. Defaults to 280. */
+  previewHeight?: number;
+  /**
+   * Extra markup injected into the playground iframe but NOT shown in the
+   * Markup snippet. Use for openers (a button that triggers a modal), wiring
+   * scaffolding, or anything that's part of the demo but not the canonical
+   * usage of the component itself.
+   */
+  previewExtras?: string;
   props: PropSpec[];
   /** When-to-use guidance. Each entry is a guideline + optional live demo. */
   usage?: UsageExample[];
 }
+
+export const DEFAULT_PREVIEW_HEIGHT = 180;
 
 const userRoles = ["member", "privileged", "blocked", "former-staff", "janitor", "moderator", "admin"];
 const tagCategories = ["artist", "copyright", "character", "species", "general", "meta", "lore", "invalid"];
@@ -66,12 +77,14 @@ export const components: ComponentEntry[] = [
         </p>
       </div>`,
     previewSurface: "empty",
+    previewHeight: 360,
     props: [],
   },
   {
     tag: "hex-card",
     title: "Card",
     group: "Surfaces",
+    previewHeight: 260,
     description:
       "Standard card surface with the brand hex-texture watermark fading down from the top. Use for grouped content.",
     defaultSlot: `
@@ -147,6 +160,7 @@ export const components: ComponentEntry[] = [
     tag: "hex-input",
     title: "Input",
     group: "Form",
+    previewHeight: 220,
     description: "Text input with optional label, hint, error, and leading icon.",
     props: [
       { name: "label", kind: "text", default: "Cluster name" },
@@ -179,6 +193,7 @@ export const components: ComponentEntry[] = [
     tag: "hex-select",
     title: "Select",
     group: "Form",
+    previewHeight: 220,
     description:
       "Native `<select>` styled to match the input. Options live as light-DOM `<option>` children for free keyboard nav, screen-reader behavior, and the mobile picker.",
     defaultSlot: `
@@ -212,6 +227,7 @@ export const components: ComponentEntry[] = [
     tag: "hex-radio-group",
     title: "Radio group",
     group: "Form",
+    previewHeight: 240,
     description:
       "Container for `<hex-radio>` children. Manages selection via `value`, propagates `name` to children, and fires `hex-change` on selection change.",
     defaultSlot: `
@@ -234,6 +250,7 @@ export const components: ComponentEntry[] = [
     tag: "hex-icon",
     title: "Icon",
     group: "Brand",
+    previewHeight: 120,
     description: "Inline stroke icon. The full set of available names is exported as `iconPaths`.",
     props: [
       { name: "name", kind: "select", options: Object.keys(iconPaths) as IconName[], default: "settings" },
@@ -245,6 +262,7 @@ export const components: ComponentEntry[] = [
     tag: "hex-chexagon",
     title: "Chexagon",
     group: "Brand",
+    previewHeight: 120,
     description: "Verification badge: hex shape with a checkmark, in the brand artist amber-orange.",
     props: [
       { name: "size", kind: "number", default: 18 },
@@ -254,6 +272,7 @@ export const components: ComponentEntry[] = [
     tag: "hex-chip",
     title: "Chip",
     group: "Tokens",
+    previewHeight: 120,
     description: "Generic inline chip for filter tokens, removable selections, and small status pills.",
     defaultSlot: "filter: errors",
     props: [
@@ -267,6 +286,7 @@ export const components: ComponentEntry[] = [
     tag: "hex-tag",
     title: "Tag",
     group: "Tokens",
+    previewHeight: 120,
     description: "Category-tinted tag with a colored dot, used in tag clouds and listings.",
     defaultSlot: "rowan",
     props: [
@@ -282,6 +302,7 @@ export const components: ComponentEntry[] = [
     tag: "hex-status-pill",
     title: "Status pill",
     group: "Tokens",
+    previewHeight: 120,
     description: "Compact health indicator. Shows a label and colored dot per status.",
     props: [
       { name: "status", kind: "select", options: ["healthy", "degraded", "failing", "idle"], default: "healthy" },
@@ -291,6 +312,7 @@ export const components: ComponentEntry[] = [
     tag: "hex-kbd",
     title: "Keyboard hint",
     group: "Tokens",
+    previewHeight: 120,
     description: "Small monospace key cap. Use for keyboard shortcut hints in tooltips and help surfaces.",
     defaultSlot: "⌘K",
     props: [],
@@ -336,6 +358,7 @@ export const components: ComponentEntry[] = [
     tag: "hex-section",
     title: "Section",
     group: "Surfaces",
+    previewHeight: 240,
     description:
       "Collapsible section. Slot any HTML into `name=\"heading\"` (badges, links, icons) and `name=\"trailing\"` for header-flush actions.",
     defaultSlot: "Region: us-east-1. Nodes: 12. Version: 2.14.0.",
@@ -350,6 +373,7 @@ export const components: ComponentEntry[] = [
     tag: "hex-code",
     title: "Code",
     group: "Content",
+    previewHeight: 140,
     description: "Monospace code element. Inline by default; set `block` for a preformatted block.",
     defaultSlot: "--hex-color-primary",
     props: [{ name: "block", kind: "boolean", default: false }],
@@ -358,9 +382,83 @@ export const components: ComponentEntry[] = [
     tag: "hex-spoiler",
     title: "Spoiler",
     group: "Content",
+    previewHeight: 140,
     description: "Inline censor that reveals on hover (desktop) or tap (mobile). Wraps cleanly across lines.",
     defaultSlot: "the Guardian of the Hexagon",
     props: [],
+  },
+  {
+    tag: "hex-dialog",
+    title: "Dialog",
+    group: "Surfaces",
+    description:
+      "Modal dialog backed by the native `<dialog>` element. Free focus trap, ESC-to-close, top-layer rendering, and proper aria role. Slots: `heading`, default body, `actions` (primary on the right).",
+    defaultSlot:
+      "This will permanently remove the cluster and all of its data. This action cannot be undone.",
+    namedSlots: {
+      heading: "Delete cluster?",
+      actions:
+        '<hex-button slot="actions" variant="outline" color="secondary">Cancel</hex-button><hex-button slot="actions" color="danger">Delete</hex-button>',
+    },
+    previewSurface: "page",
+    previewHeight: 400,
+    previewExtras: `
+      <hex-button onclick="document.querySelector('hex-dialog')?.show()">Open dialog</hex-button>
+    `,
+    props: [
+      {
+        name: "open",
+        kind: "boolean",
+        default: true,
+        description:
+          "Toggle to open as a modal. Covers the entire viewport while open.",
+      },
+      { name: "size", kind: "select", options: ["sm", "md", "lg"], default: "md" },
+      {
+        name: "no-close",
+        kind: "boolean",
+        default: false,
+        description:
+          "Hides the X, disables backdrop dismissal, and switches the role to `alertdialog`. Use for confirmations the user must explicitly acknowledge.",
+      },
+      {
+        name: "no-backdrop-close",
+        kind: "boolean",
+        default: false,
+        description: "Disable click-outside-to-close while keeping the X button.",
+      },
+    ],
+    usage: [
+      {
+        text: "Trigger the dialog from a button by calling `.show()` on the element. ESC, the close button, or a backdrop click all dismiss it.",
+        demo: `
+          <hex-button onclick="document.getElementById('demo-info').show()">Open dialog</hex-button>
+          <hex-dialog id="demo-info">
+            <span slot="heading">Cluster details</span>
+            Region us-east-1, 12 nodes, version 2.14.0. Auto-scaling enabled at 68% capacity.
+            <hex-button slot="actions" variant="outline" color="secondary"
+              onclick="document.getElementById('demo-info').close()">Close</hex-button>
+          </hex-dialog>
+        `,
+      },
+      {
+        text: "Set `no-close` for confirmations the user must explicitly acknowledge. The X disappears, backdrop clicks are ignored, the role becomes `alertdialog`, and dismissal must go through one of the action buttons.",
+        demo: `
+          <hex-button color="danger" onclick="document.getElementById('demo-confirm').show()">Delete cluster</hex-button>
+          <hex-dialog id="demo-confirm" no-close>
+            <span slot="heading">Delete cluster?</span>
+            This will permanently remove the cluster and all of its data. This action cannot be undone.
+            <hex-button slot="actions" variant="outline" color="secondary"
+              onclick="document.getElementById('demo-confirm').close()">Cancel</hex-button>
+            <hex-button slot="actions" color="danger"
+              onclick="document.getElementById('demo-confirm').close('confirmed')">Delete</hex-button>
+          </hex-dialog>
+        `,
+      },
+      {
+        text: "Listen for the `hex-close` event to react to dismissal. The event detail includes the `returnValue` passed to `.close(value)` so you can tell confirm from cancel.",
+      },
+    ],
   },
   {
     tag: "hex-alert",
@@ -375,6 +473,7 @@ export const components: ComponentEntry[] = [
         '<hex-button slot="actions" variant="ghost" color="secondary" size="sm">View logs</hex-button><hex-button slot="actions" variant="ghost" color="secondary" size="sm">Details</hex-button>',
     },
     previewSurface: "page",
+    previewHeight: 320,
     props: [
       {
         name: "variant",

@@ -316,6 +316,27 @@
           </p>
         </hex-card>
 
+        <h2>Dialog</h2>
+        <hex-card>
+          <p style="margin: 0 0 16px">Modal dialogs use the native <hex-code>&lt;dialog&gt;</hex-code> element under the hood for free focus trap, ESC, and top-layer rendering.</p>
+          <div class="row">
+            <hex-button onclick="document.getElementById('demo-dialog').show()">Open dialog</hex-button>
+            <hex-button color="danger" onclick="document.getElementById('demo-confirm').show()">Delete cluster</hex-button>
+          </div>
+          <hex-dialog id="demo-dialog">
+            <span slot="heading">Cluster details</span>
+            <p style="margin: 0 0 8px">Region: us-east-1 &middot; Nodes: 12 &middot; Version: 2.14.0</p>
+            <p style="margin: 0">Auto-scaling enabled. Current capacity at 68%.</p>
+            <hex-button slot="actions" variant="outline" color="secondary" onclick="document.getElementById('demo-dialog').close()">Close</hex-button>
+          </hex-dialog>
+          <hex-dialog id="demo-confirm" no-close>
+            <span slot="heading">Delete cluster?</span>
+            This will permanently remove the cluster and all of its data. This action cannot be undone.
+            <hex-button slot="actions" variant="outline" color="secondary" onclick="document.getElementById('demo-confirm').close()">Cancel</hex-button>
+            <hex-button slot="actions" color="danger" onclick="document.getElementById('demo-confirm').close('confirmed')">Delete</hex-button>
+          </hex-dialog>
+        </hex-card>
+
         <h2>Alerts</h2>
         <hex-card>
           <div class="stack">

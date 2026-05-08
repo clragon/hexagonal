@@ -1,7 +1,6 @@
 import { LitElement, html, css, nothing } from "lit";
-import { customElement, property, state } from "lit/decorators.js";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
-import type { ComponentEntry, PropSpec } from "./registry.js";
+import { customElement, property, query, state } from "lit/decorators.js";
+import { DEFAULT_PREVIEW_HEIGHT, type ComponentEntry, type PropSpec } from "./registry.js";
 
 // Live demo + controls + code snippet for a single component.
 // Preview pane uses brand styling so components render on their natural
@@ -21,53 +20,17 @@ export class BookPlayground extends LitElement {
         Roboto,
         sans-serif;
     }
-    /* Preview pane: brand styling so components show on a real surface. */
-    .preview {
+    /* Preview is an iframe that hosts a fresh document for each component.
+       This isolates DOM, top-layer (modals), focus trap, and styles so demos
+       like hex-dialog work without taking over the book. The iframe's
+       internal stylesheet handles the surface backgrounds. Fixed height per
+       entry (registry decides) so the layout doesn't jump as state toggles. */
+    iframe.preview {
+      width: 100%;
+      border: 1px solid #262626;
       border-radius: 4px;
-      padding: 32px 24px;
-      min-height: 80px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      flex-wrap: wrap;
-      color: var(--hex-fg-1);
-      font-family: var(--hex-font-family);
-    }
-    .preview.surface-card {
-      background-color: var(--hex-bg-card);
-      background-image: var(--hex-texture);
-      background-repeat: repeat-x;
-      background-position: left top;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    }
-    .preview.surface-page {
-      background-color: var(--hex-bg-page);
-      background-image: var(--hex-tile);
-      background-repeat: repeat;
-      border: 1px solid #262626;
-    }
-    /* Empty surface: no chrome at all. The component IS the surface (e.g.
-       hex-page which provides its own bg). Border is kept to delineate the
-       preview area. */
-    .preview.surface-empty {
+      display: block;
       background: transparent;
-      border: 1px solid #262626;
-      padding: 0;
-      overflow: hidden;
-    }
-    .preview.surface-empty > * {
-      width: 100%;
-    }
-    /* Surface components default to filling viewport. In the playground they
-       should size to content so the demo doesn't tower over the page. */
-    .preview hex-page,
-    .preview hex-card,
-    .preview hex-section,
-    .preview hex-alert {
-      min-height: auto;
-      height: auto;
-      width: 100%;
     }
     .panels {
       display: flex;
@@ -254,6 +217,19 @@ export class BookPlayground extends LitElement {
   // Slot contents. Empty key ("") is the default slot; other keys are named slots.
   @state() private slots: Record<string, string> = {};
 
+  @query("iframe.preview") private _iframe?: HTMLIFrameElement;
+  private iframeReady = false;
+
+  override connectedCallback() {
+    super.connectedCallback();
+    window.addEventListener("message", this.onIframeMessage);
+  }
+
+  override disconnectedCallback() {
+    super.disconnectedCallback();
+    window.removeEventListener("message", this.onIframeMessage);
+  }
+
   override willUpdate(changed: Map<string, unknown>) {
     if (changed.has("entry") && this.entry) {
       const next: Record<string, Value> = {};
@@ -270,6 +246,33 @@ export class BookPlayground extends LitElement {
     }
   }
 
+  override updated() {
+    this.sendToIframe();
+  }
+
+  private onIframeMessage = (e: MessageEvent) => {
+    if (!this._iframe || e.source !== this._iframe.contentWindow) return;
+    if (e.data?.type === "hex-preview-ready") {
+      this.iframeReady = true;
+      this.sendToIframe();
+    }
+  };
+
+  private sendToIframe() {
+    if (!this.iframeReady || !this._iframe?.contentWindow || !this.entry) return;
+    const componentMarkup = buildMarkup(this.entry, this.values, this.slots);
+    const extras = this.entry.previewExtras?.trim();
+    const previewMarkup = extras ? `${extras}\n${componentMarkup}` : componentMarkup;
+    this._iframe.contentWindow.postMessage(
+      {
+        type: "hex-preview-content",
+        markup: previewMarkup,
+        surface: this.entry.previewSurface ?? "card",
+      },
+      "*",
+    );
+  }
+
   private updateValue(name: string, value: Value) {
     this.values = { ...this.values, [name]: value };
   }
@@ -280,11 +283,18 @@ export class BookPlayground extends LitElement {
 
   override render() {
     if (!this.entry) return nothing;
+    // The Markup disclosure shows just the component; previewExtras stay out
+    // of the snippet on purpose so consumers see the canonical usage.
     const markup = buildMarkup(this.entry, this.values, this.slots);
-    const surface = this.entry.previewSurface ?? "card";
     const slotKeys = Object.keys(this.slots);
+    const height = this.entry.previewHeight ?? DEFAULT_PREVIEW_HEIGHT;
     return html`
-      <div class="preview surface-${surface}">${unsafeHTML(markup)}</div>
+      <iframe
+        class="preview"
+        src="preview-host.html"
+        data-tag=${this.entry.tag}
+        style="height: ${height}px"
+      ></iframe>
       <div class="panels">
         <div class="controls">
           ${this.entry.props.length > 0
