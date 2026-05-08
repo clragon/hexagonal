@@ -93,7 +93,10 @@ export class HexAlert extends HexElement {
         color: var(--alert-color);
       }
       .close {
-        color: var(--alert-color);
+        /* Override the button color tokens so the close icon and its hover
+           tint use the alert's variant color instead of the default amber. */
+        --btn-color: var(--alert-color);
+        --btn-color-light: var(--alert-color);
       }
     `,
   ];

@@ -4,11 +4,14 @@ import { HexElement } from "../shared/base.js";
 import "./hex-icon.js";
 import type { IconName } from "../shared/icons.js";
 
-export type HexButtonVariant = "primary" | "secondary" | "ghost" | "text-primary" | "danger";
+export type HexButtonVariant = "solid" | "outline" | "ghost";
+export type HexButtonColor = "primary" | "secondary" | "danger";
 export type HexButtonSize = "sm" | "md" | "lg";
 
-// Button surface. `type="submit"` forwards to the inner <button> so it works
-// inside forms; click events bubble out as the standard `click`.
+// Two-axis button: visual `variant` (solid / outline / ghost) and tonal
+// `color` (primary / secondary / danger). Color tokens are exposed as CSS
+// custom properties so each variant rule references --btn-color, etc., and
+// every variant + color combo composes naturally.
 
 @customElement("hex-button")
 export class HexButton extends HexElement {
@@ -20,7 +23,26 @@ export class HexButton extends HexElement {
         vertical-align: middle;
         position: relative;
         top: 0;
+
+        /* Color tokens default to primary; overridden per :host([color="..."]) */
+        --btn-color: var(--hex-color-primary);
+        --btn-color-light: var(--hex-color-primary-light);
+        --btn-color-dark: var(--hex-color-primary-dark);
+        --btn-fg-on: var(--hex-fg-on-primary);
       }
+      :host([color="secondary"]) {
+        --btn-color: var(--hex-color-secondary);
+        --btn-color-light: var(--hex-color-secondary-light);
+        --btn-color-dark: var(--hex-color-secondary-dark);
+        --btn-fg-on: var(--hex-color-background);
+      }
+      :host([color="danger"]) {
+        --btn-color: var(--hex-color-danger);
+        --btn-color-light: #e89486;
+        --btn-color-dark: #c96a5b;
+        --btn-fg-on: #2a0e09;
+      }
+
       :host(:active:not([disabled])) {
         top: 1px;
       }
@@ -34,6 +56,7 @@ export class HexButton extends HexElement {
       :host([disabled]) button {
         pointer-events: none;
       }
+
       button {
         all: unset;
         box-sizing: border-box;
@@ -72,70 +95,47 @@ export class HexButton extends HexElement {
         box-shadow: var(--hex-shadow-sunken), var(--hex-shadow-focus);
       }
 
-      /* primary */
-      :host([variant="primary"]) button,
+      /* solid: filled bg, dark text on bright bg */
+      :host([variant="solid"]) button,
       :host(:not([variant])) button {
-        background: var(--hex-color-primary);
-        color: var(--hex-fg-on-primary);
+        background: var(--btn-color);
+        color: var(--btn-fg-on);
+        border-color: var(--btn-color);
       }
-      :host([variant="primary"]) button:hover,
+      :host([variant="solid"]) button:hover,
       :host(:not([variant])) button:hover {
-        background: var(--hex-color-primary-light);
+        background: var(--btn-color-light);
+        border-color: var(--btn-color-light);
       }
-      :host([variant="primary"]) button:active,
+      :host([variant="solid"]) button:active,
       :host(:not([variant])) button:active {
-        background: var(--hex-color-primary-dark);
+        background: var(--btn-color-dark);
+        border-color: var(--btn-color-dark);
       }
 
-      /* secondary (outline)
-         outline variants stay at their hover colors on press; the only
-         press feedback comes from the 1px shift + inset sunken shadow on the
-         host so the button doesn't perceptually "grow" when clicked. */
-      :host([variant="secondary"]) button {
+      /* outline: transparent bg, colored border + text, tinted hover */
+      :host([variant="outline"]) button {
         background: transparent;
-        color: var(--hex-fg-1);
-        border-color: var(--hex-border-strong);
+        color: var(--btn-color);
+        border-color: var(--btn-color);
       }
-      :host([variant="secondary"]) button:hover,
-      :host([variant="secondary"]) button:active {
-        background: rgba(180, 199, 217, 0.14);
-        color: var(--hex-color-secondary-light);
-        border-color: var(--hex-color-secondary);
+      :host([variant="outline"]) button:hover,
+      :host([variant="outline"]) button:active {
+        background: color-mix(in oklch, var(--btn-color) 14%, transparent);
+        color: var(--btn-color-light);
+        border-color: var(--btn-color-light);
       }
 
-      /* ghost (no border) */
+      /* ghost: no border, transparent bg, tinted hover */
       :host([variant="ghost"]) button {
         background: transparent;
-        color: var(--hex-color-secondary);
+        color: var(--btn-color);
+        padding: 8px 10px;
       }
       :host([variant="ghost"]) button:hover,
       :host([variant="ghost"]) button:active {
-        background: rgba(180, 199, 217, 0.1);
-        color: var(--hex-color-secondary-light);
-      }
-
-      /* text-primary (amber link-ish) */
-      :host([variant="text-primary"]) button {
-        background: transparent;
-        color: var(--hex-color-primary);
-        padding: 8px 10px;
-      }
-      :host([variant="text-primary"]) button:hover,
-      :host([variant="text-primary"]) button:active {
-        background: rgba(232, 196, 70, 0.12);
-        color: var(--hex-color-primary-light);
-      }
-
-      /* danger */
-      :host([variant="danger"]) button {
-        background: var(--hex-color-danger);
-        color: #2a0e09;
-      }
-      :host([variant="danger"]) button:hover {
-        background: #e89486;
-      }
-      :host([variant="danger"]) button:active {
-        background: #c96a5b;
+        background: color-mix(in oklch, var(--btn-color) 12%, transparent);
+        color: var(--btn-color-light);
       }
 
       /* sizes */
@@ -147,10 +147,10 @@ export class HexButton extends HexElement {
         font-size: 14px;
         padding: 10px 20px;
       }
-      :host([size="sm"][variant="text-primary"]) button {
+      :host([size="sm"][variant="ghost"]) button {
         padding: 6px 8px;
       }
-      :host([size="lg"][variant="text-primary"]) button {
+      :host([size="lg"][variant="ghost"]) button {
         padding: 10px 14px;
       }
 
@@ -170,7 +170,8 @@ export class HexButton extends HexElement {
     `,
   ];
 
-  @property({ type: String, reflect: true }) variant: HexButtonVariant = "primary";
+  @property({ type: String, reflect: true }) variant: HexButtonVariant = "solid";
+  @property({ type: String, reflect: true }) color: HexButtonColor = "primary";
   @property({ type: String, reflect: true }) size: HexButtonSize = "md";
   @property({ type: String }) icon?: IconName;
   @property({ type: String }) type: "button" | "submit" | "reset" = "button";

@@ -83,33 +83,37 @@
 
         <h2>Buttons</h2>
         <hex-card>
-          <h3>Variants</h3>
+          <h3>Variants &times; colors</h3>
           <div class="row">
-            <hex-button variant="primary">Primary</hex-button>
-            <hex-button variant="secondary">Secondary</hex-button>
-            <hex-button variant="ghost">Ghost</hex-button>
-            <hex-button variant="text-primary">Text primary</hex-button>
-            <hex-button variant="danger">Delete</hex-button>
-            <hex-button variant="primary" disabled>Disabled</hex-button>
+            <hex-button>Solid primary</hex-button>
+            <hex-button variant="outline">Outline primary</hex-button>
+            <hex-button variant="ghost">Ghost primary</hex-button>
+            <hex-button color="secondary">Solid secondary</hex-button>
+            <hex-button variant="outline" color="secondary">Outline secondary</hex-button>
+            <hex-button variant="ghost" color="secondary">Ghost secondary</hex-button>
+            <hex-button color="danger">Delete</hex-button>
+            <hex-button variant="outline" color="danger">Discard</hex-button>
+            <hex-button variant="ghost" color="danger">Cancel</hex-button>
+            <hex-button disabled>Disabled</hex-button>
           </div>
           <h3>Sizes &amp; icons</h3>
           <div class="row">
-            <hex-button variant="primary" size="sm" icon="plus">Add</hex-button>
-            <hex-button variant="primary" size="md" icon="download">Export</hex-button>
-            <hex-button variant="primary" size="lg" icon="play">Run scan</hex-button>
-            <hex-button variant="secondary" icon="refresh">Reload</hex-button>
-            <hex-button variant="ghost" icon="settings">Configure</hex-button>
+            <hex-button size="sm" icon="plus">Add</hex-button>
+            <hex-button size="md" icon="download">Export</hex-button>
+            <hex-button size="lg" icon="play">Run scan</hex-button>
+            <hex-button variant="outline" color="secondary" icon="refresh">Reload</hex-button>
+            <hex-button variant="ghost" color="secondary" icon="settings">Configure</hex-button>
           </div>
           <h3>Icon-only</h3>
           <div class="row">
-            <hex-button variant="primary" icon-only icon="plus" aria-label="Add"></hex-button>
-            <hex-button variant="secondary" icon-only icon="refresh" aria-label="Reload"></hex-button>
-            <hex-button variant="ghost" icon-only icon="settings" aria-label="Settings"></hex-button>
-            <hex-button variant="text-primary" icon-only icon="download" aria-label="Export"></hex-button>
-            <hex-button variant="danger" icon-only icon="trash" aria-label="Delete"></hex-button>
-            <hex-button variant="primary" size="sm" icon-only icon="plus" aria-label="Add"></hex-button>
-            <hex-button variant="primary" size="lg" icon-only icon="play" aria-label="Run"></hex-button>
-            <hex-button variant="ghost" icon-only icon="bell" aria-label="Notifications" disabled></hex-button>
+            <hex-button icon-only icon="plus" aria-label="Add"></hex-button>
+            <hex-button variant="outline" color="secondary" icon-only icon="refresh" aria-label="Reload"></hex-button>
+            <hex-button variant="ghost" color="secondary" icon-only icon="settings" aria-label="Settings"></hex-button>
+            <hex-button variant="ghost" icon-only icon="download" aria-label="Export"></hex-button>
+            <hex-button color="danger" icon-only icon="trash" aria-label="Delete"></hex-button>
+            <hex-button size="sm" icon-only icon="plus" aria-label="Add"></hex-button>
+            <hex-button size="lg" icon-only icon="play" aria-label="Run"></hex-button>
+            <hex-button variant="ghost" color="secondary" icon-only icon="bell" aria-label="Notifications" disabled></hex-button>
           </div>
         </hex-card>
 
@@ -298,13 +302,13 @@
             <hex-alert variant="success">
               <span slot="heading">Deployment successful</span>
               All 12 nodes updated to version 2.15.0
-              <hex-button slot="actions" variant="ghost" size="sm">View logs</hex-button>
+              <hex-button slot="actions" variant="ghost" color="secondary" size="sm">View logs</hex-button>
             </hex-alert>
             <hex-alert variant="error">
               <span slot="heading">Connection lost</span>
               Failed to reach hex-prod-west. Last seen 3 minutes ago.
-              <hex-button slot="actions" variant="ghost" size="sm">Retry</hex-button>
-              <hex-button slot="actions" variant="ghost" size="sm">Details</hex-button>
+              <hex-button slot="actions" variant="ghost" color="secondary" size="sm">Retry</hex-button>
+              <hex-button slot="actions" variant="ghost" color="secondary" size="sm">Details</hex-button>
             </hex-alert>
             <hex-alert variant="warning">
               <span slot="heading">Capacity warning</span>

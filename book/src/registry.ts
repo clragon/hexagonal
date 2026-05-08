@@ -71,13 +71,19 @@ export const components: ComponentEntry[] = [
     tag: "hex-button",
     title: "Button",
     description:
-      "Primary action element. Five visual variants, three sizes, optional leading icon, and an icon-only mode.",
+      "Action element with two axes: visual `variant` (solid / outline / ghost) and tonal `color` (primary / secondary / danger). Three sizes; supports a leading icon and an icon-only mode.",
     defaultSlot: "Save changes",
     props: [
       {
         name: "variant",
         kind: "select",
-        options: ["primary", "secondary", "ghost", "text-primary", "danger"],
+        options: ["solid", "outline", "ghost"],
+        default: "solid",
+      },
+      {
+        name: "color",
+        kind: "select",
+        options: ["primary", "secondary", "danger"],
         default: "primary",
       },
       { name: "size", kind: "select", options: ["sm", "md", "lg"], default: "md" },
@@ -246,7 +252,7 @@ export const components: ComponentEntry[] = [
     namedSlots: {
       heading: "Deployment successful",
       actions:
-        '<hex-button slot="actions" variant="ghost" size="sm">View logs</hex-button><hex-button slot="actions" variant="ghost" size="sm">Details</hex-button>',
+        '<hex-button slot="actions" variant="ghost" color="secondary" size="sm">View logs</hex-button><hex-button slot="actions" variant="ghost" color="secondary" size="sm">Details</hex-button>',
     },
     previewSurface: "page",
     props: [
