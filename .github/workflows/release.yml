@@ -1,0 +1,98 @@
+name: release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version bump"
+        required: true
+        type: choice
+        options:
+          - major
+          - minor
+          - patch
+
+env:
+  LIB_NAME: hexagonal
+  S3_BUCKET: libs
+  S3_ENDPOINT: https://s3.cdn.clynamic.net
+  AWS_DEFAULT_REGION: garage
+  AWS_ACCESS_KEY_ID: ${{ secrets.GARAGE_S3_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.GARAGE_S3_SECRET_ACCESS_KEY }}
+
+jobs:
+  release:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: yarn
+
+      - run: yarn install --frozen-lockfile
+
+      - run: yarn check
+
+      - name: bump version
+        run: |
+          npm version ${{ inputs.version }} --no-git-tag-version
+          NEW_VERSION=$(node -p "require('./package.json').version")
+          echo "VERSION=$NEW_VERSION" >> $GITHUB_ENV
+
+      - run: yarn build
+
+      - name: refuse-overwrite check
+        run: |
+          existing=$(aws s3api list-objects-v2 \
+            --endpoint-url "$S3_ENDPOINT" \
+            --bucket "$S3_BUCKET" \
+            --prefix "$LIB_NAME/$VERSION/" \
+            --max-items 1 \
+            --query 'Contents[0].Key' \
+            --output text)
+          if [ "$existing" != "None" ]; then
+            echo "::error::version $LIB_NAME/$VERSION is already populated at key $existing, refusing to overwrite"
+            exit 1
+          fi
+
+      - name: upload to CDN
+        run: |
+          set -e
+          upload() {
+            local file="$1"
+            local ct="$2"
+            local key="$LIB_NAME/$VERSION/$(basename "$file")"
+            aws s3 cp "$file" "s3://$S3_BUCKET/$key" \
+              --endpoint-url "$S3_ENDPOINT" \
+              --content-type "$ct" \
+              --cache-control "public, max-age=31536000, immutable" \
+              --no-progress
+          }
+          upload dist/hexagonal.js         "application/javascript; charset=utf-8"
+          upload dist/hexagonal.js.map     "application/json"
+          upload dist/hexagonal.min.js     "application/javascript; charset=utf-8"
+          upload dist/hexagonal-fonts.css  "text/css; charset=utf-8"
+
+      - name: commit version bump
+        uses: EndBug/add-and-commit@v9
+        with:
+          message: "bumped version to ${{ env.VERSION }}"
+          default_author: github_actions
+          add: package.json
+
+      - name: create release
+        uses: softprops/action-gh-release@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag_name: v${{ env.VERSION }}
+          target_commitish: main
+          files: |
+            dist/hexagonal.js
+            dist/hexagonal.js.map
+            dist/hexagonal.min.js
+            dist/hexagonal-fonts.css
