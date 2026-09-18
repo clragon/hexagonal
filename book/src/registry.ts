@@ -387,6 +387,34 @@ export const components: ComponentEntry[] = [
     ],
   },
   {
+    tag: "hex-logo",
+    title: "Logo",
+    group: "Brand",
+    previewHeight: 180,
+    previewSurface: "page",
+    description: "Wordmark and mark. Sizes by width; height follows the aspect ratio.",
+    usage: [
+      {
+        text: "Set **width** and leave height alone. The element holds its own aspect ratio, so nothing reflows once it paints.",
+        demo: '<hex-logo width="200"></hex-logo>',
+      },
+      {
+        text: "Use **mark-only** where the wordmark will not fit or would repeat something already on screen, such as a collapsed sidebar or a favicon-sized slot.",
+        demo: '<div style="display:flex;gap:20px;align-items:center"><hex-logo width="150"></hex-logo><hex-logo mark-only width="40"></hex-logo></div>',
+      },
+      {
+        text: "Both colours are overridable for placement on an unusual surface, but leave them alone by default: the amber mark on white wordmark is the brand.",
+        demo: '<hex-logo width="170" color="#b4c7d9" mark-color="#b4c7d9"></hex-logo>',
+      },
+    ],
+    props: [
+      { name: "width", kind: "number", default: 160 },
+      { name: "mark-only", kind: "boolean", default: false },
+      { name: "color", kind: "text", default: "#fff" },
+      { name: "mark-color", kind: "text", default: "" },
+    ],
+  },
+  {
     tag: "hex-chexagon",
     title: "Chexagon",
     group: "Brand",
