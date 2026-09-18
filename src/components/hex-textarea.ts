@@ -5,6 +5,14 @@ import { HexFormElement } from "../shared/form-element.js";
 
 @customElement("hex-textarea")
 export class HexTextarea extends HexFormElement {
+  static preflight = {
+    base: { display: "block", visibility: "hidden", minHeight: "164px" },
+    variants: [
+      { when: "[label]", style: { minHeight: "185.5px" } },
+      { when: "[label][counter]", style: { minHeight: "202px" } },
+    ],
+  };
+
   static override styles = [
     HexFormElement.styles,
     css`

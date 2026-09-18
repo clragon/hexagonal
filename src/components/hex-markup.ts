@@ -148,6 +148,11 @@ export function registerMarkupStyles(root: Document | ShadowRoot): void {
 
 @customElement("hex-markup")
 export class HexMarkup extends HexElement {
+  static preflight = {
+    base: { display: "flex", flexDirection: "column", gap: "8px", visibility: "hidden" },
+    variants: [],
+  };
+
   @property({ type: Boolean, reflect: true }) dense = false;
 
   override connectedCallback(): void {

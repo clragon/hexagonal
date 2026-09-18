@@ -1,184 +1,78 @@
-hex-alert:not(:defined),
-hex-autocomplete:not(:defined),
-hex-card:not(:defined),
-hex-divider:not(:defined),
-hex-input:not(:defined),
-hex-listbox:not(:defined),
-hex-menu-item:not(:defined),
-hex-option:not(:defined),
-hex-quote:not(:defined),
-hex-section:not(:defined),
-hex-select:not(:defined),
-hex-skeleton:not(:defined),
-hex-textarea:not(:defined) {
-  display: block;
-}
-
-hex-avatar:not(:defined),
-hex-button:not(:defined),
-hex-checkbox:not(:defined),
-hex-chexagon:not(:defined),
-hex-chip:not(:defined),
-hex-icon:not(:defined),
-hex-logo:not(:defined),
-hex-radio:not(:defined),
-hex-spinner:not(:defined),
-hex-status-pill:not(:defined),
-hex-switch:not(:defined),
-hex-tag:not(:defined),
-hex-username:not(:defined) {
-  display: inline-flex;
-  vertical-align: middle;
-}
-
-hex-page:not(:defined) {
-  display: block;
-  min-height: 100vh;
-}
-
-hex-markup:not(:defined),
-hex-radio-group:not(:defined) {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-hex-dialog:not(:defined) {
-  display: none;
-}
-
-hex-alert:not(:defined),
-hex-autocomplete:not(:defined),
-hex-avatar:not(:defined),
-hex-button:not(:defined),
-hex-card:not(:defined),
-hex-checkbox:not(:defined),
-hex-chexagon:not(:defined),
-hex-chip:not(:defined),
-hex-code:not(:defined),
-hex-divider:not(:defined),
-hex-icon:not(:defined),
-hex-input:not(:defined),
-hex-kbd:not(:defined),
-hex-listbox:not(:defined),
-hex-logo:not(:defined),
-hex-menu-item:not(:defined),
-hex-option:not(:defined),
-hex-page:not(:defined),
-hex-markup:not(:defined),
-hex-quote:not(:defined),
-hex-radio:not(:defined),
-hex-radio-group:not(:defined),
-hex-section:not(:defined),
-hex-select:not(:defined),
-hex-skeleton:not(:defined),
-hex-spinner:not(:defined),
-hex-spoiler:not(:defined),
-hex-status-pill:not(:defined),
-hex-switch:not(:defined),
-hex-tag:not(:defined),
-hex-textarea:not(:defined),
-hex-username:not(:defined) {
-  visibility: hidden;
-}
-
 hex-alert:not(:defined) {
+  display: block;
+  visibility: hidden;
   min-height: 52px;
-}
-hex-avatar:not(:defined) {
-  width: 36px;
-  height: 36px;
-}
-hex-button:not(:defined) {
-  min-height: 34px;
-}
-hex-card:not(:defined) {
-  min-height: 48px;
-}
-hex-checkbox:not(:defined) {
-  min-height: 24px;
-}
-hex-chexagon:not(:defined) {
-  width: 18px;
-  height: 18px;
-}
-hex-chip:not(:defined) {
-  min-height: 24px;
-}
-hex-divider:not(:defined) {
-  min-height: 1px;
-}
-hex-icon:not(:defined) {
-  width: 16px;
-  height: 16px;
-}
-hex-autocomplete:not(:defined) {
-  min-height: 34px;
-}
-hex-input:not(:defined) {
-  min-height: 34px;
-}
-hex-listbox:not(:defined) {
-  min-height: 8px;
-}
-hex-option:not(:defined) {
-  min-height: 31.5px;
-}
-hex-kbd:not(:defined) {
-  min-height: 20.19px;
-}
-hex-logo:not(:defined) {
-  min-height: 42.66px;
-}
-hex-menu-item:not(:defined) {
-  min-height: 31.5px;
-}
-hex-quote:not(:defined) {
-  min-height: 24px;
-}
-hex-radio:not(:defined) {
-  min-height: 24px;
-}
-hex-section:not(:defined) {
-  min-height: 35px;
-}
-hex-select:not(:defined) {
-  min-height: 34px;
-}
-hex-skeleton:not(:defined) {
-  min-height: 16px;
-}
-hex-spinner:not(:defined) {
-  width: 16px;
-  height: 16px;
-}
-hex-status-pill:not(:defined) {
-  min-height: 17px;
-}
-hex-switch:not(:defined) {
-  min-height: 24px;
-}
-hex-tag:not(:defined) {
-  min-height: 22px;
-}
-hex-textarea:not(:defined) {
-  min-height: 164px;
-}
-hex-username:not(:defined) {
-  min-height: 19.5px;
+  padding: 12px 16px;
 }
 
-hex-button[size="sm"]:not(:defined) {
+hex-autocomplete:not(:defined) {
+  display: block;
+  visibility: hidden;
+  min-height: 34px;
+}
+
+hex-autocomplete[label]:not(:defined) {
+  min-height: 55.5px;
+}
+
+hex-autocomplete[hint]:not(:defined) {
+  min-height: 54.5px;
+}
+
+hex-autocomplete[label][hint]:not(:defined) {
+  min-height: 76px;
+}
+
+hex-autocomplete[label][error]:not(:defined) {
+  min-height: 76px;
+}
+
+hex-autocomplete[size="sm"]:not(:defined) {
   min-height: 29px;
 }
 
-hex-button[size="lg"]:not(:defined) {
+hex-autocomplete[size="sm"][label]:not(:defined) {
+  min-height: 50.5px;
+}
+
+hex-autocomplete[size="sm"][hint]:not(:defined) {
+  min-height: 49.5px;
+}
+
+hex-autocomplete[size="sm"][label][error]:not(:defined) {
+  min-height: 71px;
+}
+
+hex-autocomplete[size="sm"][label][hint]:not(:defined) {
+  min-height: 71px;
+}
+
+hex-autocomplete[size="lg"]:not(:defined) {
   min-height: 41px;
 }
 
-hex-button[full]:not(:defined) {
-  display: flex;
-  width: 100%;
+hex-autocomplete[size="lg"][label]:not(:defined) {
+  min-height: 62.5px;
+}
+
+hex-autocomplete[size="lg"][hint]:not(:defined) {
+  min-height: 61.5px;
+}
+
+hex-autocomplete[size="lg"][label][error]:not(:defined) {
+  min-height: 83px;
+}
+
+hex-autocomplete[size="lg"][label][hint]:not(:defined) {
+  min-height: 83px;
+}
+
+hex-avatar:not(:defined) {
+  display: inline-flex;
+  vertical-align: middle;
+  visibility: hidden;
+  width: 36px;
+  height: 36px;
 }
 
 hex-avatar[size="xs"]:not(:defined) {
@@ -201,91 +95,218 @@ hex-avatar[size="xl"]:not(:defined) {
   height: 64px;
 }
 
+hex-button:not(:defined) {
+  display: inline-flex;
+  vertical-align: middle;
+  visibility: hidden;
+  min-height: 34px;
+}
+
+hex-button[size="sm"]:not(:defined) {
+  min-height: 29px;
+}
+
+hex-button[size="lg"]:not(:defined) {
+  min-height: 41px;
+}
+
+hex-button[full]:not(:defined) {
+  display: flex;
+  width: 100%;
+}
+
+hex-card:not(:defined) {
+  display: block;
+  visibility: hidden;
+  min-height: 48px;
+  padding: 24px;
+}
+
+hex-card[dense]:not(:defined) {
+  padding: 16px;
+}
+
+hex-checkbox:not(:defined) {
+  display: inline-flex;
+  vertical-align: middle;
+  visibility: hidden;
+  min-height: 24px;
+}
+
+hex-chexagon:not(:defined) {
+  display: inline-flex;
+  vertical-align: middle;
+  visibility: hidden;
+  width: 18px;
+  height: 18px;
+}
+
+hex-chip:not(:defined) {
+  display: inline-flex;
+  vertical-align: middle;
+  visibility: hidden;
+  min-height: 24px;
+}
+
+hex-code:not(:defined) {
+  visibility: hidden;
+  display: inline;
+  font-family: "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  padding: 1px 6px;
+  border: 1px solid transparent;
+}
+
+hex-dialog:not(:defined) {
+  display: none;
+}
+
+hex-divider:not(:defined) {
+  display: block;
+  visibility: hidden;
+  min-height: 1px;
+}
+
 hex-divider[orientation="vertical"]:not(:defined) {
   min-height: 0;
   width: 1px;
 }
 
-hex-autocomplete[label]:not(:defined),
-hex-input[label]:not(:defined),
-hex-select[label]:not(:defined) {
+hex-icon:not(:defined) {
+  display: inline-flex;
+  vertical-align: middle;
+  visibility: hidden;
+  width: 16px;
+  height: 16px;
+}
+
+hex-input:not(:defined) {
+  display: block;
+  visibility: hidden;
+  min-height: 34px;
+}
+
+hex-input[label]:not(:defined) {
   min-height: 55.5px;
 }
 
-hex-autocomplete[hint]:not(:defined),
 hex-input[hint]:not(:defined) {
   min-height: 54.5px;
 }
 
-hex-autocomplete[label][hint]:not(:defined),
-hex-autocomplete[label][error]:not(:defined),
-hex-input[label][hint]:not(:defined),
-hex-input[label][error]:not(:defined),
-hex-select[label][hint]:not(:defined),
-hex-select[label][error]:not(:defined) {
+hex-input[label][hint]:not(:defined) {
   min-height: 76px;
 }
 
-hex-textarea[label]:not(:defined) {
-  min-height: 185.5px;
+hex-input[label][error]:not(:defined) {
+  min-height: 76px;
 }
 
-hex-textarea[label][counter]:not(:defined) {
-  min-height: 202px;
-}
-
-hex-autocomplete[size="sm"]:not(:defined),
-hex-input[size="sm"]:not(:defined),
-hex-select[size="sm"]:not(:defined) {
+hex-input[size="sm"]:not(:defined) {
   min-height: 29px;
 }
 
-hex-autocomplete[size="sm"][label]:not(:defined),
-hex-input[size="sm"][label]:not(:defined),
-hex-select[size="sm"][label]:not(:defined) {
+hex-input[size="sm"][label]:not(:defined) {
   min-height: 50.5px;
 }
 
-hex-autocomplete[size="sm"][hint]:not(:defined),
-hex-input[size="sm"][hint]:not(:defined),
-hex-select[size="sm"][hint]:not(:defined) {
+hex-input[size="sm"][hint]:not(:defined) {
   min-height: 49.5px;
 }
 
-hex-autocomplete[size="sm"][label][error]:not(:defined),
-hex-autocomplete[size="sm"][label][hint]:not(:defined),
-hex-input[size="sm"][label][error]:not(:defined),
-hex-input[size="sm"][label][hint]:not(:defined),
-hex-select[size="sm"][label][error]:not(:defined),
-hex-select[size="sm"][label][hint]:not(:defined) {
+hex-input[size="sm"][label][error]:not(:defined) {
   min-height: 71px;
 }
 
-hex-autocomplete[size="lg"]:not(:defined),
-hex-input[size="lg"]:not(:defined),
-hex-select[size="lg"]:not(:defined) {
+hex-input[size="sm"][label][hint]:not(:defined) {
+  min-height: 71px;
+}
+
+hex-input[size="lg"]:not(:defined) {
   min-height: 41px;
 }
 
-hex-autocomplete[size="lg"][label]:not(:defined),
-hex-input[size="lg"][label]:not(:defined),
-hex-select[size="lg"][label]:not(:defined) {
+hex-input[size="lg"][label]:not(:defined) {
   min-height: 62.5px;
 }
 
-hex-autocomplete[size="lg"][hint]:not(:defined),
-hex-input[size="lg"][hint]:not(:defined),
-hex-select[size="lg"][hint]:not(:defined) {
+hex-input[size="lg"][hint]:not(:defined) {
   min-height: 61.5px;
 }
 
-hex-autocomplete[size="lg"][label][error]:not(:defined),
-hex-autocomplete[size="lg"][label][hint]:not(:defined),
-hex-input[size="lg"][label][error]:not(:defined),
-hex-input[size="lg"][label][hint]:not(:defined),
-hex-select[size="lg"][label][error]:not(:defined),
-hex-select[size="lg"][label][hint]:not(:defined) {
+hex-input[size="lg"][label][error]:not(:defined) {
   min-height: 83px;
+}
+
+hex-input[size="lg"][label][hint]:not(:defined) {
+  min-height: 83px;
+}
+
+hex-kbd:not(:defined) {
+  visibility: hidden;
+  min-height: 20.19px;
+  display: inline-block;
+  vertical-align: baseline;
+}
+
+hex-listbox:not(:defined) {
+  display: block;
+  visibility: hidden;
+  min-height: 8px;
+  padding: 4px 0;
+}
+
+hex-logo:not(:defined) {
+  display: inline-flex;
+  vertical-align: middle;
+  visibility: hidden;
+  min-height: 42.66px;
+}
+
+hex-markup:not(:defined) {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  visibility: hidden;
+}
+
+hex-menu-item:not(:defined) {
+  display: block;
+  visibility: hidden;
+  min-height: 31.5px;
+}
+
+hex-option:not(:defined) {
+  display: block;
+  visibility: hidden;
+  min-height: 31.5px;
+}
+
+hex-page:not(:defined) {
+  display: block;
+  min-height: 100vh;
+  visibility: hidden;
+}
+
+hex-quote:not(:defined) {
+  display: block;
+  visibility: hidden;
+  min-height: 24px;
+  padding: 12px 14px;
+}
+
+hex-radio:not(:defined) {
+  display: inline-flex;
+  vertical-align: middle;
+  visibility: hidden;
+  min-height: 24px;
+}
+
+hex-radio-group:not(:defined) {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  visibility: hidden;
 }
 
 hex-radio-group[direction="horizontal"]:not(:defined) {
@@ -297,24 +318,108 @@ hex-radio-group[label]:not(:defined) {
   padding-top: 24.5px;
 }
 
-hex-listbox:not(:defined) {
-  padding: 4px 0;
+hex-section:not(:defined) {
+  display: block;
+  visibility: hidden;
+  min-height: 35px;
 }
 
-hex-card:not(:defined) {
-  padding: 24px;
+hex-select:not(:defined) {
+  display: block;
+  visibility: hidden;
+  min-height: 34px;
 }
 
-hex-card[dense]:not(:defined) {
-  padding: 16px;
+hex-select[label]:not(:defined) {
+  min-height: 55.5px;
 }
 
-hex-alert:not(:defined) {
-  padding: 12px 16px;
+hex-select[label][hint]:not(:defined) {
+  min-height: 76px;
 }
 
-hex-quote:not(:defined) {
-  padding: 12px 14px;
+hex-select[label][error]:not(:defined) {
+  min-height: 76px;
+}
+
+hex-select[size="sm"]:not(:defined) {
+  min-height: 29px;
+}
+
+hex-select[size="sm"][label]:not(:defined) {
+  min-height: 50.5px;
+}
+
+hex-select[size="sm"][hint]:not(:defined) {
+  min-height: 49.5px;
+}
+
+hex-select[size="sm"][label][error]:not(:defined) {
+  min-height: 71px;
+}
+
+hex-select[size="sm"][label][hint]:not(:defined) {
+  min-height: 71px;
+}
+
+hex-select[size="lg"]:not(:defined) {
+  min-height: 41px;
+}
+
+hex-select[size="lg"][label]:not(:defined) {
+  min-height: 62.5px;
+}
+
+hex-select[size="lg"][hint]:not(:defined) {
+  min-height: 61.5px;
+}
+
+hex-select[size="lg"][label][error]:not(:defined) {
+  min-height: 83px;
+}
+
+hex-select[size="lg"][label][hint]:not(:defined) {
+  min-height: 83px;
+}
+
+hex-skeleton:not(:defined) {
+  display: block;
+  visibility: hidden;
+  min-height: 16px;
+}
+
+hex-spinner:not(:defined) {
+  display: inline-flex;
+  vertical-align: middle;
+  visibility: hidden;
+  width: 16px;
+  height: 16px;
+}
+
+hex-spoiler:not(:defined) {
+  visibility: hidden;
+  display: inline;
+}
+
+hex-status-pill:not(:defined) {
+  display: inline-flex;
+  vertical-align: middle;
+  visibility: hidden;
+  min-height: 17px;
+}
+
+hex-switch:not(:defined) {
+  display: inline-flex;
+  vertical-align: middle;
+  visibility: hidden;
+  min-height: 24px;
+}
+
+hex-tag:not(:defined) {
+  display: inline-flex;
+  vertical-align: middle;
+  visibility: hidden;
+  min-height: 22px;
 }
 
 hex-tag[variant="row"]:not(:defined) {
@@ -322,19 +427,23 @@ hex-tag[variant="row"]:not(:defined) {
   width: fit-content;
 }
 
-hex-code:not(:defined),
-hex-spoiler:not(:defined) {
-  display: inline;
+hex-textarea:not(:defined) {
+  display: block;
+  visibility: hidden;
+  min-height: 164px;
 }
 
-hex-code:not(:defined) {
-  font-family: "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
-  font-size: 12px;
-  padding: 1px 6px;
-  border: 1px solid transparent;
+hex-textarea[label]:not(:defined) {
+  min-height: 185.5px;
 }
 
-hex-kbd:not(:defined) {
-  display: inline-block;
-  vertical-align: baseline;
+hex-textarea[label][counter]:not(:defined) {
+  min-height: 202px;
+}
+
+hex-username:not(:defined) {
+  display: inline-flex;
+  vertical-align: middle;
+  visibility: hidden;
+  min-height: 19.5px;
 }

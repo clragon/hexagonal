@@ -5,6 +5,16 @@ import "./hex-icon.js";
 
 @customElement("hex-checkbox")
 export class HexCheckbox extends HexFormElement {
+  static preflight = {
+    base: {
+      display: "inline-flex",
+      verticalAlign: "middle",
+      visibility: "hidden",
+      minHeight: "24px",
+    },
+    variants: [],
+  };
+
   static override styles = [
     HexFormElement.styles,
     css`

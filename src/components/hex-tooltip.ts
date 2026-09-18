@@ -8,6 +8,8 @@ let tooltipSeq = 0;
 
 @customElement("hex-tooltip")
 export class HexTooltip extends HexElement {
+  static preflight = null;
+
   static override styles = [
     HexElement.styles,
     css`

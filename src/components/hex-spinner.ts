@@ -13,6 +13,17 @@ const WEDGES = [
 
 @customElement("hex-spinner")
 export class HexSpinner extends HexElement {
+  static preflight = {
+    base: {
+      display: "inline-flex",
+      verticalAlign: "middle",
+      visibility: "hidden",
+      width: "16px",
+      height: "16px",
+    },
+    variants: [],
+  };
+
   static override styles = [
     HexElement.styles,
     css`

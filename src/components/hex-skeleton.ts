@@ -6,6 +6,11 @@ export type HexSkeletonShape = "text" | "block" | "circle" | "pill";
 
 @customElement("hex-skeleton")
 export class HexSkeleton extends HexElement {
+  static preflight = {
+    base: { display: "block", visibility: "hidden", minHeight: "16px" },
+    variants: [],
+  };
+
   static override styles = [
     HexElement.styles,
     css`

@@ -140,7 +140,8 @@ registerIcon("blip", svg`<circle cx="12" cy="12" r="8" />`);
 yarn install
 yarn dev            # book at http://localhost:47312, rebuilt on change
 yarn build          # dist bundles, types, fonts.css, preflight.css, book.js
-yarn verify         # fmt, lint, types
+yarn verify         # fmt, lint, types, preflight freshness
+yarn preflight      # regenerate assets/preflight.css from component metadata
 yarn test           # component behaviour, in chromium
 yarn test:preflight # upgrade layout shift, against the built bundle
 yarn test:mutation  # stryker over the component suite

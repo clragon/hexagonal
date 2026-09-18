@@ -8,6 +8,11 @@ import { HexElement } from "../shared/base.js";
 
 @customElement("hex-spoiler")
 export class HexSpoiler extends HexElement {
+  static preflight = {
+    base: { visibility: "hidden", display: "inline" },
+    variants: [],
+  };
+
   static override styles = [
     HexElement.styles,
     css`

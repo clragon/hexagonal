@@ -9,6 +9,11 @@ import { HexElement } from "../shared/base.js";
 
 @customElement("hex-section")
 export class HexSection extends HexElement {
+  static preflight = {
+    base: { display: "block", visibility: "hidden", minHeight: "35px" },
+    variants: [],
+  };
+
   static override styles = [
     HexElement.styles,
     css`

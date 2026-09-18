@@ -28,6 +28,11 @@ const VARIANT_ICON: Record<HexAlertVariant, IconName> = {
 
 @customElement("hex-alert")
 export class HexAlert extends HexElement {
+  static preflight = {
+    base: { display: "block", visibility: "hidden", minHeight: "52px", padding: "12px 16px" },
+    variants: [],
+  };
+
   static override styles = [
     HexElement.styles,
     css`

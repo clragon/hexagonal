@@ -6,6 +6,11 @@ export type HexDividerOrientation = "horizontal" | "vertical";
 
 @customElement("hex-divider")
 export class HexDivider extends HexElement {
+  static preflight = {
+    base: { display: "block", visibility: "hidden", minHeight: "1px" },
+    variants: [{ when: '[orientation="vertical"]', style: { minHeight: "0", width: "1px" } }],
+  };
+
   static override styles = [
     HexElement.styles,
     css`

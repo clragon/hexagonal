@@ -12,6 +12,11 @@ const compact = new Intl.NumberFormat(undefined, {
 
 @customElement("hex-option")
 export class HexOption extends HexElement {
+  static preflight = {
+    base: { display: "block", visibility: "hidden", minHeight: "31.5px" },
+    variants: [],
+  };
+
   static override styles = [
     HexElement.styles,
     css`

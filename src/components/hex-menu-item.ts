@@ -6,6 +6,11 @@ import type { IconName } from "../shared/icons.js";
 
 @customElement("hex-menu-item")
 export class HexMenuItem extends HexElement {
+  static preflight = {
+    base: { display: "block", visibility: "hidden", minHeight: "31.5px" },
+    variants: [],
+  };
+
   static override styles = [
     HexElement.styles,
     css`

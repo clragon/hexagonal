@@ -14,6 +14,11 @@ export interface HexListboxSelectDetail {
 
 @customElement("hex-listbox")
 export class HexListbox extends HexElement {
+  static preflight = {
+    base: { display: "block", visibility: "hidden", minHeight: "8px", padding: "4px 0" },
+    variants: [],
+  };
+
   static override styles = [
     HexElement.styles,
     css`

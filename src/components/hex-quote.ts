@@ -10,6 +10,11 @@ export type HexQuoteVariant = "default" | "alt";
 
 @customElement("hex-quote")
 export class HexQuote extends HexElement {
+  static preflight = {
+    base: { display: "block", visibility: "hidden", minHeight: "24px", padding: "12px 14px" },
+    variants: [],
+  };
+
   static override styles = [
     HexElement.styles,
     css`

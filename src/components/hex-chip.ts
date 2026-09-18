@@ -8,6 +8,16 @@ import "./hex-icon.js";
 
 @customElement("hex-chip")
 export class HexChip extends HexElement {
+  static preflight = {
+    base: {
+      display: "inline-flex",
+      verticalAlign: "middle",
+      visibility: "hidden",
+      minHeight: "24px",
+    },
+    variants: [],
+  };
+
   static override styles = [
     HexElement.styles,
     css`

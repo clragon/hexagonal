@@ -16,6 +16,20 @@ export type HexButtonSize = "sm" | "md" | "lg";
 
 @customElement("hex-button")
 export class HexButton extends HexElement {
+  static preflight = {
+    base: {
+      display: "inline-flex",
+      verticalAlign: "middle",
+      visibility: "hidden",
+      minHeight: "34px",
+    },
+    variants: [
+      { when: '[size="sm"]', style: { minHeight: "29px" } },
+      { when: '[size="lg"]', style: { minHeight: "41px" } },
+      { when: "[full]", style: { display: "flex", width: "100%" } },
+    ],
+  };
+
   static override shadowRootOptions = {
     ...HexElement.shadowRootOptions,
     delegatesFocus: true,

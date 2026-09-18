@@ -12,6 +12,16 @@ import { HexFormElement } from "../shared/form-element.js";
 
 @customElement("hex-switch")
 export class HexSwitch extends HexFormElement {
+  static preflight = {
+    base: {
+      display: "inline-flex",
+      verticalAlign: "middle",
+      visibility: "hidden",
+      minHeight: "24px",
+    },
+    variants: [],
+  };
+
   static override styles = [
     HexFormElement.styles,
     css`

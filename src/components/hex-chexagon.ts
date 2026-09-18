@@ -7,6 +7,17 @@ import { HexElement } from "../shared/base.js";
 
 @customElement("hex-chexagon")
 export class HexChexagon extends HexElement {
+  static preflight = {
+    base: {
+      display: "inline-flex",
+      verticalAlign: "middle",
+      visibility: "hidden",
+      width: "18px",
+      height: "18px",
+    },
+    variants: [],
+  };
+
   static override styles = [
     HexElement.styles,
     css`

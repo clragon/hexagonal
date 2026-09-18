@@ -13,6 +13,16 @@ const STATUS_LABELS: Record<HexStatus, string> = {
 
 @customElement("hex-status-pill")
 export class HexStatusPill extends HexElement {
+  static preflight = {
+    base: {
+      display: "inline-flex",
+      verticalAlign: "middle",
+      visibility: "hidden",
+      minHeight: "17px",
+    },
+    variants: [],
+  };
+
   static override styles = [
     HexElement.styles,
     css`

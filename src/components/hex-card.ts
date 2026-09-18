@@ -8,6 +8,11 @@ import { HexElement } from "../shared/base.js";
 
 @customElement("hex-card")
 export class HexCard extends HexElement {
+  static preflight = {
+    base: { display: "block", visibility: "hidden", minHeight: "48px", padding: "24px" },
+    variants: [{ when: "[dense]", style: { padding: "16px" } }],
+  };
+
   static override styles = [
     HexElement.styles,
     css`

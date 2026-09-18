@@ -7,6 +7,8 @@ import type { HexMenuItem } from "./hex-menu-item.js";
 
 @customElement("hex-menu")
 export class HexMenu extends HexElement {
+  static preflight = null;
+
   static override styles = [
     HexElement.styles,
     css`

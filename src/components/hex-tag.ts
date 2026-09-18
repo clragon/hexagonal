@@ -26,6 +26,16 @@ const compactCount = new Intl.NumberFormat(undefined, {
 
 @customElement("hex-tag")
 export class HexTag extends HexElement {
+  static preflight = {
+    base: {
+      display: "inline-flex",
+      verticalAlign: "middle",
+      visibility: "hidden",
+      minHeight: "22px",
+    },
+    variants: [{ when: '[variant="row"]', style: { display: "flex", width: "fit-content" } }],
+  };
+
   static override styles = [
     HexElement.styles,
     css`

@@ -4,6 +4,16 @@ import { HexElement } from "../shared/base.js";
 
 @customElement("hex-kbd")
 export class HexKbd extends HexElement {
+  static preflight = {
+    base: {
+      visibility: "hidden",
+      minHeight: "20.19px",
+      display: "inline-block",
+      verticalAlign: "baseline",
+    },
+    variants: [],
+  };
+
   static override styles = [
     HexElement.styles,
     css`

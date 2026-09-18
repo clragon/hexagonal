@@ -20,6 +20,16 @@ const MARK_BOX_H = MARK_H + STROKE_PAD * 2;
 
 @customElement("hex-logo")
 export class HexLogo extends HexElement {
+  static preflight = {
+    base: {
+      display: "inline-flex",
+      verticalAlign: "middle",
+      visibility: "hidden",
+      minHeight: "42.66px",
+    },
+    variants: [],
+  };
+
   static override styles = [
     HexElement.styles,
     css`

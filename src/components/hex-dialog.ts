@@ -21,6 +21,11 @@ export type HexDialogSize = "sm" | "md" | "lg";
 
 @customElement("hex-dialog")
 export class HexDialog extends HexElement {
+  static preflight = {
+    base: { display: "none" },
+    variants: [],
+  };
+
   static override styles = [
     HexElement.styles,
     css`

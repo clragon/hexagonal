@@ -11,6 +11,14 @@ export type HexRadioGroupDirection = "vertical" | "horizontal";
 
 @customElement("hex-radio-group")
 export class HexRadioGroup extends HexElement {
+  static preflight = {
+    base: { display: "flex", flexDirection: "column", gap: "8px", visibility: "hidden" },
+    variants: [
+      { when: '[direction="horizontal"]', style: { flexDirection: "row", gap: "16px" } },
+      { when: "[label]", style: { paddingTop: "24.5px" } },
+    ],
+  };
+
   static override styles = [
     HexElement.styles,
     css`

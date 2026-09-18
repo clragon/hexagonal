@@ -20,6 +20,22 @@ const SIZE_PX: Record<HexAvatarSize, number> = { xs: 20, sm: 28, md: 36, lg: 48,
 
 @customElement("hex-avatar")
 export class HexAvatar extends HexElement {
+  static preflight = {
+    base: {
+      display: "inline-flex",
+      verticalAlign: "middle",
+      visibility: "hidden",
+      width: "36px",
+      height: "36px",
+    },
+    variants: [
+      { when: '[size="xs"]', style: { width: "20px", height: "20px" } },
+      { when: '[size="sm"]', style: { width: "28px", height: "28px" } },
+      { when: '[size="lg"]', style: { width: "48px", height: "48px" } },
+      { when: '[size="xl"]', style: { width: "64px", height: "64px" } },
+    ],
+  };
+
   static override styles = [
     HexElement.styles,
     css`

@@ -8,6 +8,16 @@ import { HexFormElement } from "../shared/form-element.js";
 
 @customElement("hex-radio")
 export class HexRadio extends HexFormElement {
+  static preflight = {
+    base: {
+      display: "inline-flex",
+      verticalAlign: "middle",
+      visibility: "hidden",
+      minHeight: "24px",
+    },
+    variants: [],
+  };
+
   static override styles = [
     HexFormElement.styles,
     css`

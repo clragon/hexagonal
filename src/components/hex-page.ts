@@ -7,6 +7,11 @@ import { HexElement } from "../shared/base.js";
 
 @customElement("hex-page")
 export class HexPage extends HexElement {
+  static preflight = {
+    base: { display: "block", minHeight: "100vh", visibility: "hidden" },
+    variants: [],
+  };
+
   static override styles = [
     HexElement.styles,
     css`

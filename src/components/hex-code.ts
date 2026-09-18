@@ -6,6 +6,18 @@ import { HexElement } from "../shared/base.js";
 
 @customElement("hex-code")
 export class HexCode extends HexElement {
+  static preflight = {
+    base: {
+      visibility: "hidden",
+      display: "inline",
+      fontFamily: '"SF Mono", Menlo, Consolas, "Liberation Mono", monospace',
+      fontSize: "12px",
+      padding: "1px 6px",
+      border: "1px solid transparent",
+    },
+    variants: [],
+  };
+
   static override styles = [
     HexElement.styles,
     css`

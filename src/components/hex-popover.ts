@@ -9,6 +9,8 @@ const VIEWPORT_MARGIN = 8;
 
 @customElement("hex-popover")
 export class HexPopover extends HexElement {
+  static preflight = null;
+
   static override styles = [
     HexElement.styles,
     css`

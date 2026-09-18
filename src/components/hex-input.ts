@@ -6,6 +6,26 @@ import "./hex-icon.js";
 
 @customElement("hex-input")
 export class HexInput extends HexFieldElement {
+  static preflight = {
+    base: { display: "block", visibility: "hidden", minHeight: "34px" },
+    variants: [
+      { when: "[label]", style: { minHeight: "55.5px" } },
+      { when: "[hint]", style: { minHeight: "54.5px" } },
+      { when: "[label][hint]", style: { minHeight: "76px" } },
+      { when: "[label][error]", style: { minHeight: "76px" } },
+      { when: '[size="sm"]', style: { minHeight: "29px" } },
+      { when: '[size="sm"][label]', style: { minHeight: "50.5px" } },
+      { when: '[size="sm"][hint]', style: { minHeight: "49.5px" } },
+      { when: '[size="sm"][label][error]', style: { minHeight: "71px" } },
+      { when: '[size="sm"][label][hint]', style: { minHeight: "71px" } },
+      { when: '[size="lg"]', style: { minHeight: "41px" } },
+      { when: '[size="lg"][label]', style: { minHeight: "62.5px" } },
+      { when: '[size="lg"][hint]', style: { minHeight: "61.5px" } },
+      { when: '[size="lg"][label][error]', style: { minHeight: "83px" } },
+      { when: '[size="lg"][label][hint]', style: { minHeight: "83px" } },
+    ],
+  };
+
   static override styles = HexFieldElement.styles;
 
   @property({ type: String }) value = "";
