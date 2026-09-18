@@ -20,9 +20,11 @@ export class HexSpoiler extends HexElement {
         cursor: pointer;
         user-select: none;
         -webkit-user-select: none;
+        filter: brightness(0);
         transition:
           background var(--hex-dur-fast) var(--hex-ease),
-          color var(--hex-dur-fast) var(--hex-ease);
+          color var(--hex-dur-fast) var(--hex-ease),
+          filter var(--hex-dur-fast) var(--hex-ease);
         box-decoration-break: clone;
         -webkit-box-decoration-break: clone;
       }
@@ -32,6 +34,7 @@ export class HexSpoiler extends HexElement {
       :host([revealed]) {
         background: transparent;
         color: var(--hex-fg-1);
+        filter: none;
         user-select: auto;
         -webkit-user-select: auto;
       }
@@ -43,10 +46,14 @@ export class HexSpoiler extends HexElement {
 
   constructor() {
     super();
-    if (!this.hasAttribute("role")) this.setAttribute("role", "button");
-    if (!this.hasAttribute("tabindex")) this.setAttribute("tabindex", "0");
     this.addEventListener("click", this.onClick);
     this.addEventListener("keydown", this.onKey);
+  }
+
+  override connectedCallback(): void {
+    super.connectedCallback();
+    if (!this.hasAttribute("role")) this.setAttribute("role", "button");
+    if (!this.hasAttribute("tabindex")) this.setAttribute("tabindex", "0");
   }
 
   override updated(changed: Map<string, unknown>) {
