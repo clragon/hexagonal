@@ -117,12 +117,33 @@ hex-prose[dense] h4, hex-prose[dense] h5, hex-prose[dense] h6 {
 }
 `;
 
-export function registerProseStyles(): void {
-  if (typeof document === "undefined" || document.getElementById(STYLE_ID)) return;
-  const style = document.createElement("style");
+let sheet: CSSStyleSheet | undefined;
+
+function proseSheet(): CSSStyleSheet | undefined {
+  if (typeof CSSStyleSheet === "undefined" || !("replaceSync" in CSSStyleSheet.prototype))
+    return undefined;
+  if (!sheet) {
+    sheet = new CSSStyleSheet();
+    sheet.replaceSync(proseCss);
+  }
+  return sheet;
+}
+
+export function registerProseStyles(root: Document | ShadowRoot): void {
+  const constructed = proseSheet();
+  if (constructed && "adoptedStyleSheets" in root) {
+    if (!root.adoptedStyleSheets.includes(constructed)) {
+      root.adoptedStyleSheets = [...root.adoptedStyleSheets, constructed];
+    }
+    return;
+  }
+  const doc = root instanceof Document ? root : root.ownerDocument;
+  const host = root instanceof Document ? root.head : root;
+  if (!doc || (root instanceof Document && doc.getElementById(STYLE_ID))) return;
+  const style = doc.createElement("style");
   style.id = STYLE_ID;
   style.textContent = proseCss;
-  document.head.appendChild(style);
+  host.appendChild(style);
 }
 
 @customElement("hex-prose")
@@ -131,7 +152,8 @@ export class HexProse extends HexElement {
 
   override connectedCallback(): void {
     super.connectedCallback();
-    registerProseStyles();
+    const root = this.getRootNode();
+    if (root instanceof Document || root instanceof ShadowRoot) registerProseStyles(root);
   }
 
   override render() {
