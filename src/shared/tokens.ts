@@ -98,7 +98,6 @@ export const tokensCss = /* css */ `
 
   --hex-shadow-card:    0 4px 20px rgba(0, 0, 0, 0.20);
   --hex-shadow-popover: 0 8px 28px rgba(0, 0, 0, 0.40);
-  --hex-shadow-sunken:  inset 0 1px 0 rgba(0, 0, 0, 0.30);
   --hex-shadow-focus:   0 0 0 2px rgba(232, 196, 70, 0.45);
   --hex-shadow-focus-danger: 0 0 0 2px rgba(224, 123, 107, 0.35);
 
