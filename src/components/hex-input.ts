@@ -1,14 +1,14 @@
 import { html, css, nothing } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
-import { HexElement } from "../shared/base.js";
+import { HexFormElement } from "../shared/form-element.js";
 import "./hex-icon.js";
 import type { IconName } from "../shared/icons.js";
 
 @customElement("hex-input")
-export class HexInput extends HexElement {
+export class HexInput extends HexFormElement {
   static override styles = [
-    HexElement.styles,
+    HexFormElement.styles,
     css`
       :host {
         display: block;
@@ -88,10 +88,23 @@ export class HexInput extends HexElement {
   @property({ type: String }) hint = "";
   @property({ type: String }) error = "";
   @property({ type: String }) icon?: IconName;
-  @property({ type: String }) name = "";
-  @property({ type: Boolean, reflect: true }) disabled = false;
+  @property({ type: String }) pattern?: string;
+  @property({ type: Number, attribute: "minlength" }) minLength?: number;
+  @property({ type: Number, attribute: "maxlength" }) maxLength?: number;
 
   @query("input") private _input!: HTMLInputElement;
+
+  protected override control(): HTMLInputElement | null {
+    return this._input ?? null;
+  }
+
+  protected override formValue(): string {
+    return this.value;
+  }
+
+  protected override resetValue(): void {
+    this.value = "";
+  }
 
   override focus() {
     this._input?.focus();
@@ -100,11 +113,15 @@ export class HexInput extends HexElement {
   override updated(changed: Map<string, unknown>) {
     if (changed.has("icon")) this.toggleAttribute("with-icon", Boolean(this.icon));
     if (changed.has("error")) this.toggleAttribute("invalid", Boolean(this.error));
+    if (changed.has("value") || changed.has("required") || changed.has("error")) {
+      this.commit(this.error || undefined);
+    }
   }
 
   private onInput = (e: Event) => {
     const value = (e.target as HTMLInputElement).value;
     this.value = value;
+    this.commit(this.error || undefined);
     this.dispatchEvent(
       new CustomEvent("hex-input", { detail: { value }, bubbles: true, composed: true }),
     );
@@ -132,6 +149,10 @@ export class HexInput extends HexElement {
           name=${this.name}
           placeholder=${this.placeholder}
           ?disabled=${this.disabled}
+          ?required=${this.required}
+          pattern=${ifDefined(this.pattern)}
+          minlength=${ifDefined(this.minLength)}
+          maxlength=${ifDefined(this.maxLength)}
           aria-describedby=${ifDefined(describedBy)}
           aria-invalid=${this.error ? "true" : "false"}
           @input=${this.onInput}

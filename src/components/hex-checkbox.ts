@@ -1,12 +1,12 @@
 import { html, css } from "lit";
-import { customElement, property } from "lit/decorators.js";
-import { HexElement } from "../shared/base.js";
+import { customElement, property, query } from "lit/decorators.js";
+import { HexFormElement } from "../shared/form-element.js";
 import "./hex-icon.js";
 
 @customElement("hex-checkbox")
-export class HexCheckbox extends HexElement {
+export class HexCheckbox extends HexFormElement {
   static override styles = [
-    HexElement.styles,
+    HexFormElement.styles,
     css`
       :host {
         display: inline-flex;
@@ -14,6 +14,7 @@ export class HexCheckbox extends HexElement {
       label {
         display: inline-flex;
         align-items: center;
+        min-height: 24px;
         gap: 8px;
         font-size: var(--hex-fs-md);
         color: var(--hex-fg-1);
@@ -21,8 +22,8 @@ export class HexCheckbox extends HexElement {
         user-select: none;
       }
       .box {
-        width: 14px;
-        height: 14px;
+        width: 18px;
+        height: 18px;
         border-radius: var(--hex-radius-sm);
         border: 1px solid var(--hex-border-strong);
         background: var(--hex-color-background);
@@ -56,12 +57,31 @@ export class HexCheckbox extends HexElement {
   ];
 
   @property({ type: Boolean, reflect: true }) checked = false;
-  @property({ type: Boolean, reflect: true }) disabled = false;
-  @property({ type: String }) name = "";
+
+  @property({ type: String }) value = "on";
+
+  @query("input") private _input!: HTMLInputElement;
+
+  protected override control(): HTMLInputElement | null {
+    return this._input ?? null;
+  }
+
+  protected override formValue(): string | null {
+    return this.checked ? this.value : null;
+  }
+
+  protected override resetValue(): void {
+    this.checked = false;
+  }
+
+  override updated(changed: Map<string, unknown>) {
+    if (changed.has("checked") || changed.has("required")) this.commit();
+  }
 
   private onToggle = () => {
     if (this.disabled) return;
     this.checked = !this.checked;
+    this.commit();
     this.dispatchEvent(
       new CustomEvent("hex-change", {
         detail: { checked: this.checked },
@@ -78,10 +98,11 @@ export class HexCheckbox extends HexElement {
           type="checkbox"
           .checked=${this.checked}
           ?disabled=${this.disabled}
+          ?required=${this.required}
           @change=${this.onToggle}
         />
         <span class="box">
-          ${this.checked ? html`<hex-icon name="check" size="10" stroke-width="3"></hex-icon>` : ""}
+          ${this.checked ? html`<hex-icon name="check" size="13" stroke-width="3"></hex-icon>` : ""}
         </span>
         <slot></slot>
       </label>

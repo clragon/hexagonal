@@ -1,7 +1,7 @@
 import { html, css, nothing } from "lit";
 import { customElement, property, query, state } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
-import { HexElement } from "../shared/base.js";
+import { HexFormElement } from "../shared/form-element.js";
 import "./hex-icon.js";
 import type { IconName } from "../shared/icons.js";
 
@@ -17,9 +17,9 @@ interface OptionData {
 }
 
 @customElement("hex-select")
-export class HexSelect extends HexElement {
+export class HexSelect extends HexFormElement {
   static override styles = [
-    HexElement.styles,
+    HexFormElement.styles,
     css`
       :host {
         display: block;
@@ -119,14 +119,24 @@ export class HexSelect extends HexElement {
   @property({ type: String }) hint = "";
   @property({ type: String }) error = "";
   @property({ type: String }) icon?: IconName;
-  @property({ type: String }) name = "";
-  @property({ type: Boolean, reflect: true }) disabled = false;
 
   @state() private opts: OptionData[] = [];
 
   @query("select") private _select!: HTMLSelectElement;
 
   private observer?: MutationObserver;
+
+  protected override control(): HTMLSelectElement | null {
+    return this._select ?? null;
+  }
+
+  protected override formValue(): string {
+    return this.value;
+  }
+
+  protected override resetValue(): void {
+    this.value = "";
+  }
 
   override connectedCallback() {
     super.connectedCallback();
@@ -143,6 +153,9 @@ export class HexSelect extends HexElement {
   override updated(changed: Map<string, unknown>) {
     if (changed.has("icon")) this.toggleAttribute("with-icon", Boolean(this.icon));
     if (changed.has("error")) this.toggleAttribute("invalid", Boolean(this.error));
+    if (changed.has("value") || changed.has("required") || changed.has("error")) {
+      this.commit(this.error || undefined);
+    }
   }
 
   override focus() {
@@ -178,6 +191,7 @@ export class HexSelect extends HexElement {
           id="select"
           name=${this.name}
           ?disabled=${this.disabled}
+          ?required=${this.required}
           aria-describedby=${ifDefined(describedBy)}
           aria-invalid=${this.error ? "true" : "false"}
           @change=${this.onChange}

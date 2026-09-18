@@ -1,6 +1,6 @@
 import { html, css } from "lit";
-import { customElement, property } from "lit/decorators.js";
-import { HexElement } from "../shared/base.js";
+import { customElement, property, query } from "lit/decorators.js";
+import { HexFormElement } from "../shared/form-element.js";
 
 // Toggle switch. The native checkbox is visually hidden but keeps role,
 // keyboard, and screen-reader behavior; the visible track + thumb is purely
@@ -11,9 +11,9 @@ import { HexElement } from "../shared/base.js";
 // layouts (label on left + hint below + switch on right) wrap externally.
 
 @customElement("hex-switch")
-export class HexSwitch extends HexElement {
+export class HexSwitch extends HexFormElement {
   static override styles = [
-    HexElement.styles,
+    HexFormElement.styles,
     css`
       :host {
         display: inline-flex;
@@ -37,8 +37,8 @@ export class HexSwitch extends HexElement {
       }
       .track {
         position: relative;
-        width: 40px;
-        height: 22px;
+        width: 44px;
+        height: 24px;
         background: var(--hex-border-strong);
         border-radius: var(--hex-radius-pill);
         transition: background var(--hex-dur-base) var(--hex-ease);
@@ -48,8 +48,8 @@ export class HexSwitch extends HexElement {
         position: absolute;
         top: 3px;
         left: 3px;
-        width: 16px;
-        height: 16px;
+        width: 18px;
+        height: 18px;
         background: #ffffff;
         border-radius: var(--hex-radius-pill);
         transition:
@@ -61,7 +61,7 @@ export class HexSwitch extends HexElement {
         background: var(--hex-color-primary);
       }
       :host([checked]) .thumb {
-        transform: translateX(18px);
+        transform: translateX(20px);
         background: var(--hex-fg-on-primary);
       }
       input:focus-visible + .track {
@@ -75,13 +75,30 @@ export class HexSwitch extends HexElement {
   ];
 
   @property({ type: Boolean, reflect: true }) checked = false;
-  @property({ type: Boolean, reflect: true }) disabled = false;
-  @property({ type: String }) name = "";
   @property({ type: String }) value = "on";
+
+  @query("input") private _input!: HTMLInputElement;
+
+  protected override control(): HTMLInputElement | null {
+    return this._input ?? null;
+  }
+
+  protected override formValue(): string | null {
+    return this.checked ? this.value : null;
+  }
+
+  protected override resetValue(): void {
+    this.checked = false;
+  }
+
+  override updated(changed: Map<string, unknown>) {
+    if (changed.has("checked") || changed.has("required")) this.commit();
+  }
 
   private onToggle = () => {
     if (this.disabled) return;
     this.checked = !this.checked;
+    this.commit();
     this.dispatchEvent(
       new CustomEvent("hex-change", {
         detail: { checked: this.checked },
