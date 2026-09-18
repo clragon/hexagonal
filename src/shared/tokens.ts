@@ -165,6 +165,10 @@ const TOKEN_STYLE_ID = "hex-tokens";
 export function registerTokens(): void {
   if (typeof document === "undefined") return;
   if (document.getElementById(TOKEN_STYLE_ID)) return;
+  const existing = getComputedStyle(document.documentElement)
+    .getPropertyValue("--hex-color-background")
+    .trim();
+  if (existing) return;
   const style = document.createElement("style");
   style.id = TOKEN_STYLE_ID;
   style.textContent = tokensCss;

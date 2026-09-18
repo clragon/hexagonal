@@ -1,6 +1,6 @@
 import { build, context } from "esbuild";
-import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
-import { fileURLToPath } from "node:url";
+import { readFileSync, writeFileSync, mkdirSync, rmSync } from "node:fs";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { dirname, resolve } from "node:path";
 import { spawnSync } from "node:child_process";
 
@@ -99,6 +99,22 @@ if (watch) {
     readFileSync(resolve(root, "assets/preflight.css"), "utf8"),
   );
 
+  // The same tokens the bundle injects, as a stylesheet. Linking it means the
+  // palette resolves before any script runs, so a page is not blank until then.
+  const tokensBundle = resolve(root, "dist/.tokens.mjs");
+  await build({
+    entryPoints: [resolve(root, "src/shared/tokens.ts")],
+    bundle: true,
+    format: "esm",
+    target: "es2022",
+    plugins: [assetPlugin],
+    outfile: tokensBundle,
+    logLevel: "silent",
+  });
+  const { tokensCss } = await import(pathToFileURL(tokensBundle).href);
+  writeFileSync(resolve(root, "dist/hexagonal-tokens.css"), tokensCss.trimStart());
+  rmSync(tokensBundle);
+
   await build({
     ...bookOptions,
     outfile: resolve(root, "dist/book.js"),
@@ -106,7 +122,7 @@ if (watch) {
   });
 
   console.log(
-    "[esbuild] built dist/hexagonal.js + .min.js + hexagonal-fonts.css + hexagonal-preflight.css + book.js",
+    "[esbuild] built dist/hexagonal.js + .min.js + hexagonal-tokens.css + hexagonal-fonts.css + hexagonal-preflight.css + book.js",
   );
 
   console.log("[tsc] emitting .d.ts ...");

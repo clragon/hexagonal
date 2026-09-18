@@ -80,6 +80,7 @@ jobs:
           upload dist/hexagonal.js         "application/javascript; charset=utf-8"
           upload dist/hexagonal.js.map     "application/json"
           upload dist/hexagonal.min.js     "application/javascript; charset=utf-8"
+          upload dist/hexagonal-tokens.css "text/css; charset=utf-8"
           upload dist/hexagonal-fonts.css  "text/css; charset=utf-8"
           upload dist/hexagonal-preflight.css "text/css; charset=utf-8"
 

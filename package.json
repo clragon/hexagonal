@@ -13,8 +13,9 @@
       "types": "./dist/types/index.d.ts",
       "import": "./dist/hexagonal.js"
     },
-    "./fonts.css": "./dist/hexagonal-fonts.css",
-    "./preflight.css": "./dist/hexagonal-preflight.css"
+    "./tokens.css": "./dist/hexagonal-tokens.css",
+    "./preflight.css": "./dist/hexagonal-preflight.css",
+    "./fonts.css": "./dist/hexagonal-fonts.css"
   },
   "files": [
     "dist",
