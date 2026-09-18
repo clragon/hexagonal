@@ -75,7 +75,7 @@ does:
   z-index: -1;
   background-image: var(--hex-texture);
   background-repeat: repeat;
-  mask-image: linear-gradient(to bottom, #000 0, transparent var(--hex-texture-fade));
+  mask-image: var(--hex-texture-mask);
 }
 ```
 

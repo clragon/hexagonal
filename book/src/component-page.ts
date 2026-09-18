@@ -113,8 +113,8 @@ export class ComponentPage extends LitElement {
       border-radius: inherit;
       background-image: var(--hex-texture);
       background-repeat: repeat;
-      -webkit-mask-image: linear-gradient(to bottom, #000 0, transparent var(--hex-texture-fade));
-      mask-image: linear-gradient(to bottom, #000 0, transparent var(--hex-texture-fade));
+      -webkit-mask-image: var(--hex-texture-mask);
+      mask-image: var(--hex-texture-mask);
     }
     .usage-demo {
       padding: 24px 20px;

@@ -101,7 +101,15 @@ export const tokensCss = /* css */ `
   --hex-shadow-focus:   0 0 0 2px rgba(232, 196, 70, 0.45);
   --hex-shadow-focus-danger: 0 0 0 2px rgba(224, 123, 107, 0.35);
 
-  --hex-texture-fade: 200px;
+  --hex-texture-fade: 180px;
+  --hex-texture-mask: linear-gradient(
+    to bottom,
+    #000 0,
+    rgba(0, 0, 0, 0.75) calc(var(--hex-texture-fade) * 0.29),
+    rgba(0, 0, 0, 0.5) calc(var(--hex-texture-fade) * 0.53),
+    rgba(0, 0, 0, 0.25) calc(var(--hex-texture-fade) * 0.73),
+    transparent var(--hex-texture-fade)
+  );
 
   --hex-raise-depth: 4px;
   --hex-raise-press: 2px;

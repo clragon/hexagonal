@@ -52,8 +52,8 @@ export class HexDialog extends HexElement {
         border-radius: inherit;
         background-image: var(--hex-texture);
         background-repeat: repeat;
-        -webkit-mask-image: linear-gradient(to bottom, #000 0, transparent var(--hex-texture-fade));
-        mask-image: linear-gradient(to bottom, #000 0, transparent var(--hex-texture-fade));
+        -webkit-mask-image: var(--hex-texture-mask);
+        mask-image: var(--hex-texture-mask);
       }
       dialog:focus,
       dialog:focus-visible {
