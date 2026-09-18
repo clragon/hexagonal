@@ -79,11 +79,13 @@ export const components: ComponentEntry[] = [
     description:
       "Page surface. Wraps a route or app shell in the navy background and hexagon tile.",
     defaultSlot: `
-      <div style="text-align: center; padding: 36px 24px; max-width: 560px; margin: 0 auto;">
-        <hex-logo width="200"></hex-logo>
-        <p style="margin: 14px 0 0; opacity: 0.85; line-height: 1.5; font-size: 13px;">
-          A design for a blue honeycomb world.
-        </p>
+      <div style="padding: 36px 24px; max-width: 460px; margin: 0 auto;">
+        <hex-card style="text-align: center">
+          <hex-logo width="200"></hex-logo>
+          <p style="margin: 14px 0 0; opacity: 0.85; line-height: 1.5; font-size: 13px;">
+            A design for a blue honeycomb world.
+          </p>
+        </hex-card>
       </div>`,
     previewSurface: "empty",
     previewHeight: 360,
