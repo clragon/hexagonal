@@ -7,7 +7,7 @@ of tags, text and thumbnails.
 ## Use
 
 ```html
-<script type="module" src="https://your-cdn/hexagonal.js"></script>
+<script type="module" src="https://libs.cdn.clynamic.net/hexagonal/0.2.0/hexagonal.min.js"></script>
 
 <hex-page>
   <hex-card>
@@ -16,6 +16,9 @@ of tags, text and thumbnails.
   </hex-card>
 </hex-page>
 ```
+
+Each release is uploaded under its own version and cached immutably, so pin the
+version you want and it will never change under you.
 
 Importing the bundle:
 
@@ -29,7 +32,7 @@ JavaScript lands cannot use `var(--hex-*)`.
 Optional bundled fonts (Verdana, Paulistana Ipe):
 
 ```html
-<link rel="stylesheet" href="https://your-cdn/hexagonal-fonts.css" />
+<link rel="stylesheet" href="https://libs.cdn.clynamic.net/hexagonal/0.2.0/hexagonal-fonts.css" />
 ```
 
 Without it the system falls back to the Verdana installed on the OS.
@@ -41,7 +44,7 @@ before the bundle arrives will jump when it upgrades. `preflight.css` reserves t
 measured box of every component ahead of time:
 
 ```html
-<link rel="stylesheet" href="https://your-cdn/hexagonal-preflight.css" />
+<link rel="stylesheet" href="https://libs.cdn.clynamic.net/hexagonal/0.2.0/hexagonal-preflight.css" />
 ```
 
 It is plain CSS with literal values, no tokens, and it stops applying the moment
