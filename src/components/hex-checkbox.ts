@@ -22,6 +22,8 @@ export class HexCheckbox extends HexFormElement {
         user-select: none;
       }
       .box {
+        position: relative;
+        top: var(--hex-control-optical-offset);
         width: 18px;
         height: 18px;
         border-radius: var(--hex-radius-sm);

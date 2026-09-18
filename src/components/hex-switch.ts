@@ -37,6 +37,7 @@ export class HexSwitch extends HexFormElement {
       }
       .track {
         position: relative;
+        top: var(--hex-control-optical-offset);
         width: 44px;
         height: 24px;
         background: var(--hex-border-strong);

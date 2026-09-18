@@ -25,6 +25,8 @@ export class HexRadio extends HexFormElement {
         user-select: none;
       }
       .dot {
+        position: relative;
+        top: var(--hex-control-optical-offset);
         width: 18px;
         height: 18px;
         border-radius: var(--hex-radius-pill);
