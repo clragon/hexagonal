@@ -59,7 +59,7 @@ test("source matching is a substring, not a prefix", async () => {
   expect(shown(el)).toEqual(["cherry"]);
 });
 
-test("arrow down walks the list and points the input at each option", async () => {
+test("arrow down walks the list and points the input at the highlighted option", async () => {
   const el = await field({ source: FRUIT });
   await type(el, "ap");
 

@@ -337,7 +337,7 @@ export const components: ComponentEntry[] = [
         text: "Suggestions come from one of two places: **source** for a fixed list, or a **provider** for anything that must be looked up, such as a server or a search index. A provider defines what counts as a match and may be async. Debouncing, responses that arrive out of order, keyboard navigation and screen-reader wiring are already covered.",
       },
       {
-        text: "A provider may also define what gets written into the field when a suggestion is picked, and what each row looks like. This matters for a field holding several values at once, such as a tag search, where picking a suggestion should replace only the word under the cursor rather than the whole box.",
+        text: "A provider may also define what gets written into the field when a suggestion is picked, and how a row is rendered. This matters for a field holding several values at once, such as a tag search, where picking a suggestion should replace only the word under the cursor rather than the whole box.",
       },
       {
         text: "With a fixed **source**, matching is a case-insensitive substring and the matched run is underlined so people can see why a row is there.",

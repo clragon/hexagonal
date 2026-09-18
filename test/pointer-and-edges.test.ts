@@ -164,7 +164,7 @@ test("tab closes an open select without reverting the value", async () => {
   expect(el.value).toBe("b");
 });
 
-test("focusing the host reaches the control inside each field", async () => {
+test("focusing the host reaches the control inside a field", async () => {
   for (const [tag, inner, sel] of [
     ["hex-input", "", "input"],
     ["hex-autocomplete", "", "input"],
