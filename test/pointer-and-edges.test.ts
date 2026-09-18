@@ -277,3 +277,52 @@ test("a custom validity message is applied and can be cleared", async () => {
   el.setCustomValidity("");
   expect(el.checkValidity()).toBe(true);
 });
+
+test("an external label activates the control it points at", async () => {
+  const form = document.createElement("form");
+  form.innerHTML = `
+    <label for="cb" id="lcb">Enable</label><hex-checkbox id="cb" name="t" value="on"></hex-checkbox>
+    <label for="sw" id="lsw">Notify</label><hex-switch id="sw" name="n" value="on"></hex-switch>
+    <label for="rd" id="lrd">Standard</label><hex-radio id="rd" name="tier" value="a"></hex-radio>`;
+  document.body.append(form);
+  mounted.push(form as unknown as HexListbox);
+  await tick(30);
+
+  for (const id of ["lcb", "lsw", "lrd"]) {
+    (form.querySelector(`#${id}`) as HTMLLabelElement).click();
+    await tick(20);
+  }
+
+  expect([...new FormData(form).entries()].map(([k, v]) => `${k}=${v}`)).toEqual([
+    "t=on",
+    "n=on",
+    "tier=a",
+  ]);
+});
+
+test("an external label leaves a disabled control alone", async () => {
+  const wrap = document.createElement("div");
+  wrap.innerHTML = `<label for="d" id="ld">Disabled</label><hex-checkbox id="d" disabled></hex-checkbox>`;
+  document.body.append(wrap);
+  mounted.push(wrap as unknown as HexListbox);
+  await tick(30);
+
+  (wrap.querySelector("#ld") as HTMLLabelElement).click();
+  await tick(20);
+
+  expect((wrap.querySelector("#d") as HexInput & { checked: boolean }).checked).toBe(false);
+});
+
+test("clicking the control itself toggles it once, not twice", async () => {
+  const el = mount<HexInput & { checked: boolean }>("hex-checkbox", "Enable");
+  await el.updateComplete;
+  await tick(20);
+
+  expect(el.checked).toBe(false);
+  el.click();
+  await tick(30);
+  expect(el.checked).toBe(true);
+  el.click();
+  await tick(30);
+  expect(el.checked).toBe(false);
+});
