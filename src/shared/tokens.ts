@@ -38,7 +38,7 @@ export const tokensCss = /* css */ `
   --hex-tag-copyright: #dd00dd;
   --hex-tag-character: #00aa00;
   --hex-tag-species:   #ed5d1f;
-  --hex-tag-general:   #0075e0;
+  --hex-tag-general:   #b4c7d9;
   --hex-tag-meta:      #ffffff;
   --hex-tag-lore:      #228b22;
   --hex-tag-invalid:   #ff3d3d;
