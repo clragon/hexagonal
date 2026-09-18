@@ -462,8 +462,9 @@ function prettyPrint(markup: string): string {
     .trim()
     .split(/(?<=")\s+/)
     .filter(Boolean);
-  const inner = body.trim();
-  return `<${tag}\n  ${attrs.join("\n  ")}\n>${inner ? `\n  ${inner}\n` : ""}</${tag.split(" ")[0]}>`;
+  const inner = (body ?? "").trim();
+  const name = (tag ?? "").split(" ")[0] ?? "";
+  return `<${tag}\n  ${attrs.join("\n  ")}\n>${inner ? `\n  ${inner}\n` : ""}</${name}>`;
 }
 
 declare global {
