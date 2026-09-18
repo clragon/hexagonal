@@ -92,6 +92,21 @@ export class HexRadio extends HexFormElement {
     );
   };
 
+  override connectedCallback(): void {
+    super.connectedCallback();
+    this.addEventListener("click", this.onHostClick);
+  }
+
+  override disconnectedCallback(): void {
+    this.removeEventListener("click", this.onHostClick);
+    super.disconnectedCallback();
+  }
+
+  private readonly onHostClick = (e: Event): void => {
+    if (this.disabled || e.composedPath()[0] !== this) return;
+    this.renderRoot.querySelector("input")?.click();
+  };
+
   override render() {
     return html`
       <label>
