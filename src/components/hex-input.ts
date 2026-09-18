@@ -1,85 +1,14 @@
-import { html, css, nothing } from "lit";
+import { html, nothing } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { HexFormElement } from "../shared/form-element.js";
+import { fieldStyles } from "../shared/field-styles.js";
 import "./hex-icon.js";
 import type { IconName } from "../shared/icons.js";
 
 @customElement("hex-input")
 export class HexInput extends HexFormElement {
-  static override styles = [
-    HexFormElement.styles,
-    css`
-      :host {
-        display: block;
-      }
-      label {
-        display: block;
-        font-size: var(--hex-fs-xs);
-        text-transform: uppercase;
-        letter-spacing: 0.06em;
-        color: var(--hex-fg-2);
-        font-weight: var(--hex-font-weight-bold);
-        margin-bottom: 5px;
-      }
-      .field {
-        position: relative;
-        display: flex;
-        align-items: center;
-      }
-      .icon {
-        position: absolute;
-        left: 10px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: var(--hex-color-secondary-dark);
-        pointer-events: none;
-      }
-      input {
-        width: 100%;
-        box-sizing: border-box;
-        background: var(--hex-color-background);
-        color: var(--hex-fg-1);
-        border: 1px solid var(--hex-border-strong);
-        font-family: inherit;
-        font-size: var(--hex-fs-md);
-        padding: 8px 10px;
-        border-radius: var(--hex-radius-md);
-        outline: none;
-        transition:
-          border-color var(--hex-dur-fast) var(--hex-ease),
-          box-shadow var(--hex-dur-fast) var(--hex-ease);
-      }
-      :host([with-icon]) input {
-        padding-left: 30px;
-      }
-      input:focus {
-        border-color: var(--hex-color-primary);
-        box-shadow: var(--hex-shadow-focus);
-      }
-      :host([invalid]) input {
-        border-color: var(--hex-color-danger);
-      }
-      :host([invalid]) input:focus {
-        box-shadow: var(--hex-shadow-focus-danger);
-      }
-      .hint,
-      .error {
-        font-size: var(--hex-fs-xs);
-        margin-top: 4px;
-      }
-      .hint {
-        color: var(--hex-fg-2);
-      }
-      .error {
-        color: var(--hex-color-danger);
-      }
-      :host([disabled]) {
-        opacity: 0.55;
-        pointer-events: none;
-      }
-    `,
-  ];
+  static override styles = [HexFormElement.styles, fieldStyles];
 
   @property({ type: String }) label = "";
   @property({ type: String }) value = "";
@@ -144,6 +73,7 @@ export class HexInput extends HexFormElement {
           : nothing}
         <input
           id="input"
+          class="control"
           .value=${this.value}
           type=${this.type}
           name=${this.name}
