@@ -12,18 +12,18 @@ export class HexSkeleton extends HexElement {
       :host {
         display: block;
         width: 100%;
-        --skeleton-base: var(--hex-bg-hover);
-        --skeleton-sheen: var(--hex-bg-active);
+        --_hex-skeleton-base: var(--hex-bg-hover);
+        --_hex-skeleton-sheen: var(--hex-bg-active);
       }
       .text {
         display: inline;
         color: transparent;
         border-radius: var(--hex-radius-sm);
-        background: var(--skeleton-base);
+        background: var(--_hex-skeleton-base);
         background-image: linear-gradient(
           90deg,
           transparent 0%,
-          var(--skeleton-sheen) 50%,
+          var(--_hex-skeleton-sheen) 50%,
           transparent 100%
         );
         background-size: 200% 100%;
@@ -39,12 +39,12 @@ export class HexSkeleton extends HexElement {
       }
       .bar {
         width: 100%;
-        background: var(--skeleton-base);
+        background: var(--_hex-skeleton-base);
         border-radius: var(--hex-radius-sm);
         background-image: linear-gradient(
           90deg,
           transparent 0%,
-          var(--skeleton-sheen) 50%,
+          var(--_hex-skeleton-sheen) 50%,
           transparent 100%
         );
         background-size: 200% 100%;

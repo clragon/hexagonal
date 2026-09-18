@@ -67,7 +67,7 @@ export class HexAutocomplete extends HexFormElement {
         display: none;
       }
       hex-popover::part(surface) {
-        min-width: var(--ac-width, 12rem);
+        min-width: var(--_hex-ac-width, 12rem);
         max-width: min(92vw, 34rem);
       }
       .status {
@@ -253,7 +253,7 @@ export class HexAutocomplete extends HexFormElement {
 
   private openPanel(): void {
     if (this._field) {
-      this._popover?.style.setProperty("--ac-width", `${this._field.offsetWidth}px`);
+      this._popover?.style.setProperty("--_hex-ac-width", `${this._field.offsetWidth}px`);
     }
     this.expanded = true;
     this._popover?.show();

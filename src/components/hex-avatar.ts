@@ -25,26 +25,26 @@ export class HexAvatar extends HexElement {
     css`
       :host {
         display: inline-flex;
-        --av-color: var(--hex-role-member);
-        color: var(--av-color);
+        --_hex-av-color: var(--hex-role-member);
+        color: var(--_hex-av-color);
       }
       :host([role-color="privileged"]) {
-        --av-color: var(--hex-role-privileged);
+        --_hex-av-color: var(--hex-role-privileged);
       }
       :host([role-color="blocked"]) {
-        --av-color: var(--hex-role-blocked);
+        --_hex-av-color: var(--hex-role-blocked);
       }
       :host([role-color="former-staff"]) {
-        --av-color: var(--hex-role-former-staff);
+        --_hex-av-color: var(--hex-role-former-staff);
       }
       :host([role-color="janitor"]) {
-        --av-color: var(--hex-role-janitor);
+        --_hex-av-color: var(--hex-role-janitor);
       }
       :host([role-color="moderator"]) {
-        --av-color: var(--hex-role-moderator);
+        --_hex-av-color: var(--hex-role-moderator);
       }
       :host([role-color="admin"]) {
-        --av-color: var(--hex-role-admin);
+        --_hex-av-color: var(--hex-role-admin);
       }
 
       .sq {

@@ -40,31 +40,31 @@ export class HexAlert extends HexElement {
         border-left: 3px solid;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
         font-size: var(--hex-fs-md);
-        --alert-color: var(--hex-color-secondary);
+        --_hex-alert-color: var(--hex-color-secondary);
         background: var(--hex-bg-muted);
-        border-left-color: var(--alert-color);
-        color: var(--alert-color);
+        border-left-color: var(--_hex-alert-color);
+        color: var(--_hex-alert-color);
       }
       :host([variant="success"]) {
-        --alert-color: var(--hex-color-success);
+        --_hex-alert-color: var(--hex-color-success);
         background: var(--hex-bg-success);
       }
       :host([variant="error"]) {
-        --alert-color: var(--hex-color-danger);
+        --_hex-alert-color: var(--hex-color-danger);
         background: var(--hex-bg-danger);
       }
       :host([variant="warning"]) {
-        --alert-color: var(--hex-color-primary);
+        --_hex-alert-color: var(--hex-color-primary);
         background: var(--hex-bg-warning);
       }
       :host([variant="info"]) {
-        --alert-color: var(--hex-color-secondary);
+        --_hex-alert-color: var(--hex-color-secondary);
         background: var(--hex-bg-muted);
       }
 
       .icon {
         flex-shrink: 0;
-        color: var(--alert-color);
+        color: var(--_hex-alert-color);
       }
       .content {
         flex: 1;
@@ -74,7 +74,7 @@ export class HexAlert extends HexElement {
         font-weight: var(--hex-font-weight-bold);
         font-size: var(--hex-fs-md);
         margin-bottom: 2px;
-        color: var(--alert-color);
+        color: var(--_hex-alert-color);
       }
       .heading.empty {
         display: none;
@@ -90,13 +90,13 @@ export class HexAlert extends HexElement {
         flex-shrink: 0;
       }
       ::slotted([slot="actions"]) {
-        color: var(--alert-color);
+        color: var(--_hex-alert-color);
       }
       .close {
         /* Override the button color tokens so the close icon and its hover
            tint use the alert's variant color instead of the default amber. */
-        --btn-color: var(--alert-color);
-        --btn-color-light: var(--alert-color);
+        --_hex-btn-color: var(--_hex-alert-color);
+        --_hex-btn-color-light: var(--_hex-alert-color);
       }
     `,
   ];

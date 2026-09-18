@@ -96,16 +96,16 @@ hex-prose code, hex-prose .inline-code {
 }
 hex-prose pre code, hex-prose pre .inline-code { background: none; padding: 0; }
 hex-prose sub, hex-prose sup { line-height: 0; font-size: 0.75em; }
-hex-prose [class*="dtext-color-"] { color: var(--dtext-color, inherit); }
-hex-prose .dtext-color-artist { --dtext-color: var(--hex-tag-artist); }
-hex-prose .dtext-color-copyright { --dtext-color: var(--hex-tag-copyright); }
-hex-prose .dtext-color-character { --dtext-color: var(--hex-tag-character); }
-hex-prose .dtext-color-species { --dtext-color: var(--hex-tag-species); }
-hex-prose .dtext-color-general { --dtext-color: var(--hex-tag-general); }
-hex-prose .dtext-color-meta { --dtext-color: var(--hex-tag-meta); }
-hex-prose .dtext-color-lore { --dtext-color: var(--hex-tag-lore); }
-hex-prose .dtext-color-invalid { --dtext-color: var(--hex-tag-invalid); }
-hex-prose .dtext-color-contributor { --dtext-color: var(--hex-tag-contributor); }
+hex-prose [class*="dtext-color-"] { color: var(--_hex-dtext-color, inherit); }
+hex-prose .dtext-color-artist { --_hex-dtext-color: var(--hex-tag-artist); }
+hex-prose .dtext-color-copyright { --_hex-dtext-color: var(--hex-tag-copyright); }
+hex-prose .dtext-color-character { --_hex-dtext-color: var(--hex-tag-character); }
+hex-prose .dtext-color-species { --_hex-dtext-color: var(--hex-tag-species); }
+hex-prose .dtext-color-general { --_hex-dtext-color: var(--hex-tag-general); }
+hex-prose .dtext-color-meta { --_hex-dtext-color: var(--hex-tag-meta); }
+hex-prose .dtext-color-lore { --_hex-dtext-color: var(--hex-tag-lore); }
+hex-prose .dtext-color-invalid { --_hex-dtext-color: var(--hex-tag-invalid); }
+hex-prose .dtext-color-contributor { --_hex-dtext-color: var(--hex-tag-contributor); }
 hex-prose[dense] p,
 hex-prose[dense] ul,
 hex-prose[dense] ol,

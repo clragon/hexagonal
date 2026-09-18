@@ -66,7 +66,7 @@ export class HexSelect extends HexFormElement {
         left: 10px;
       }
       hex-popover::part(surface) {
-        min-width: var(--select-width, 12rem);
+        min-width: var(--_hex-select-width, 12rem);
       }
     `,
   ];
@@ -148,7 +148,7 @@ export class HexSelect extends HexFormElement {
   private open(focus: "selected" | "first" | "last" = "selected"): void {
     if (this.expanded || this.disabled) return;
     if (this._field) {
-      this._popover?.style.setProperty("--select-width", `${this._field.offsetWidth}px`);
+      this._popover?.style.setProperty("--_hex-select-width", `${this._field.offsetWidth}px`);
     }
     this.expanded = true;
     this._popover?.show();

@@ -11,7 +11,7 @@ export type HexButtonSize = "sm" | "md" | "lg";
 
 // Two-axis button: visual `variant` (solid / outline / ghost) and tonal
 // `color` (primary / secondary / danger). Color tokens are exposed as CSS
-// custom properties so each variant rule references --btn-color, etc., and
+// custom properties so each variant rule references --_hex-btn-color, etc., and
 // every variant + color combo composes naturally.
 
 @customElement("hex-button")
@@ -31,32 +31,32 @@ export class HexButton extends HexElement {
         top: 0;
 
         /* Color tokens default to primary; overridden per :host([color="..."]) */
-        --btn-color: var(--hex-color-primary);
-        --btn-color-light: var(--hex-color-primary-light);
-        --btn-color-dark: var(--hex-color-primary-dark);
-        --btn-fg-on: var(--hex-fg-on-primary);
+        --_hex-btn-color: var(--hex-color-primary);
+        --_hex-btn-color-light: var(--hex-color-primary-light);
+        --_hex-btn-color-dark: var(--hex-color-primary-dark);
+        --_hex-btn-fg-on: var(--hex-fg-on-primary);
       }
       :host([color="secondary"]) {
-        --btn-color: var(--hex-color-secondary);
-        --btn-color-light: var(--hex-color-secondary-light);
-        --btn-color-dark: var(--hex-color-secondary-dark);
-        --btn-fg-on: var(--hex-color-background);
+        --_hex-btn-color: var(--hex-color-secondary);
+        --_hex-btn-color-light: var(--hex-color-secondary-light);
+        --_hex-btn-color-dark: var(--hex-color-secondary-dark);
+        --_hex-btn-fg-on: var(--hex-color-background);
       }
       :host([color="danger"]) {
-        --btn-color: var(--hex-color-danger);
-        --btn-color-light: var(--hex-color-danger-light);
-        --btn-color-dark: var(--hex-color-danger-dark);
-        --btn-fg-on: var(--hex-fg-on-danger);
+        --_hex-btn-color: var(--hex-color-danger);
+        --_hex-btn-color-light: var(--hex-color-danger-light);
+        --_hex-btn-color-dark: var(--hex-color-danger-dark);
+        --_hex-btn-fg-on: var(--hex-fg-on-danger);
       }
 
       :host([variant="solid"]),
       :host([variant="raised"]),
       :host(:not([variant])) {
-        color: var(--btn-fg-on);
+        color: var(--_hex-btn-fg-on);
       }
       :host([variant="outline"]),
       :host([variant="ghost"]) {
-        color: var(--btn-color);
+        color: var(--_hex-btn-color);
       }
 
       :host(:active:not([disabled])) {
@@ -80,7 +80,7 @@ export class HexButton extends HexElement {
         top: var(--hex-raise-press);
       }
       :host([loading][variant="raised"]) button {
-        box-shadow: 0 var(--hex-raise-press) 0 var(--btn-color-dark);
+        box-shadow: 0 var(--hex-raise-press) 0 var(--_hex-btn-color-dark);
       }
 
       button {
@@ -119,44 +119,44 @@ export class HexButton extends HexElement {
       /* solid: filled bg, dark text on bright bg */
       :host([variant="solid"]) button,
       :host(:not([variant])) button {
-        background: var(--btn-color);
-        color: var(--btn-fg-on);
-        border-color: var(--btn-color);
+        background: var(--_hex-btn-color);
+        color: var(--_hex-btn-fg-on);
+        border-color: var(--_hex-btn-color);
       }
       :host([variant="solid"]) button:hover,
       :host(:not([variant])) button:hover {
-        background: var(--btn-color-light);
-        border-color: var(--btn-color-light);
+        background: var(--_hex-btn-color-light);
+        border-color: var(--_hex-btn-color-light);
       }
       :host([variant="solid"]) button:active,
       :host(:not([variant])) button:active {
-        background: var(--btn-color-dark);
-        border-color: var(--btn-color-dark);
+        background: var(--_hex-btn-color-dark);
+        border-color: var(--_hex-btn-color-dark);
       }
 
       /* outline: transparent bg, colored border + text, tinted hover */
       :host([variant="outline"]) button {
         background: transparent;
-        color: var(--btn-color);
-        border-color: var(--btn-color);
+        color: var(--_hex-btn-color);
+        border-color: var(--_hex-btn-color);
       }
       :host([variant="outline"]) button:hover,
       :host([variant="outline"]) button:active {
-        background: color-mix(in oklch, var(--btn-color) 14%, transparent);
-        color: var(--btn-color-light);
-        border-color: var(--btn-color-light);
+        background: color-mix(in oklch, var(--_hex-btn-color) 14%, transparent);
+        color: var(--_hex-btn-color-light);
+        border-color: var(--_hex-btn-color-light);
       }
 
       /* ghost: no border, transparent bg, tinted hover */
       :host([variant="ghost"]) button {
         background: transparent;
-        color: var(--btn-color);
+        color: var(--_hex-btn-color);
         padding: 8px 10px;
       }
       :host([variant="ghost"]) button:hover,
       :host([variant="ghost"]) button:active {
-        background: color-mix(in oklch, var(--btn-color) 12%, transparent);
-        color: var(--btn-color-light);
+        background: color-mix(in oklch, var(--_hex-btn-color) 12%, transparent);
+        color: var(--_hex-btn-color-light);
       }
 
       /* sizes */
@@ -166,31 +166,31 @@ export class HexButton extends HexElement {
           color var(--hex-dur-fast) var(--hex-ease),
           border-color var(--hex-dur-fast) var(--hex-ease);
         position: relative;
-        background: var(--btn-color);
-        color: var(--btn-fg-on);
-        border-color: var(--btn-color);
-        box-shadow: 0 var(--hex-raise-depth) 0 var(--btn-color-dark);
+        background: var(--_hex-btn-color);
+        color: var(--_hex-btn-fg-on);
+        border-color: var(--_hex-btn-color);
+        box-shadow: 0 var(--hex-raise-depth) 0 var(--_hex-btn-color-dark);
       }
       :host([variant="raised"]) button:hover {
-        background: var(--btn-color-light);
-        border-color: var(--btn-color-light);
+        background: var(--_hex-btn-color-light);
+        border-color: var(--_hex-btn-color-light);
       }
       :host([variant="raised"]) button:focus-visible {
         box-shadow:
-          0 var(--hex-raise-depth) 0 var(--btn-color-dark),
+          0 var(--hex-raise-depth) 0 var(--_hex-btn-color-dark),
           var(--hex-shadow-focus);
       }
       :host([variant="raised"]:active:not([disabled])) {
         top: var(--hex-raise-press);
       }
       :host([variant="raised"]) button:active {
-        background: var(--btn-color);
-        border-color: var(--btn-color);
-        box-shadow: 0 var(--hex-raise-press) 0 var(--btn-color-dark);
+        background: var(--_hex-btn-color);
+        border-color: var(--_hex-btn-color);
+        box-shadow: 0 var(--hex-raise-press) 0 var(--_hex-btn-color-dark);
       }
       :host([variant="raised"]) button:active:focus-visible {
         box-shadow:
-          0 var(--hex-raise-press) 0 var(--btn-color-dark),
+          0 var(--hex-raise-press) 0 var(--_hex-btn-color-dark),
           var(--hex-shadow-focus);
       }
       /* e621ng .st-button.kinetic covers this gap: the press offset moves

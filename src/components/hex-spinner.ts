@@ -28,25 +28,25 @@ export class HexSpinner extends HexElement {
       path {
         fill: currentColor;
         opacity: 0.08;
-        animation: swap var(--spinner-duration, 1800ms) ease-in-out infinite;
+        animation: swap var(--hex-spinner-duration, 1800ms) ease-in-out infinite;
       }
       path:nth-child(1) {
         animation-delay: 0ms;
       }
       path:nth-child(2) {
-        animation-delay: calc(var(--spinner-duration, 1800ms) / -6);
+        animation-delay: calc(var(--hex-spinner-duration, 1800ms) / -6);
       }
       path:nth-child(3) {
-        animation-delay: calc(var(--spinner-duration, 1800ms) / -3);
+        animation-delay: calc(var(--hex-spinner-duration, 1800ms) / -3);
       }
       path:nth-child(4) {
-        animation-delay: calc(var(--spinner-duration, 1800ms) / -2);
+        animation-delay: calc(var(--hex-spinner-duration, 1800ms) / -2);
       }
       path:nth-child(5) {
-        animation-delay: calc(var(--spinner-duration, 1800ms) / -1.5);
+        animation-delay: calc(var(--hex-spinner-duration, 1800ms) / -1.5);
       }
       path:nth-child(6) {
-        animation-delay: calc(var(--spinner-duration, 1800ms) / -1.2);
+        animation-delay: calc(var(--hex-spinner-duration, 1800ms) / -1.2);
       }
       @keyframes swap {
         0%,
@@ -82,7 +82,7 @@ export class HexSpinner extends HexElement {
         height=${this.size}
         viewBox="-6 -6 212 212"
         aria-label=${this.label}
-        style="--spinner-duration:${this.durationMs}ms"
+        style="--hex-spinner-duration:${this.durationMs}ms"
       >
         ${WEDGES.map((d) => svg`<path d=${d}></path>`)}
       </svg>

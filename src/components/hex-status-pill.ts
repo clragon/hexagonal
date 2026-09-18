@@ -25,32 +25,32 @@ export class HexStatusPill extends HexElement {
         padding: 3px 9px;
         border-radius: var(--hex-radius-pill);
         line-height: 1;
-        --pill-bg: var(--hex-bg-muted);
-        --pill-fg: var(--hex-color-secondary);
-        background: var(--pill-bg);
-        color: var(--pill-fg);
+        --_hex-pill-bg: var(--hex-bg-muted);
+        --_hex-pill-fg: var(--hex-color-secondary);
+        background: var(--_hex-pill-bg);
+        color: var(--_hex-pill-fg);
       }
       :host([status="healthy"]) {
-        --pill-bg: var(--hex-bg-success);
-        --pill-fg: var(--hex-color-success);
+        --_hex-pill-bg: var(--hex-bg-success);
+        --_hex-pill-fg: var(--hex-color-success);
       }
       :host([status="degraded"]) {
-        --pill-bg: var(--hex-bg-warning);
-        --pill-fg: var(--hex-color-primary);
+        --_hex-pill-bg: var(--hex-bg-warning);
+        --_hex-pill-fg: var(--hex-color-primary);
       }
       :host([status="failing"]) {
-        --pill-bg: var(--hex-bg-danger);
-        --pill-fg: var(--hex-color-danger);
+        --_hex-pill-bg: var(--hex-bg-danger);
+        --_hex-pill-fg: var(--hex-color-danger);
       }
       :host([status="idle"]) {
-        --pill-bg: var(--hex-bg-muted);
-        --pill-fg: var(--hex-color-secondary);
+        --_hex-pill-bg: var(--hex-bg-muted);
+        --_hex-pill-fg: var(--hex-color-secondary);
       }
       .dot {
         width: 6px;
         height: 6px;
         border-radius: var(--hex-radius-pill);
-        background: var(--pill-fg);
+        background: var(--_hex-pill-fg);
       }
     `,
   ];

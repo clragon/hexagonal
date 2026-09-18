@@ -18,7 +18,7 @@ export class HexOption extends HexElement {
       :host {
         display: block;
         cursor: pointer;
-        --option-color: var(--hex-fg-1);
+        --_hex-option-color: var(--hex-fg-1);
       }
       .row {
         display: flex;
@@ -28,7 +28,7 @@ export class HexOption extends HexElement {
         font-size: var(--hex-fs-md);
         line-height: var(--hex-line-normal);
         white-space: nowrap;
-        color: var(--option-color);
+        color: var(--_hex-option-color);
       }
       :host([active]) .row,
       :host(:hover) .row {
@@ -72,34 +72,34 @@ export class HexOption extends HexElement {
         text-underline-offset: 2px;
       }
       :host([category="artist"]) {
-        --option-color: var(--hex-tag-artist);
+        --_hex-option-color: var(--hex-tag-artist);
       }
       :host([category="copyright"]) {
-        --option-color: var(--hex-tag-copyright);
+        --_hex-option-color: var(--hex-tag-copyright);
       }
       :host([category="character"]) {
-        --option-color: var(--hex-tag-character);
+        --_hex-option-color: var(--hex-tag-character);
       }
       :host([category="species"]) {
-        --option-color: var(--hex-tag-species);
+        --_hex-option-color: var(--hex-tag-species);
       }
       :host([category="general"]) {
-        --option-color: var(--hex-tag-general);
+        --_hex-option-color: var(--hex-tag-general);
       }
       :host([category="meta"]) {
-        --option-color: var(--hex-tag-meta);
+        --_hex-option-color: var(--hex-tag-meta);
       }
       :host([category="lore"]) {
-        --option-color: var(--hex-tag-lore);
+        --_hex-option-color: var(--hex-tag-lore);
       }
       :host([category="invalid"]) {
-        --option-color: var(--hex-tag-invalid);
+        --_hex-option-color: var(--hex-tag-invalid);
       }
       :host([category="contributor"]) {
-        --option-color: var(--hex-tag-contributor);
+        --_hex-option-color: var(--hex-tag-contributor);
       }
       :host([category="metatag"]) {
-        --option-color: var(--hex-fg-2);
+        --_hex-option-color: var(--hex-fg-2);
       }
     `,
   ];

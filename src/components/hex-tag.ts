@@ -32,44 +32,44 @@ export class HexTag extends HexElement {
         background: rgba(2, 15, 35, 0.45);
         border: 1px solid currentColor;
         line-height: 1;
-        --tag-color: var(--hex-tag-general);
-        color: var(--tag-color);
+        --_hex-tag-color: var(--hex-tag-general);
+        color: var(--_hex-tag-color);
       }
       :host([category="artist"]) {
-        --tag-color: var(--hex-tag-artist);
-        --tag-color-alt: var(--hex-tag-artist-alt);
+        --_hex-tag-color: var(--hex-tag-artist);
+        --_hex-tag-color-alt: var(--hex-tag-artist-alt);
       }
       :host([category="copyright"]) {
-        --tag-color: var(--hex-tag-copyright);
-        --tag-color-alt: var(--hex-tag-copyright-alt);
+        --_hex-tag-color: var(--hex-tag-copyright);
+        --_hex-tag-color-alt: var(--hex-tag-copyright-alt);
       }
       :host([category="character"]) {
-        --tag-color: var(--hex-tag-character);
-        --tag-color-alt: var(--hex-tag-character-alt);
+        --_hex-tag-color: var(--hex-tag-character);
+        --_hex-tag-color-alt: var(--hex-tag-character-alt);
       }
       :host([category="species"]) {
-        --tag-color: var(--hex-tag-species);
-        --tag-color-alt: var(--hex-tag-species-alt);
+        --_hex-tag-color: var(--hex-tag-species);
+        --_hex-tag-color-alt: var(--hex-tag-species-alt);
       }
       :host([category="general"]) {
-        --tag-color: var(--hex-tag-general);
-        --tag-color-alt: var(--hex-tag-general-alt);
+        --_hex-tag-color: var(--hex-tag-general);
+        --_hex-tag-color-alt: var(--hex-tag-general-alt);
       }
       :host([category="lore"]) {
-        --tag-color: var(--hex-tag-lore);
-        --tag-color-alt: var(--hex-tag-lore-alt);
+        --_hex-tag-color: var(--hex-tag-lore);
+        --_hex-tag-color-alt: var(--hex-tag-lore-alt);
       }
       :host([category="invalid"]) {
-        --tag-color: var(--hex-tag-invalid);
-        --tag-color-alt: var(--hex-tag-invalid-alt);
+        --_hex-tag-color: var(--hex-tag-invalid);
+        --_hex-tag-color-alt: var(--hex-tag-invalid-alt);
       }
       :host([category="contributor"]) {
-        --tag-color: var(--hex-tag-contributor);
-        --tag-color-alt: var(--hex-tag-contributor-alt);
+        --_hex-tag-color: var(--hex-tag-contributor);
+        --_hex-tag-color-alt: var(--hex-tag-contributor-alt);
       }
       :host([category="meta"]) {
-        --tag-color: var(--hex-tag-meta);
-        --tag-color-alt: var(--hex-tag-meta-alt);
+        --_hex-tag-color: var(--hex-tag-meta);
+        --_hex-tag-color-alt: var(--hex-tag-meta-alt);
         color: #fff;
       }
     `,

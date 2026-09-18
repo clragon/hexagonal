@@ -18,26 +18,26 @@ export class HexUsername extends HexElement {
         gap: 4px;
         font-weight: var(--hex-font-weight-bold);
         font-size: var(--hex-fs-md);
-        --uname-color: var(--hex-role-member);
-        color: var(--uname-color);
+        --_hex-uname-color: var(--hex-role-member);
+        color: var(--_hex-uname-color);
       }
       :host([role-color="privileged"]) {
-        --uname-color: var(--hex-role-privileged);
+        --_hex-uname-color: var(--hex-role-privileged);
       }
       :host([role-color="blocked"]) {
-        --uname-color: var(--hex-role-blocked);
+        --_hex-uname-color: var(--hex-role-blocked);
       }
       :host([role-color="former-staff"]) {
-        --uname-color: var(--hex-role-former-staff);
+        --_hex-uname-color: var(--hex-role-former-staff);
       }
       :host([role-color="janitor"]) {
-        --uname-color: var(--hex-role-janitor);
+        --_hex-uname-color: var(--hex-role-janitor);
       }
       :host([role-color="moderator"]) {
-        --uname-color: var(--hex-role-moderator);
+        --_hex-uname-color: var(--hex-role-moderator);
       }
       :host([role-color="admin"]) {
-        --uname-color: var(--hex-role-admin);
+        --_hex-uname-color: var(--hex-role-admin);
       }
 
       .name {
