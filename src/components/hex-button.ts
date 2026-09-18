@@ -85,6 +85,7 @@ export class HexButton extends HexElement {
 
       button {
         all: unset;
+        flex: 1 1 auto;
         box-sizing: border-box;
         font-family: inherit;
         font-size: var(--hex-fs-md);
