@@ -77,7 +77,7 @@ export const components: ComponentEntry[] = [
     title: "Page",
     group: "Surfaces",
     description:
-      "Full-bleed page surface. Wraps a route or app shell with the brand navy background and tiled hex pattern.",
+      "Page surface. Wraps a route or app shell in the navy background and hexagon tile.",
     defaultSlot: `
       <div style="text-align: center; padding: 36px 24px; max-width: 560px; margin: 0 auto;">
         <hex-logo width="200"></hex-logo>
@@ -89,7 +89,7 @@ export const components: ComponentEntry[] = [
     previewHeight: 360,
     usage: [
       {
-        text: "Wrap a whole view. It paints the page background and the hexagon tile, so nothing below it needs to. Use one per view, not one per section. The preview above is the page itself, at full bleed; there is no sensible way to show a page surface inside a card.",
+        text: "Wrap a whole view to set it on the navy background and its blue hexagons.",
       },
     ],
     props: [],
@@ -100,12 +100,12 @@ export const components: ComponentEntry[] = [
     group: "Surfaces",
     previewHeight: 260,
     description:
-      "Standard card surface with the brand hex-texture watermark fading down from the top. Use for grouped content.",
+      "Groups related content onto one raised surface, so a page reads as parts rather than one wall.",
     defaultSlot: `
       <h3 style="margin: 0 0 8px; font-size: 16px; font-weight: 700;">Cluster configuration</h3>
       <p style="margin: 0 0 12px; line-height: 1.55;">
         Cards group related content on a textured surface. The hex-texture watermark fades
-        from dense at the top to clear at the bottom, giving each card a subtle visual anchor
+        from dense at the top to clear at the bottom, giving a card its visual anchor
         without competing with the content.
       </p>
       <p style="margin: 0; line-height: 1.55; color: var(--hex-fg-2); font-size: 12px;">
@@ -114,7 +114,7 @@ export const components: ComponentEntry[] = [
     previewSurface: "page",
     usage: [
       {
-        text: "Group content that belongs together on one surface. A card is the default home for content; reach for it before inventing a container.",
+        text: "Group content that belongs together on one surface. A card is the default home for content, so reach for it before inventing a container.",
         demo: '<hex-card style="padding:14px;max-width:320px">Content on the standard surface.</hex-card>',
       },
       {
@@ -132,7 +132,7 @@ export const components: ComponentEntry[] = [
     title: "Button",
     group: "Form",
     description:
-      "Action element. Three visual variants, three colors, three sizes, optional leading icon, and an icon-only mode.",
+      "Action element. Its variant and colour say how much weight the action carries.",
     defaultSlot: "Save changes",
     usage: [
       {
@@ -140,7 +140,7 @@ export const components: ComponentEntry[] = [
         demo: '<hex-button>Save changes</hex-button>',
       },
       {
-        text: "Use **raised** for actions that should feel physical, where the click is the point rather than a step in a form. The lip is the button's own dark shade, and the press consumes it so the footprint never changes.",
+        text: "Use **raised** for actions that should feel physical, where the click is the point rather than a step in a form. The lip is the button's own dark shade, and the press consumes it, so the footprint stays the same.",
         demo:
           '<hex-button variant="raised">Save changes</hex-button> <hex-button variant="raised" color="secondary">Reload</hex-button> <hex-button variant="raised" color="danger" icon="trash">Delete</hex-button>',
       },
@@ -150,7 +150,7 @@ export const components: ComponentEntry[] = [
           '<hex-button variant="outline" color="secondary">Cancel</hex-button> <hex-button>Save changes</hex-button>',
       },
       {
-        text: "Use **ghost** for tertiary or in-line actions where a full button would be too loud: in toolbars, alert footers, table rows.",
+        text: "Use **ghost** for tertiary or in-line actions where a full button would be too loud, such as a toolbar or an alert footer.",
         demo:
           '<hex-button variant="ghost" color="secondary" icon="settings">Configure</hex-button> <hex-button variant="ghost" color="secondary" icon="refresh">Reload</hex-button>',
       },
@@ -194,7 +194,7 @@ export const components: ComponentEntry[] = [
     title: "Input",
     group: "Form",
     previewHeight: 220,
-    description: "Text input with optional label, hint, error, and leading icon.",
+    description: "Single-line field for a value the reader types freely.",
     usage: [
       {
         text: "To join a field to a button, square off the edges where they meet with `::part`. The focus ring still wraps the field correctly, so this needs no wrapper element:\n\n`hex-input::part(control) { border-top-right-radius: 0; border-bottom-right-radius: 0 }`\n\n`hex-button::part(base) { border-top-left-radius: 0; border-bottom-left-radius: 0 }`",
@@ -231,10 +231,10 @@ export const components: ComponentEntry[] = [
     title: "Textarea",
     group: "Form",
     previewHeight: 320,
-    description: "Multi-line text field. Reserves its height and resizes by hand, never on its own.",
+    description: "Multi-line field for text that runs past a single line.",
     usage: [
       {
-        text: "Textareas **reserve their height and never grow on their own**. An autogrowing field pushes everything below it down on each new line, which is a layout shift the reader is causing by typing. Give it the room it needs and let people drag it.",
+        text: "A textarea **keeps the height it is given**. An autogrowing field pushes the content below it down as lines are added, which is a layout shift the reader causes by typing. Give it the room it needs and let people drag it.",
         demo: '<div style="width:340px"><hex-textarea label="Reason" hint="Visible to the user" rows="4"></hex-textarea></div>',
       },
       {
@@ -242,8 +242,12 @@ export const components: ComponentEntry[] = [
         demo: '<div style="width:340px"><hex-textarea label="Bio" counter maxlength="80" rows="3" value="Contributor since 2019."></hex-textarea></div>',
       },
       {
-        text: "It participates in forms like a native control: it submits under its `name`, honours `required`, and pairs with an external `label` through `for`.",
+        text: "It participates in forms like a native control, submitting under its `name` and honouring `required`. An external `label` pairs with it through `for`.",
         demo: '<div style="width:340px"><hex-textarea label="Notes" required error="This field is required" rows="3"></hex-textarea></div>',
+      },
+      {
+        text: "It carries the same chrome as the other fields, so **size**, an **icon** and the prefix and suffix slots all work here. Affixes align with the first line rather than the middle of the box.",
+        demo: '<div style="width:340px"><hex-textarea size="sm" label="Reason" icon="settings" rows="3" hint="Kept on the record"></hex-textarea></div>',
       },
     ],
     props: [
@@ -252,6 +256,8 @@ export const components: ComponentEntry[] = [
       { name: "placeholder", kind: "text", default: "" },
       { name: "hint", kind: "text", default: "" },
       { name: "error", kind: "text", default: "" },
+      { name: "size", kind: "select", options: ["sm", "md", "lg"], default: "md" },
+      { name: "icon", kind: "select", options: ICON_OPTIONS, default: "" },
       { name: "rows", kind: "number", default: 6 },
       { name: "maxlength", kind: "number", default: "" },
       { name: "counter", kind: "boolean", default: false },
@@ -263,7 +269,7 @@ export const components: ComponentEntry[] = [
     tag: "hex-checkbox",
     title: "Checkbox",
     group: "Form",
-    description: "Boolean toggle with an inline label.",
+    description: "Boolean choice that takes effect when the form around it is submitted.",
     defaultSlot: "Enable autoscaling",
     usage: [
       {
@@ -286,7 +292,7 @@ export const components: ComponentEntry[] = [
     group: "Form",
     previewHeight: 360,
     description:
-      "Picker for one value out of a known set. Options are ordinary `<option>` children, or `<hex-option>` when a row needs a category tint, a count or an antecedent.",
+      "Picker for one value out of a known set. A row can carry a category tint, a count and an antecedent.",
     defaultSlot: `
       <option value="us-east-1">US East (Virginia)</option>
       <option value="us-west-2">US West (Oregon)</option>
@@ -302,7 +308,7 @@ export const components: ComponentEntry[] = [
         demo: '<div style="width:260px"><hex-select label="Owner" placeholder="Unassigned"><option>Ada</option><option>Grace</option></hex-select></div>',
       },
       {
-        text: "Swap `<option>` for `<hex-option>` when a row needs more than a label. It takes **category** to tint the label with the matching tag colour, **count** to show a right-aligned figure in compact notation, and **antecedent** for a name the option resolves away from.",
+        text: "Swap `<option>` for `<hex-option>` when a row needs more than a label. **category** tints the label with the matching tag colour and **count** shows a right-aligned figure in compact notation. **antecedent** names what the option resolves away from.",
         demo: '<div style="width:280px"><hex-select label="Tag" placeholder="Pick a tag"><hex-option value="wolf" label="wolf" category="species" count="88400"></hex-option><hex-option value="patreon" label="patreon" category="meta" count="4120"></hex-option><hex-option value="canine" label="canine" category="species" count="512000" antecedent="dog"></hex-option></hex-select></div>',
       },
       {
@@ -333,7 +339,7 @@ export const components: ComponentEntry[] = [
       "Text field that suggests values as you type. Use it when the valid answers are too many to list, such as tags or users.",
     usage: [
       {
-        text: "Suggestions come from one of two places: **source** for a fixed list, or a **provider** for anything that must be looked up, such as a server or a search index. A provider defines what counts as a match and may be async. Debouncing, responses that arrive out of order, keyboard navigation and screen-reader wiring are already covered.",
+        text: "Suggestions come from **source** for a fixed list, or from a **provider** for anything that must be looked up, such as a server. A provider defines what counts as a match and may be async. Debouncing, responses that arrive out of order, keyboard navigation and screen-reader wiring are already covered.",
       },
       {
         text: "A provider may also define what gets written into the field when a suggestion is picked, and how a row is rendered. This matters for a field holding several values at once, such as a tag search, where picking a suggestion should replace only the word under the cursor rather than the whole box.",
@@ -434,7 +440,7 @@ export const components: ComponentEntry[] = [
     title: "Icon",
     group: "Brand",
     previewHeight: 120,
-    description: "Inline stroke icon. The full set of available names is exported as `iconPaths`.",
+    description: "Inline stroke icon, drawn from a set that can be extended at runtime.",
     usage: [
       {
         text: "Set `name` to one of the built-in icons. The full set is exported as `iconPaths`.",
@@ -457,10 +463,10 @@ export const components: ComponentEntry[] = [
     group: "Brand",
     previewHeight: 180,
     previewSurface: "page",
-    description: "Wordmark and mark. Sizes by width; height follows the aspect ratio.",
+    description: "The Hexagonal wordmark, and the mark on its own.",
     usage: [
       {
-        text: "Set **width** and leave height alone. The element holds its own aspect ratio, so nothing reflows once it paints.",
+        text: "Set **width** and leave height alone. The element keeps its aspect ratio, so nothing reflows once it paints.",
         demo: '<hex-logo width="200"></hex-logo>',
       },
       {
@@ -484,7 +490,7 @@ export const components: ComponentEntry[] = [
     title: "Chexagon",
     group: "Brand",
     previewHeight: 120,
-    description: "Verification badge: hex shape with a checkmark, in the brand artist amber-orange.",
+    description: "Verification badge, shown beside a name that has been verified.",
     usage: [
       {
         text: "Use it beside a name or a tag that has been verified, never as decoration. The badge means a claim was checked, so it stops meaning anything if it appears without one.",
@@ -525,7 +531,7 @@ export const components: ComponentEntry[] = [
     group: "Tokens",
     previewHeight: 120,
     description:
-      "Category-tinted tag. The chip variant flows like words in a wrap; the row variant stacks into a sidebar list with a count and controls.",
+      "Category-tinted tag. The chip variant flows like words in a wrap. The row variant stacks into a sidebar list with a count and controls.",
     defaultSlot: "rowan",
     usage: [
       {
@@ -603,11 +609,11 @@ export const components: ComponentEntry[] = [
         demo: '<div style="width:320px"><hex-skeleton>Kesha Rosalind Aldritch has been a contributor since 2019.</hex-skeleton></div>',
       },
       {
-        text: "Slot nothing and you get abstract bars instead. Use these only when the content is genuinely unknown, such as a list whose length has not arrived yet, and remember `lines` is a guess where slotted text is a measurement.",
+        text: "Slot nothing and you get abstract bars instead. Use these only when the content is unknown, such as a list whose length has not arrived yet, and remember `lines` is a guess where slotted text is a measurement.",
         demo: '<div style="width:320px"><hex-skeleton lines="3"></hex-skeleton></div>',
       },
       {
-        text: "Use `aspect` for media, so the box is reserved before the image knows its own size.",
+        text: "Use `aspect` for media, so the box is reserved before the image loads.",
         demo: '<div style="width:220px"><hex-skeleton shape="block" aspect="16/9"></hex-skeleton></div>',
       },
       {
@@ -687,7 +693,7 @@ export const components: ComponentEntry[] = [
     `,
     usage: [
       {
-        text: "Put the menu **after its trigger**. It sets `aria-haspopup` and `aria-expanded` on the trigger, opens on click or arrow key, moves with arrows and Home/End, and returns focus to the trigger when it closes.",
+        text: "Put the menu **after its trigger**. It sets `aria-haspopup` and `aria-expanded` on the trigger, and opens on click or arrow key. Arrows and Home/End move through the items, and closing returns focus to the trigger.",
         demo: '<hex-button variant="outline" color="secondary" icon-only aria-label="More"><hex-icon slot=\"icon\" size=\"14\"><svg viewBox=\"0 0 24 24\" fill=\"currentColor\"><circle cx=\"12\" cy=\"5\" r=\"1.6\"/><circle cx=\"12\" cy=\"12\" r=\"1.6\"/><circle cx=\"12\" cy=\"19\" r=\"1.6\"/></svg></hex-icon></hex-button> <hex-menu><hex-menu-item value="rename" icon="settings">Rename</hex-menu-item><hex-menu-item value="duplicate" icon="layers">Duplicate</hex-menu-item><hex-menu-item value="delete" icon="trash" danger>Delete</hex-menu-item></hex-menu>',
       },
       {
@@ -712,7 +718,7 @@ export const components: ComponentEntry[] = [
     `,
     usage: [
       {
-        text: "Use `hex-popover` directly only when building a new overlay. For descriptions reach for **tooltip**, for action lists reach for **menu**; both are built on this.",
+        text: "Use `hex-popover` directly only when building a new overlay. Reach for **tooltip** for descriptions and **menu** for action lists, both of which are built on this.",
         demo: '<hex-button id="pop-demo-trigger">Open popover</hex-button> <hex-popover placement="bottom"><div style="padding:10px 14px">Anchored, flipped and shifted as needed</div></hex-popover>',
       },
     ],
@@ -728,7 +734,7 @@ export const components: ComponentEntry[] = [
     title: "Status pill",
     group: "Tokens",
     previewHeight: 120,
-    description: "Compact health indicator. Shows a label and colored dot per status.",
+    description: "Says at a glance whether something is healthy, busy or broken.",
     usage: [
       {
         text: "Use it for the state of a system, not the outcome of an action. The label is fixed per status so the same state always reads the same way across views.",
@@ -758,14 +764,14 @@ export const components: ComponentEntry[] = [
     tag: "hex-avatar",
     title: "Avatar",
     group: "User",
-    description: "Stroke-only rounded square avatar. Tinted by user role. Falls back to two-letter initials.",
+    description: "Stands in for a person beside their name or in a row, tinted by their role.",
     usage: [
       {
         text: "Use **initials** as the fallback when there is no image. An avatar that silently renders empty is worse than one that shows two letters.",
         demo: '<div style="display:flex;gap:8px;align-items:center"><hex-avatar initials="AL"></hex-avatar><hex-avatar initials="GH" role-color="moderator"></hex-avatar><hex-avatar initials="RS" role-color="admin"></hex-avatar></div>',
       },
       {
-        text: "Size by context rather than by importance: **xs** and **sm** inline beside text, **md** in rows, **lg** and **xl** on a profile.",
+        text: "Size by context rather than by importance. **xs** and **sm** sit inline beside text, while **md** suits a row. **lg** and **xl** belong on a profile.",
         demo: '<div style="display:flex;gap:8px;align-items:center"><hex-avatar size="xs" initials="A"></hex-avatar><hex-avatar size="sm" initials="B"></hex-avatar><hex-avatar size="md" initials="C"></hex-avatar><hex-avatar size="lg" initials="D"></hex-avatar></div>',
       },
     ],
@@ -835,7 +841,7 @@ export const components: ComponentEntry[] = [
     title: "Quote",
     group: "Content",
     description:
-      "Inline rounded quote block with a left-side accent stripe. Set `stripe-color` (or the `--hex-quote-stripe` CSS variable) to use any CSS color.",
+      "Sets quoted words apart from the writing around them.",
     defaultSlot: "The hex tile is the brand. Every full-page surface uses a tiled hex pattern.",
     usage: [
       {
@@ -858,7 +864,7 @@ export const components: ComponentEntry[] = [
     group: "Surfaces",
     previewHeight: 240,
     description:
-      "Collapsible section. Slot any HTML into `name=\"heading\"` (badges, links, icons) and `name=\"trailing\"` for header-flush actions.",
+      "Puts detail a reader can skip behind a heading they can open.",
     defaultSlot: "Region: us-east-1. Nodes: 12. Version: 2.14.0.",
     namedSlots: {
       heading:
@@ -882,11 +888,11 @@ export const components: ComponentEntry[] = [
     title: "Code",
     group: "Content",
     previewHeight: 140,
-    description: "Monospace code element. Inline by default; set `block` for a preformatted block.",
+    description: "Monospace code element, inline inside a sentence or set apart as a preformatted block.",
     defaultSlot: "--hex-color-primary",
     usage: [
       {
-        text: "Use the inline form for identifiers inside a sentence: a flag, a tag name, a field. It keeps the reading line intact.",
+        text: "Use the inline form for identifiers inside a sentence, such as a flag or a field name. It keeps the reading line intact.",
         demo: '<span>Set <hex-code>--hex-radius-md</hex-code> to change the corner radius, or pass <hex-code>variant=\"raised\"</hex-code> for a physical button.</span>',
       },
       {
@@ -920,7 +926,7 @@ export const components: ComponentEntry[] = [
     title: "Dialog",
     group: "Surfaces",
     description:
-      "Modal for a decision that has to be made before anything else can continue. Keeps focus inside, closes on Escape, and sits above the rest of the page.",
+      "Modal for a decision that has to be made before anything else can continue. It keeps focus inside and closes on Escape.",
     defaultSlot:
       "This will permanently remove the cluster and all of its data. This action cannot be undone.",
     namedSlots: {
@@ -993,7 +999,7 @@ export const components: ComponentEntry[] = [
     title: "Alert",
     group: "Content",
     description:
-      "Banner for something the reader needs to notice, tinted by how serious it is. Takes a heading, a message, and optional actions, and can be dismissed.",
+      "Tells the reader something they need to notice, tinted by how serious it is.",
     defaultSlot: "All 12 nodes updated to version 2.15.0",
     namedSlots: {
       heading: "Deployment successful",
