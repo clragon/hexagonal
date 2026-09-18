@@ -1,7 +1,12 @@
 {
   "name": "@clynamic/hexagonal",
   "version": "0.1.1",
-  "description": "Hexagonal Design System as CDN-able web components",
+  "description": "A design for a blue honeycomb world.",
+  "homepage": "https://clragon.github.io/hexagonal/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/clragon/hexagonal.git"
+  },
   "license": "UNLICENSED",
   "author": "binaryfloof",
   "type": "module",
