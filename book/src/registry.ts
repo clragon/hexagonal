@@ -198,6 +198,39 @@ export const components: ComponentEntry[] = [
     ],
   },
   {
+    tag: "hex-textarea",
+    title: "Textarea",
+    group: "Form",
+    previewHeight: 320,
+    description: "Multi-line text field. Reserves its height and resizes by hand, never on its own.",
+    usage: [
+      {
+        text: "Textareas **reserve their height and never grow on their own**. An autogrowing field pushes everything below it down on each new line, which is a layout shift the reader is causing by typing. Give it the room it needs and let people drag it.",
+        demo: '<div style="width:340px"><hex-textarea label="Reason" hint="Visible to the user" rows="4"></hex-textarea></div>',
+      },
+      {
+        text: "Add **counter** with a `maxlength` where the limit is real. The count turns danger-coloured past the limit, and it is announced politely rather than on every keystroke.",
+        demo: '<div style="width:340px"><hex-textarea label="Bio" counter maxlength="80" rows="3" value="Contributor since 2019."></hex-textarea></div>',
+      },
+      {
+        text: "It participates in forms like a native control: it submits under its `name`, honours `required`, and pairs with an external `label` through `for`.",
+        demo: '<div style="width:340px"><hex-textarea label="Notes" required error="This field is required" rows="3"></hex-textarea></div>',
+      },
+    ],
+    props: [
+      { name: "label", kind: "text", default: "" },
+      { name: "value", kind: "text", default: "" },
+      { name: "placeholder", kind: "text", default: "" },
+      { name: "hint", kind: "text", default: "" },
+      { name: "error", kind: "text", default: "" },
+      { name: "rows", kind: "number", default: 6 },
+      { name: "maxlength", kind: "number", default: 0 },
+      { name: "counter", kind: "boolean", default: false },
+      { name: "required", kind: "boolean", default: false },
+      { name: "disabled", kind: "boolean", default: false },
+    ],
+  },
+  {
     tag: "hex-checkbox",
     title: "Checkbox",
     group: "Form",
@@ -533,6 +566,37 @@ export const components: ComponentEntry[] = [
       { name: "verified", kind: "boolean", default: false },
       { name: "href", kind: "text", default: "" },
     ],
+  },
+  {
+    tag: "hex-prose",
+    title: "Prose",
+    group: "Content",
+    previewHeight: 420,
+    previewSurface: "card",
+    defaultSlot: `
+      <h2>Tag group: canines</h2>
+      <p>See <a class="dtext-link dtext-post-search-link" href="#">canine</a>, the
+      <a class="dtext-link dtext-artist-id-link" href="#">artist page</a>, or the
+      <a class="dtext-link dtext-external-link" href="#">upstream wiki</a>.</p>
+      <ul><li>First item</li><li>Second, with <span class="inline-code">inline code</span></li></ul>
+      <blockquote>Quoted guidance from a staff member.</blockquote>
+    `,
+    description: "Scopes typography for rendered DText. Styles the markup rather than replacing it.",
+    usage: [
+      {
+        text: "Wrap **rendered DText** in `hex-prose`. dmark emits ordinary HTML carrying `dtext-*` classes, so this styles that output in place instead of asking you to swap every node for a custom element.",
+        demo: '<hex-prose><h3>Heading</h3><p>A paragraph with a <a class="dtext-link" href="#">link</a> and <span class="inline-code">code</span>.</p><ul><li>One</li><li>Two</li></ul></hex-prose>',
+      },
+      {
+        text: "Reference links carry their own colour, so an artist link reads gold and a tag search reads blue, matching the site they came from. External links get an arrow.",
+        demo: '<hex-prose><p><a class="dtext-link dtext-artist-id-link" href="#">artist</a> &middot; <a class="dtext-link dtext-post-search-link" href="#">tag search</a> &middot; <a class="dtext-link dtext-external-link" href="#">external</a></p></hex-prose>',
+      },
+      {
+        text: "Use **dense** inside a comment or a list row, where full paragraph spacing would waste the space.",
+        demo: '<hex-prose dense><p>First paragraph.</p><p>Second paragraph, tightened.</p></hex-prose>',
+      },
+    ],
+    props: [{ name: "dense", kind: "boolean", default: false }],
   },
   {
     tag: "hex-quote",
