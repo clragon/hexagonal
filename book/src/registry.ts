@@ -294,7 +294,7 @@ export const components: ComponentEntry[] = [
     group: "Form",
     previewHeight: 360,
     description:
-      "Picker for one value out of a known set. A row can carry a category tint, a count and an antecedent.",
+      "Picker for one value out of a known set.",
     defaultSlot: `
       <option value="us-east-1">US East (Virginia)</option>
       <option value="us-west-2">US West (Oregon)</option>
@@ -310,15 +310,11 @@ export const components: ComponentEntry[] = [
         demo: '<div style="width:260px"><hex-select label="Owner" placeholder="Unassigned"><option>Ada</option><option>Grace</option></hex-select></div>',
       },
       {
-        text: "Swap `<option>` for `<hex-option>` when a row needs more than a label. **category** tints the label with the matching tag colour and **count** shows a right-aligned figure in compact notation. **antecedent** names what the option resolves away from.",
-        demo: '<div style="width:280px"><hex-select label="Tag" placeholder="Pick a tag"><hex-option value="wolf" label="wolf" category="species" count="88400"></hex-option><hex-option value="patreon" label="patreon" category="meta" count="4120"></hex-option><hex-option value="canine" label="canine" category="species" count="512000" antecedent="dog"></hex-option></hex-select></div>',
+        text: "Swap `<option>` for `<hex-option>` when a row needs a figure or a badge on the right. Slot it as **trailing**, and set `--hex-option-color` where the label should carry a colour of its own.",
+        demo: '<div style="width:280px"><hex-select label="Region" placeholder="Pick a region"><hex-option value="eu" label="Europe"><span slot="trailing">12 ms</span></hex-option><hex-option value="us" label="North America"><span slot="trailing">78 ms</span></hex-option></hex-select></div>',
       },
       {
-        text: "Plain `<option>` reaches the same rendering through `data-category` and `data-count`, which is easier when the markup comes from a template that only emits standard options.",
-        demo: '<div style="width:280px"><hex-select label="Tag" placeholder="Pick a tag"><option value="wolf" data-category="species" data-count="88400">wolf</option><option value="patreon" data-category="meta" data-count="4120">patreon</option></hex-select></div>',
-      },
-      {
-        text: "Both this and `hex-autocomplete` are built on `hex-listbox`, which owns highlight state, wrap-around movement, typeahead and click-to-select. It is exported for building a new combobox-like control, but reach for it only then: focus stays on the field and `aria-activedescendant` points at the option, so a listbox on its own does nothing useful.",
+        text: "Both this and `hex-autocomplete` are built on `hex-listbox`, which owns highlight state, wrap-around movement, typeahead and click-to-select. It is exported for building a new combobox-like control. Focus stays on the field rather than the list, and `aria-activedescendant` points at the highlighted option, so it needs a field driving it.",
       },
     ],
     props: [
