@@ -27,7 +27,7 @@ export class HexCheckbox extends HexFormElement {
         width: 18px;
         height: 18px;
         border-radius: var(--hex-radius-sm);
-        border: 1px solid var(--hex-border-strong);
+        border: 2px solid var(--hex-border-strong);
         background: var(--hex-color-background);
         display: inline-flex;
         align-items: center;
