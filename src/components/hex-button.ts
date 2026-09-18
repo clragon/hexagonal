@@ -2,9 +2,10 @@ import { html, css, nothing } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { HexElement } from "../shared/base.js";
 import "./hex-icon.js";
+import "./hex-spinner.js";
 import type { IconName } from "../shared/icons.js";
 
-export type HexButtonVariant = "solid" | "outline" | "ghost";
+export type HexButtonVariant = "solid" | "raised" | "outline" | "ghost";
 export type HexButtonColor = "primary" | "secondary" | "danger";
 export type HexButtonSize = "sm" | "md" | "lg";
 
@@ -15,6 +16,11 @@ export type HexButtonSize = "sm" | "md" | "lg";
 
 @customElement("hex-button")
 export class HexButton extends HexElement {
+  static override shadowRootOptions = {
+    ...HexElement.shadowRootOptions,
+    delegatesFocus: true,
+  };
+
   static override styles = [
     HexElement.styles,
     css`
@@ -38,9 +44,19 @@ export class HexButton extends HexElement {
       }
       :host([color="danger"]) {
         --btn-color: var(--hex-color-danger);
-        --btn-color-light: #e89486;
-        --btn-color-dark: #c96a5b;
-        --btn-fg-on: #2a0e09;
+        --btn-color-light: var(--hex-color-danger-light);
+        --btn-color-dark: var(--hex-color-danger-dark);
+        --btn-fg-on: var(--hex-fg-on-danger);
+      }
+
+      :host([variant="solid"]),
+      :host([variant="raised"]),
+      :host(:not([variant])) {
+        color: var(--btn-fg-on);
+      }
+      :host([variant="outline"]),
+      :host([variant="ghost"]) {
+        color: var(--btn-color);
       }
 
       :host(:active:not([disabled])) {
@@ -55,6 +71,16 @@ export class HexButton extends HexElement {
       }
       :host([disabled]) button {
         pointer-events: none;
+      }
+      :host([loading]) button {
+        cursor: progress;
+        pointer-events: none;
+      }
+      :host([loading][variant="raised"]) {
+        top: var(--hex-raise-press);
+      }
+      :host([loading][variant="raised"]) button {
+        box-shadow: 0 var(--hex-raise-press) 0 var(--btn-color-dark);
       }
 
       button {
@@ -87,12 +113,6 @@ export class HexButton extends HexElement {
       button:focus-visible {
         outline: none;
         box-shadow: var(--hex-shadow-focus);
-      }
-      button:active {
-        box-shadow: var(--hex-shadow-sunken);
-      }
-      button:active:focus-visible {
-        box-shadow: var(--hex-shadow-sunken), var(--hex-shadow-focus);
       }
 
       /* solid: filled bg, dark text on bright bg */
@@ -139,6 +159,54 @@ export class HexButton extends HexElement {
       }
 
       /* sizes */
+      :host([variant="raised"]) button {
+        transition:
+          background var(--hex-dur-fast) var(--hex-ease),
+          color var(--hex-dur-fast) var(--hex-ease),
+          border-color var(--hex-dur-fast) var(--hex-ease);
+        position: relative;
+        background: var(--btn-color);
+        color: var(--btn-fg-on);
+        border-color: var(--btn-color);
+        box-shadow: 0 var(--hex-raise-depth) 0 var(--btn-color-dark);
+      }
+      :host([variant="raised"]) button:hover {
+        background: var(--btn-color-light);
+        border-color: var(--btn-color-light);
+      }
+      :host([variant="raised"]) button:focus-visible {
+        box-shadow:
+          0 var(--hex-raise-depth) 0 var(--btn-color-dark),
+          var(--hex-shadow-focus);
+      }
+      :host([variant="raised"]:active:not([disabled])) {
+        top: var(--hex-raise-press);
+      }
+      :host([variant="raised"]) button:active {
+        background: var(--btn-color);
+        border-color: var(--btn-color);
+        box-shadow: 0 var(--hex-raise-press) 0 var(--btn-color-dark);
+      }
+      :host([variant="raised"]) button:active:focus-visible {
+        box-shadow:
+          0 var(--hex-raise-press) 0 var(--btn-color-dark),
+          var(--hex-shadow-focus);
+      }
+      /* e621ng .st-button.kinetic covers this gap: the press offset moves
+         the hit box down, so clicks on the old top edge miss. */
+      :host([variant="raised"]) button:active::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: calc(-1 * var(--hex-raise-press));
+        height: var(--hex-raise-depth);
+        background: transparent;
+      }
+      :host([variant="raised"][disabled]) button {
+        box-shadow: none;
+      }
+
       :host([size="sm"]) button {
         font-size: var(--hex-fs-xs);
         padding: 6px 10px;
@@ -177,6 +245,7 @@ export class HexButton extends HexElement {
   @property({ type: String }) type: "button" | "submit" | "reset" = "button";
   @property({ type: Boolean, reflect: true }) disabled = false;
   @property({ type: Boolean, reflect: true }) full = false;
+  @property({ type: Boolean, reflect: true }) loading = false;
   @property({ type: Boolean, reflect: true, attribute: "icon-only" }) iconOnly = false;
 
   // ARIA attributes set on the host don't reach the focusable inner <button>
@@ -218,7 +287,7 @@ export class HexButton extends HexElement {
   }
 
   private onClick = (e: Event) => {
-    if (this.disabled) {
+    if (this.disabled || this.loading) {
       e.preventDefault();
       e.stopPropagation();
       return;
@@ -234,8 +303,17 @@ export class HexButton extends HexElement {
   override render() {
     const iconSize = this.size === "lg" ? 16 : 14;
     return html`
-      <button type=${this.type} ?disabled=${this.disabled} @click=${this.onClick}>
-        ${this.icon ? html`<hex-icon name=${this.icon} size=${iconSize}></hex-icon>` : nothing}
+      <button
+        type=${this.type}
+        ?disabled=${this.disabled}
+        aria-busy=${this.loading ? "true" : "false"}
+        @click=${this.onClick}
+      >
+        ${this.loading
+          ? html`<hex-spinner size=${iconSize} duration="1200"></hex-spinner>`
+          : this.icon
+            ? html`<hex-icon name=${this.icon} size=${iconSize}></hex-icon>`
+            : html`<slot name="icon"></slot>`}
         ${this.iconOnly ? nothing : html`<slot></slot>`}
       </button>
     `;
