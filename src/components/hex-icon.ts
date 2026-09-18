@@ -1,4 +1,4 @@
-import { html, css, svg, nothing, type SVGTemplateResult } from "lit";
+import { html, css, svg, type SVGTemplateResult } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { HexElement } from "../shared/base.js";
 import { iconPaths, type IconName } from "../shared/icons.js";
@@ -17,6 +17,14 @@ export class HexIcon extends HexElement {
       svg {
         display: block;
       }
+      .slotted {
+        display: block;
+      }
+      ::slotted(svg) {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
     `,
   ];
 
@@ -28,7 +36,13 @@ export class HexIcon extends HexElement {
     const path: SVGTemplateResult | null = this.name
       ? (iconPaths[this.name as IconName] ?? null)
       : null;
-    if (!path) return nothing;
+    if (!path) {
+      return html`
+        <div class="slotted" style="width:${this.size}px;height:${this.size}px">
+          <slot></slot>
+        </div>
+      `;
+    }
     return html`
       <svg
         width=${this.size}
