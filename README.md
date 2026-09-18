@@ -17,8 +17,8 @@ of tags, text and thumbnails.
 </hex-page>
 ```
 
-Each release is uploaded under its own version and cached immutably, so pin the
-version you want and it will never change under you.
+Each release uploads under its own version and caches immutably, so a pinned
+version stays byte-identical.
 
 Importing the bundle:
 
@@ -37,14 +37,13 @@ Optional bundled fonts (Verdana, Paulistana Ipe):
 
 Without it the system falls back to the Verdana installed on the OS.
 
-## Before the bundle arrives
+## The first paint
 
-A page that renders before the bundle evaluates has two problems, and a stylesheet
-for each. Both are optional, and both stop mattering once the bundle runs.
+A page that renders before the bundle evaluates starts blank and then shifts. Two
+stylesheets cover that window, and each stops mattering once the bundle runs.
 
-**The page is blank.** Tokens normally arrive with the bundle, so the palette does
-not exist yet and a dark design system starts out white. Link the tokens and paint
-with them:
+Tokens arrive with the bundle, so the palette is absent until then and a dark
+design system starts out white. Linking the tokens supplies the palette early:
 
 ```html
 <link rel="stylesheet" href="https://libs.cdn.clynamic.net/hexagonal/0.2.0/hexagonal-tokens.css" />
@@ -54,38 +53,30 @@ with them:
 The bundle detects tokens that are already present and leaves them alone, so
 linking the stylesheet costs nothing beyond the request.
 
-**The layout jumps.** Custom elements have no size until their definition loads,
-so content shifts when they upgrade. `preflight.css` reserves the measured box of
-every component ahead of time:
+Custom elements have no size until their definition loads, so content shifts when
+they upgrade. `preflight.css` reserves the measured box of each component:
 
 ```html
 <link rel="stylesheet" href="https://libs.cdn.clynamic.net/hexagonal/0.2.0/hexagonal-preflight.css" />
 ```
 
-It carries literal values rather than tokens, so it works on its own, and each
-rule stops applying as soon as that element is defined.
+It carries literal values, so it works on its own. Each rule stops applying as
+soon as that element is defined.
 
 ## Components
 
-**Surfaces** &middot; `hex-card` `hex-dialog` `hex-page` `hex-section`
+| Group | Components |
+| --- | --- |
+| Surfaces | `hex-card` `hex-dialog` `hex-page` `hex-section` |
+| Layout | `hex-divider` `hex-skeleton` `hex-spinner` |
+| Form | `hex-autocomplete` `hex-button` `hex-checkbox` `hex-input` `hex-radio-group` `hex-select` `hex-switch` `hex-textarea` |
+| Overlay | `hex-menu` `hex-popover` `hex-tooltip` |
+| Content | `hex-alert` `hex-code` `hex-markup` `hex-quote` `hex-spoiler` |
+| Tokens | `hex-chip` `hex-kbd` `hex-status-pill` `hex-tag` |
+| User | `hex-avatar` `hex-username` |
+| Brand | `hex-chexagon` `hex-icon` `hex-logo` |
 
-**Layout** &middot; `hex-divider` `hex-skeleton` `hex-spinner`
-
-**Form** &middot; `hex-autocomplete` `hex-button` `hex-checkbox` `hex-input` `hex-radio-group` `hex-select` `hex-switch` `hex-textarea`
-
-**Overlay** &middot; `hex-menu` `hex-popover` `hex-tooltip`
-
-**Content** &middot; `hex-alert` `hex-code` `hex-markup` `hex-quote` `hex-spoiler`
-
-**Tokens** &middot; `hex-chip` `hex-kbd` `hex-status-pill` `hex-tag`
-
-**User** &middot; `hex-avatar` `hex-username`
-
-**Brand** &middot; `hex-chexagon` `hex-icon` `hex-logo`
-
-
-
-Slotted into a parent rather than used alone: `hex-listbox` `hex-menu-item` `hex-option` `hex-radio`.
+These four slot into a parent: `hex-listbox` `hex-menu-item` `hex-option` `hex-radio`.
 
 
 
@@ -95,8 +86,8 @@ Run `yarn dev` for the component book: every component with its props, guidance 
 
 `dmark` emits ordinary HTML carrying `dtext-*` classes. Wrap it in `<hex-markup>`
 for typography, and pass `dmarkHandlers` to its renderer so quotes, spoilers,
-sections and code render as components with their own reveal, collapse and
-keyboard behaviour rather than as inert markup.
+sections and code render as components carrying their own reveal, collapse and
+keyboard behaviour.
 
 ```js
 import { renderAstToHtml, htmlHandlers } from "@clynamic/dmark";
@@ -108,8 +99,8 @@ const html = renderAstToHtml(ast, { ...htmlHandlers, ...dmarkHandlers });
 ## Extending
 
 Build a component in the same style by extending the exported bases. Lit's
-authoring primitives are re-exported, so extenders never install lit themselves
-and there is only ever one copy on the page.
+authoring primitives are re-exported, so extenders skip installing lit and the
+page holds one copy.
 
 ```js
 import { HexFieldElement, html, css } from "hexagonal";
@@ -153,13 +144,13 @@ yarn test:all       # both
 yarn test:mutation  # stryker over the component suite
 ```
 
-Tests run in a real browser because these components only mean anything with
-shadow DOM, `ElementInternals`, the popover top layer and real layout. jsdom has
-no layout engine, so a geometry assertion under it would be a lie.
+Tests run in a real browser because these components depend on shadow DOM,
+`ElementInternals`, the popover top layer and real layout. jsdom has no layout
+engine, so a geometry assertion under it reports a number nothing produced.
 
-Toolchain: **Lit 3**, **TypeScript**, **esbuild** for the bundle, **tsc** for
-declarations, **oxlint + oxfmt**, **vitest + playwright** for tests, **stryker**
-for mutation testing.
+The toolchain is Lit 3 and TypeScript, bundled by esbuild, with tsc emitting
+declarations. oxlint and oxfmt handle lint and format, vitest and playwright run
+the tests, and stryker mutates them.
 
 ## Output
 
