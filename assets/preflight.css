@@ -325,3 +325,8 @@ hex-alert:not(:defined) {
 hex-quote:not(:defined) {
   padding: 12px 14px;
 }
+
+hex-tag[variant="row"]:not(:defined) {
+  display: flex;
+  width: fit-content;
+}
