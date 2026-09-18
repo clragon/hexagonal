@@ -18,8 +18,8 @@ export class HexChip extends HexElement {
         font-size: var(--hex-fs-sm);
         padding: 5px 10px;
         border-radius: var(--hex-radius-sm);
-        background: rgba(180, 199, 217, 0.1);
-        border: 1px solid rgba(180, 199, 217, 0.16);
+        background: var(--hex-bg-hover);
+        border: 1px solid var(--hex-bg-active);
         color: var(--hex-fg-1);
         line-height: 1;
         transition:
@@ -31,7 +31,7 @@ export class HexChip extends HexElement {
         cursor: pointer;
       }
       :host([interactive]:hover) {
-        background: rgba(180, 199, 217, 0.18);
+        background: var(--hex-bg-active);
       }
       :host([active]) {
         background: rgba(232, 196, 70, 0.16);

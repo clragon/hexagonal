@@ -25,25 +25,25 @@ export class HexStatusPill extends HexElement {
         padding: 3px 9px;
         border-radius: var(--hex-radius-pill);
         line-height: 1;
-        --pill-bg: rgba(180, 199, 217, 0.12);
+        --pill-bg: var(--hex-bg-muted);
         --pill-fg: var(--hex-color-secondary);
         background: var(--pill-bg);
         color: var(--pill-fg);
       }
       :host([status="healthy"]) {
-        --pill-bg: rgba(107, 191, 122, 0.15);
+        --pill-bg: var(--hex-bg-success);
         --pill-fg: var(--hex-color-success);
       }
       :host([status="degraded"]) {
-        --pill-bg: rgba(232, 196, 70, 0.18);
+        --pill-bg: var(--hex-bg-warning);
         --pill-fg: var(--hex-color-primary);
       }
       :host([status="failing"]) {
-        --pill-bg: rgba(224, 123, 107, 0.15);
+        --pill-bg: var(--hex-bg-danger);
         --pill-fg: var(--hex-color-danger);
       }
       :host([status="idle"]) {
-        --pill-bg: rgba(180, 199, 217, 0.12);
+        --pill-bg: var(--hex-bg-muted);
         --pill-fg: var(--hex-color-secondary);
       }
       .dot {

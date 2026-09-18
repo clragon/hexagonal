@@ -83,7 +83,7 @@ export class HexSelect extends HexElement {
         border-color: var(--hex-color-danger);
       }
       :host([invalid]) select:focus {
-        box-shadow: 0 0 0 2px rgba(224, 123, 107, 0.35);
+        box-shadow: var(--hex-shadow-focus-danger);
       }
       option {
         background: var(--hex-bg-card);

@@ -81,7 +81,7 @@ export class HexDialog extends HexElement {
         gap: 8px;
         padding: 12px 20px 16px;
         border-top: 1px solid var(--hex-border);
-        background: rgba(2, 15, 35, 0.2);
+        background: var(--hex-bg-sunken);
       }
       .actions[hidden] {
         display: none;

@@ -21,7 +21,9 @@ export const tokensCss = /* css */ `
 
   --hex-color-success: #6bbf7a;
   --hex-color-warning: #e8c446;
-  --hex-color-danger:  #e07b6b;
+  --hex-color-danger:        #e07b6b;
+  --hex-color-danger-light:  #e89486;
+  --hex-color-danger-dark:   #c96a5b;
   --hex-color-info:    #b4c7d9;
 
   --hex-role-member:       #b4c7d9;
@@ -40,17 +42,27 @@ export const tokensCss = /* css */ `
   --hex-tag-meta:      #ffffff;
   --hex-tag-lore:      #228b22;
   --hex-tag-invalid:   #ff3d3d;
+  --hex-tag-contributor: #c0c0c0;
 
   --hex-bg-page:    var(--hex-color-background);
   --hex-bg-card:    var(--hex-color-foreground);
   --hex-bg-section: var(--hex-color-section);
   --hex-bg-overlay: rgba(2, 15, 35, 0.72);
+  --hex-bg-sunken:  rgba(2, 15, 35, 0.20);
+  --hex-bg-muted:   rgba(180, 199, 217, 0.12);
+  --hex-bg-hover:   rgba(180, 199, 217, 0.10);
+  --hex-bg-success: rgba(107, 191, 122, 0.15);
+  --hex-bg-warning: rgba(232, 196, 70, 0.15);
+  --hex-bg-danger:  rgba(224, 123, 107, 0.15);
+  --hex-bg-active:  rgba(180, 199, 217, 0.16);
+
+  --hex-fg-on-danger: #2a0e09;
 
   --hex-fg-1: var(--hex-color-text);
   --hex-fg-2: var(--hex-color-text-muted);
   --hex-fg-link: var(--hex-color-secondary);
   --hex-fg-link-hover: var(--hex-color-secondary-light);
-  --hex-fg-on-primary: #1a1303;
+  --hex-fg-on-primary: var(--hex-color-background);
 
   --hex-border:        var(--hex-color-section);
   --hex-border-strong: #2a4d80;
@@ -78,6 +90,19 @@ export const tokensCss = /* css */ `
   --hex-shadow-popover: 0 8px 28px rgba(0, 0, 0, 0.40);
   --hex-shadow-sunken:  inset 0 1px 0 rgba(0, 0, 0, 0.30);
   --hex-shadow-focus:   0 0 0 2px rgba(232, 196, 70, 0.45);
+  --hex-shadow-focus-danger: 0 0 0 2px rgba(224, 123, 107, 0.35);
+
+  --hex-raise-depth: 4px;
+  --hex-raise-press: 2px;
+
+  --hex-z-behind:   -1;
+  --hex-z-base:      0;
+  --hex-z-sticky:  100;
+  --hex-z-dropdown: 200;
+  --hex-z-overlay: 300;
+  --hex-z-modal:   400;
+  --hex-z-popover: 500;
+  --hex-z-toast:   600;
 
   --hex-font-family: Verdana, "Noto Sans", "Helvetica Neue", Arial, sans-serif;
   --hex-font-logo:   "Paulistana Ipe", Verdana, "Noto Sans", sans-serif;

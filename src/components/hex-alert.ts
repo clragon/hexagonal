@@ -41,25 +41,25 @@ export class HexAlert extends HexElement {
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
         font-size: var(--hex-fs-md);
         --alert-color: var(--hex-color-secondary);
-        background: rgba(180, 199, 217, 0.12);
+        background: var(--hex-bg-muted);
         border-left-color: var(--alert-color);
         color: var(--alert-color);
       }
       :host([variant="success"]) {
         --alert-color: var(--hex-color-success);
-        background: rgba(107, 191, 122, 0.15);
+        background: var(--hex-bg-success);
       }
       :host([variant="error"]) {
         --alert-color: var(--hex-color-danger);
-        background: rgba(224, 123, 107, 0.15);
+        background: var(--hex-bg-danger);
       }
       :host([variant="warning"]) {
         --alert-color: var(--hex-color-primary);
-        background: rgba(232, 196, 70, 0.12);
+        background: var(--hex-bg-warning);
       }
       :host([variant="info"]) {
         --alert-color: var(--hex-color-secondary);
-        background: rgba(180, 199, 217, 0.12);
+        background: var(--hex-bg-muted);
       }
 
       .icon {
