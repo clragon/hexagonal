@@ -39,7 +39,7 @@
     "fmt:check": "oxfmt --check src scripts",
     "lint": "oxlint src",
     "lint:fix": "oxlint --fix src",
-    "check": "yarn fmt:check && yarn lint && yarn typecheck",
+    "verify": "yarn fmt:check && yarn lint && yarn typecheck",
     "serve": "node scripts/serve.mjs",
     "dev": "node scripts/dev.mjs",
     "test": "vitest run",
