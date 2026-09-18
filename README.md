@@ -15,21 +15,10 @@ A design for a blue honeycomb world.
 </hex-page>
 ```
 
-Each release uploads under its own version and caches immutably, so a pinned
-version stays byte-identical.
+The bundle defines the `--hex-*` tokens on `:root`.
 
-Importing the bundle:
-
-- registers every `<hex-*>` custom element
-- injects the design tokens onto `:root`, so consumer CSS can use `var(--hex-*)`
-- inlines the brand textures as base64 data URIs
-
-The bundle injects tokens at runtime, so CSS that runs before the script cannot
-use `var(--hex-*)`.
-
-The fonts stylesheet embeds Verdana for body text and Paulistana Ipe for the
-wordmark. It costs 120 KB gzipped, against 34 KB for the bundle itself. Omitting
-it leaves body text to the Verdana installed on the machine.
+The fonts stylesheet embeds Verdana and the wordmark face. It costs 120 KB
+gzipped, against 34 KB for the bundle.
 
 ```html
 <link rel="stylesheet" href="https://libs.cdn.clynamic.net/hexagonal/0.2.0/hexagonal-fonts.css" />
@@ -37,28 +26,15 @@ it leaves body text to the Verdana installed on the machine.
 
 ## The first paint
 
-A page that renders before the bundle evaluates starts blank and then shifts.
-
-Tokens arrive with the bundle, so the page renders white until the script runs.
-Linking the tokens supplies the palette earlier:
+Before the bundle evaluates the page has no palette and no component sizes, so it
+renders white and then shifts. The tokens and preflight stylesheets cover that
+window:
 
 ```html
 <link rel="stylesheet" href="https://libs.cdn.clynamic.net/hexagonal/0.2.0/hexagonal-tokens.css" />
+<link rel="stylesheet" href="https://libs.cdn.clynamic.net/hexagonal/0.2.0/hexagonal-preflight.css" />
 <style>html { background: var(--hex-color-background) }</style>
 ```
-
-The bundle detects tokens that are already present and leaves them alone, so
-linking the stylesheet costs nothing beyond the request.
-
-Custom elements have no size until their definition loads, so content shifts when
-they upgrade. `preflight.css` holds that space with measured values:
-
-```html
-<link rel="stylesheet" href="https://libs.cdn.clynamic.net/hexagonal/0.2.0/hexagonal-preflight.css" />
-```
-
-It carries literal values, so it works on its own. Each rule stops applying as
-soon as that element is defined.
 
 ## Components
 
@@ -75,17 +51,14 @@ soon as that element is defined.
 
 These four slot into a parent: `hex-listbox` `hex-menu-item` `hex-option` `hex-radio`.
 
-
-
-`yarn dev` serves the component book, which carries props, guidance and live
-examples.
+The component book carries props, guidance and live examples:
+<https://clragon.github.io/hexagonal/>. `yarn dev` serves it locally.
 
 ## Rendering DText
 
 `dmark` emits ordinary HTML carrying `dtext-*` classes. Wrap it in `<hex-markup>`
 for typography, and pass `dmarkHandlers` to its renderer so quotes, spoilers,
-sections and code render as components carrying their own reveal, collapse and
-keyboard behaviour.
+sections and code render as components.
 
 ```js
 import { renderAstToHtml, htmlHandlers } from "@clynamic/dmark";
@@ -96,9 +69,8 @@ const html = renderAstToHtml(ast, { ...htmlHandlers, ...dmarkHandlers });
 
 ## Extending
 
-Build a component in the same style by extending the exported bases. Lit's
-authoring primitives are re-exported, so extenders skip installing lit and the
-page holds one copy.
+Build a component in the same style by extending the exported bases. Import
+lit's `html` and `css` from hexagonal instead of installing lit.
 
 ```js
 import { HexFieldElement, html, css } from "hexagonal";
@@ -142,21 +114,6 @@ yarn test:all       # both
 yarn test:mutation  # stryker over the component suite
 ```
 
-Tests run in a real browser because these components depend on shadow DOM,
-`ElementInternals`, the popover top layer and layout. jsdom has no layout engine
-and cannot measure geometry.
-
 The toolchain is Lit 3 and TypeScript, bundled by esbuild, with tsc emitting
 declarations. oxlint and oxfmt handle lint and format, vitest and playwright run
-the tests, and stryker mutates them.
-
-## Output
-
-- `dist/hexagonal.js`: ESM bundle carrying the Lit runtime and every element. Injects tokens on import.
-- `dist/hexagonal.min.js`: the minified build
-- `dist/hexagonal-tokens.css`: the design tokens, for use before the bundle loads
-- `dist/hexagonal-preflight.css`: the layout-shift reservations described above
-- `dist/hexagonal-fonts.css`: optional bundled brand fonts
-- `dist/types/`: the `.d.ts` declarations
-
-`yarn build` prints the current bundle sizes.
+the tests in a real browser, and stryker mutates them.
