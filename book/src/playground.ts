@@ -382,7 +382,10 @@ export class BookPlayground extends LitElement {
             <input
               type="number"
               .value=${String(v ?? "")}
-              @input=${(e: Event) => this.updateValue(p.name, Number((e.target as HTMLInputElement).value))}
+              @input=${(e: Event) => {
+                const raw = (e.target as HTMLInputElement).value;
+                this.updateValue(p.name, raw === "" ? "" : Number(raw));
+              }}
             />
           </div>
         `;

@@ -251,7 +251,7 @@ export const components: ComponentEntry[] = [
       { name: "hint", kind: "text", default: "" },
       { name: "error", kind: "text", default: "" },
       { name: "rows", kind: "number", default: 6 },
-      { name: "maxlength", kind: "number", default: 0 },
+      { name: "maxlength", kind: "number", default: "" },
       { name: "counter", kind: "boolean", default: false },
       { name: "required", kind: "boolean", default: false },
       { name: "disabled", kind: "boolean", default: false },
@@ -555,7 +555,7 @@ export const components: ComponentEntry[] = [
         default: "artist",
       },
       { name: "variant", kind: "select", options: ["chip", "row"], default: "chip" },
-      { name: "count", kind: "number", default: 0 },
+      { name: "count", kind: "number", default: "" },
     ],
   },
   {
