@@ -279,3 +279,24 @@ test("the provider chooses what the matched run is highlighted against", async (
   await option?.updateComplete;
   expect(option?.renderRoot.querySelector("mark")?.textContent).toBe("be");
 });
+
+test("a count reaches the option as compact trailing content", async () => {
+  const el = await field({
+    search: () => [
+      { value: "wolf", count: 88400 },
+      { value: "patreon", count: 0 },
+      { value: "fox" },
+    ],
+  });
+  type(el, "wo");
+  await tick(20);
+
+  const options = [...el.renderRoot.querySelectorAll("hex-option")];
+  const trailing = options.map(
+    (o) => o.querySelector('[slot="trailing"]')?.textContent?.trim() ?? null,
+  );
+
+  expect(trailing[0], "88400 should read as compact notation").toBe("88.4K");
+  expect(trailing[1], "a zero count is a count, not an absent one").toBe("0");
+  expect(trailing[2], "an item with no count gets no trailing node").toBeNull();
+});

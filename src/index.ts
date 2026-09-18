@@ -98,7 +98,6 @@ export { HexLogo } from "./components/hex-logo.js";
 export { HexMenuItem } from "./components/hex-menu-item.js";
 export { HexMenu } from "./components/hex-menu.js";
 export { HexOption } from "./components/hex-option.js";
-export type { HexOptionCategory } from "./components/hex-option.js";
 export { HexPage } from "./components/hex-page.js";
 export { HexPopover } from "./components/hex-popover.js";
 export type { HexPopoverPlacement, HexPopoverAlign } from "./components/hex-popover.js";

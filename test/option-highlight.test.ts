@@ -70,25 +70,40 @@ test("only the first occurrence is marked", async () => {
   expect(marks[0]?.textContent).toBe("na");
 });
 
-test("a count renders in compact notation and is omitted when unset", async () => {
-  const withCount = await option({ label: "wolf", count: 88400 });
-  expect(withCount.renderRoot.querySelector(".count")?.textContent?.trim()).toBe("88.4K");
+async function optionWithTrailing(inner: string) {
+  const el = document.createElement("hex-option") as HexOption;
+  el.label = "wolf";
+  el.innerHTML = inner;
+  document.body.append(el);
+  mounted.push(el);
+  await el.updateComplete;
+  await new Promise((r) => setTimeout(r, 0));
+  return el;
+}
 
-  const without = await option({ label: "wolf" });
-  expect(without.renderRoot.querySelector(".count")).toBeNull();
+test("the trailing slot stays hidden until something is slotted into it", async () => {
+  const empty = await optionWithTrailing("");
+  const slot = empty.renderRoot.querySelector(".trailing") as HTMLElement;
+  expect(slot.hidden, "an empty trailing slot must not reserve its gap").toBe(true);
+
+  const filled = await optionWithTrailing(`<span slot="trailing">88.4K</span>`);
+  const filledSlot = filled.renderRoot.querySelector(".trailing") as HTMLElement;
+  expect(filledSlot.hidden).toBe(false);
+  expect(
+    (filledSlot.querySelector("slot") as HTMLSlotElement).assignedNodes({ flatten: true }).length,
+  ).toBe(1);
 });
 
-test("a zero count still renders rather than being treated as absent", async () => {
-  const el = await option({ label: "wolf", count: 0 });
-  expect(el.renderRoot.querySelector(".count")?.textContent?.trim()).toBe("0");
-});
+test("a trailing node does not disturb the label or its highlight", async () => {
+  const el = document.createElement("hex-option") as HexOption;
+  el.label = "banana";
+  el.match = "nan";
+  el.innerHTML = `<span slot="trailing">12</span>`;
+  document.body.append(el);
+  mounted.push(el);
+  await el.updateComplete;
 
-test("an antecedent renders alongside the label and is omitted when unset", async () => {
-  const withAnte = await option({ label: "canine", antecedent: "dog" });
-  expect(withAnte.renderRoot.querySelector(".antecedent")?.textContent?.trim()).toBe("dog");
-
-  const without = await option({ label: "canine" });
-  expect(without.renderRoot.querySelector(".antecedent")).toBeNull();
+  expect(parts(el)).toEqual({ text: "banana", marked: "nan" });
 });
 
 test("text falls back through label, slotted content, then value", async () => {

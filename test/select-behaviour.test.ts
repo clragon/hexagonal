@@ -185,25 +185,23 @@ test("options added after mount are picked up", async () => {
   expect(el.renderRoot.querySelectorAll("hex-option")).toHaveLength(2);
 });
 
-test("plain options carry category and count through data attributes", async () => {
-  const el = await select(
-    `<option value="wolf" data-category="species" data-count="88400">wolf</option>`,
-  );
+test("a plain option carries its value, text and disabled state", async () => {
+  const el = await select(`<option value="wolf" disabled>Grey wolf</option>`);
   const option = el.renderRoot.querySelector("hex-option")!;
 
-  expect(option.getAttribute("category")).toBe("species");
-  expect(option.getAttribute("count")).toBe("88400");
+  expect(option.getAttribute("value")).toBe("wolf");
+  expect(option.getAttribute("label")).toBe("Grey wolf");
+  expect(option.hasAttribute("disabled")).toBe(true);
 });
 
 test("rich option children are used in place of plain options", async () => {
   const el = await select(
-    `<hex-option value="wolf" label="wolf" category="species" count="88400" antecedent="canis"></hex-option>`,
+    `<hex-option value="wolf" label="Grey wolf"></hex-option><option value="fox">Fox</option>`,
   );
-  const option = el.renderRoot.querySelector("hex-option")!;
+  const options = el.renderRoot.querySelectorAll("hex-option");
 
-  expect(option.getAttribute("label")).toBe("wolf");
-  expect(option.getAttribute("category")).toBe("species");
-  expect(option.getAttribute("antecedent")).toBe("canis");
+  expect(options).toHaveLength(1);
+  expect(options[0]!.getAttribute("label")).toBe("Grey wolf");
 });
 
 test("the trigger points at the option it has highlighted", async () => {

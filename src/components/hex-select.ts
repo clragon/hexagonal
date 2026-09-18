@@ -7,16 +7,13 @@ import "./hex-listbox.js";
 import "./hex-option.js";
 import "./hex-popover.js";
 import type { HexListbox, HexListboxSelectDetail } from "./hex-listbox.js";
-import type { HexOption, HexOptionCategory } from "./hex-option.js";
+import type { HexOption } from "./hex-option.js";
 import type { HexPopover } from "./hex-popover.js";
 
 interface OptionData {
   value: string;
   label: string;
   disabled: boolean;
-  category?: HexOptionCategory;
-  count?: number;
-  antecedent?: string;
 }
 
 @customElement("hex-select")
@@ -145,24 +142,15 @@ export class HexSelect extends HexFieldElement {
         value: opt.getAttribute("value") ?? "",
         label: opt.getAttribute("label") ?? (opt.textContent ?? "").trim(),
         disabled: opt.hasAttribute("disabled"),
-        category: (opt.getAttribute("category") as HexOptionCategory | null) ?? undefined,
-        count: opt.hasAttribute("count") ? Number(opt.getAttribute("count")) : undefined,
-        antecedent: opt.getAttribute("antecedent") ?? undefined,
       }));
       return;
     }
     const lightOptions = Array.from(this.querySelectorAll<HTMLOptionElement>("option"));
-    this.opts = lightOptions.map((opt) => {
-      const count = opt.dataset.count;
-      return {
-        value: opt.value || (opt.textContent ?? "").trim(),
-        label: (opt.textContent ?? "").trim(),
-        disabled: opt.disabled,
-        category: opt.dataset.category as HexOptionCategory | undefined,
-        count: count === undefined ? undefined : Number(count),
-        antecedent: opt.dataset.antecedent,
-      };
-    });
+    this.opts = lightOptions.map((opt) => ({
+      value: opt.value || (opt.textContent ?? "").trim(),
+      label: (opt.textContent ?? "").trim(),
+      disabled: opt.disabled,
+    }));
   }
 
   private get selected(): OptionData | undefined {
@@ -364,14 +352,7 @@ export class HexSelect extends HexFieldElement {
         >
           ${this.opts.map(
             (o) => html`
-              <hex-option
-                value=${o.value}
-                label=${o.label}
-                category=${ifDefined(o.category)}
-                count=${ifDefined(o.count)}
-                antecedent=${ifDefined(o.antecedent)}
-                ?disabled=${o.disabled}
-              ></hex-option>
+              <hex-option value=${o.value} label=${o.label} ?disabled=${o.disabled}></hex-option>
             `,
           )}
         </hex-listbox>

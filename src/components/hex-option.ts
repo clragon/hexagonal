@@ -1,14 +1,6 @@
-import { html, css, nothing, type TemplateResult } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { html, css, type TemplateResult } from "lit";
+import { customElement, property, state } from "lit/decorators.js";
 import { HexElement } from "../shared/base.js";
-import type { HexTagCategory } from "./hex-tag.js";
-
-export type HexOptionCategory = HexTagCategory | "user" | "pool" | "wiki" | "metatag";
-
-const compact = new Intl.NumberFormat(undefined, {
-  notation: "compact",
-  maximumFractionDigits: 1,
-});
 
 @customElement("hex-option")
 export class HexOption extends HexElement {
@@ -23,7 +15,6 @@ export class HexOption extends HexElement {
       :host {
         display: block;
         cursor: pointer;
-        --_hex-option-color: var(--hex-fg-1);
       }
       .row {
         display: flex;
@@ -33,7 +24,7 @@ export class HexOption extends HexElement {
         font-size: var(--hex-fs-md);
         line-height: var(--hex-line-normal);
         white-space: nowrap;
-        color: var(--_hex-option-color);
+        color: var(--hex-option-color, var(--hex-fg-1));
       }
       :host([active]) .row,
       :host(:hover) .row {
@@ -54,20 +45,16 @@ export class HexOption extends HexElement {
         overflow: hidden;
         text-overflow: ellipsis;
       }
-      .count {
+      .trailing {
         flex: 0 0 auto;
+        display: flex;
+        align-items: center;
+        gap: var(--hex-space-2);
         font-size: var(--hex-fs-xs);
         color: var(--hex-fg-2);
-        font-variant-numeric: tabular-nums;
       }
-      .antecedent {
-        flex: 0 0 auto;
-        color: var(--hex-fg-2);
-        text-decoration: line-through;
-      }
-      .arrow {
-        flex: 0 0 auto;
-        color: var(--hex-fg-2);
+      .trailing[hidden] {
+        display: none;
       }
       mark {
         background: transparent;
@@ -76,48 +63,21 @@ export class HexOption extends HexElement {
         text-decoration: underline;
         text-underline-offset: 2px;
       }
-      :host([category="artist"]) {
-        --_hex-option-color: var(--hex-tag-artist);
-      }
-      :host([category="copyright"]) {
-        --_hex-option-color: var(--hex-tag-copyright);
-      }
-      :host([category="character"]) {
-        --_hex-option-color: var(--hex-tag-character);
-      }
-      :host([category="species"]) {
-        --_hex-option-color: var(--hex-tag-species);
-      }
-      :host([category="general"]) {
-        --_hex-option-color: var(--hex-tag-general);
-      }
-      :host([category="meta"]) {
-        --_hex-option-color: var(--hex-tag-meta);
-      }
-      :host([category="lore"]) {
-        --_hex-option-color: var(--hex-tag-lore);
-      }
-      :host([category="invalid"]) {
-        --_hex-option-color: var(--hex-tag-invalid);
-      }
-      :host([category="contributor"]) {
-        --_hex-option-color: var(--hex-tag-contributor);
-      }
-      :host([category="metatag"]) {
-        --_hex-option-color: var(--hex-fg-2);
-      }
     `,
   ];
 
   @property({ type: String, reflect: true }) value = "";
   @property({ type: String }) label = "";
-  @property({ type: Number }) count?: number;
-  @property({ type: String, reflect: true }) category?: HexOptionCategory;
-  @property({ type: String }) antecedent?: string;
   @property({ type: String }) match = "";
   @property({ type: Boolean, reflect: true }) disabled = false;
   @property({ type: Boolean, reflect: true }) selected = false;
   @property({ type: Boolean, reflect: true }) active = false;
+
+  @state() private hasTrailing = false;
+
+  private readonly onTrailingSlot = (e: Event): void => {
+    this.hasTrailing = (e.target as HTMLSlotElement).assignedNodes({ flatten: true }).length > 0;
+  };
 
   override connectedCallback(): void {
     super.connectedCallback();
@@ -150,16 +110,12 @@ export class HexOption extends HexElement {
   override render() {
     return html`
       <div class="row" part="base">
-        ${this.antecedent
-          ? html`<span class="antecedent" part="antecedent">${this.antecedent}</span>
-              <span class="arrow" aria-hidden="true">&rarr;</span>`
-          : nothing}
         <span class="label" part="label"
           >${this.label ? this.highlighted(this.label) : html`<slot></slot>`}</span
         >
-        ${this.count === undefined
-          ? nothing
-          : html`<span class="count" part="count">${compact.format(this.count)}</span>`}
+        <span class="trailing" part="trailing" ?hidden=${!this.hasTrailing}>
+          <slot name="trailing" @slotchange=${this.onTrailingSlot}></slot>
+        </span>
       </div>
     `;
   }

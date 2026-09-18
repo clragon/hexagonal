@@ -8,15 +8,12 @@ import "./hex-option.js";
 import "./hex-popover.js";
 import "./hex-spinner.js";
 import type { HexListbox, HexListboxSelectDetail } from "./hex-listbox.js";
-import type { HexOptionCategory } from "./hex-option.js";
 import type { HexPopover } from "./hex-popover.js";
 
 export interface HexAutocompleteItem {
   value: string;
   label?: string;
   count?: number;
-  category?: HexOptionCategory;
-  antecedent?: string;
   disabled?: boolean;
   data?: unknown;
 }
@@ -36,6 +33,11 @@ export interface HexAutocompleteProvider {
   insert?(input: HTMLInputElement, item: HexAutocompleteItem): void;
   renderOption?(item: HexAutocompleteItem, index: number): TemplateResult;
 }
+
+const compactCount = new Intl.NumberFormat(undefined, {
+  notation: "compact",
+  maximumFractionDigits: 1,
+});
 
 const DEFAULT_DELAY = 225;
 const BLUR_GRACE = 150;
@@ -461,13 +463,14 @@ export class HexAutocomplete extends HexFieldElement {
               <hex-option
                 value=${item.value}
                 label=${custom ? "" : (item.label ?? item.value)}
-                category=${ifDefined(item.category)}
-                antecedent=${ifDefined(item.antecedent)}
-                count=${ifDefined(item.count)}
                 match=${this.term}
                 ?disabled=${item.disabled ?? false}
-                >${custom ?? nothing}</hex-option
               >
+                ${custom ?? nothing}
+                ${item.count === undefined
+                  ? nothing
+                  : html`<span slot="trailing">${compactCount.format(item.count)}</span>`}
+              </hex-option>
             `;
           })}
         </hex-listbox>
