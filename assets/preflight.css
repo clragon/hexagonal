@@ -19,13 +19,10 @@ hex-button:not(:defined),
 hex-checkbox:not(:defined),
 hex-chexagon:not(:defined),
 hex-chip:not(:defined),
-hex-code:not(:defined),
 hex-icon:not(:defined),
-hex-kbd:not(:defined),
 hex-logo:not(:defined),
 hex-radio:not(:defined),
 hex-spinner:not(:defined),
-hex-spoiler:not(:defined),
 hex-status-pill:not(:defined),
 hex-switch:not(:defined),
 hex-tag:not(:defined),
@@ -108,9 +105,6 @@ hex-chexagon:not(:defined) {
 hex-chip:not(:defined) {
   min-height: 24px;
 }
-hex-code:not(:defined) {
-  min-height: 14px;
-}
 hex-divider:not(:defined) {
   min-height: 1px;
 }
@@ -157,9 +151,6 @@ hex-skeleton:not(:defined) {
 hex-spinner:not(:defined) {
   width: 16px;
   height: 16px;
-}
-hex-spoiler:not(:defined) {
-  min-height: 18px;
 }
 hex-status-pill:not(:defined) {
   min-height: 17px;
@@ -329,4 +320,21 @@ hex-quote:not(:defined) {
 hex-tag[variant="row"]:not(:defined) {
   display: flex;
   width: fit-content;
+}
+
+hex-code:not(:defined),
+hex-spoiler:not(:defined) {
+  display: inline;
+}
+
+hex-code:not(:defined) {
+  font-family: "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  padding: 1px 6px;
+  border: 1px solid transparent;
+}
+
+hex-kbd:not(:defined) {
+  display: inline-block;
+  vertical-align: baseline;
 }

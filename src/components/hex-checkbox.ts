@@ -10,6 +10,7 @@ export class HexCheckbox extends HexFormElement {
     css`
       :host {
         display: inline-flex;
+        vertical-align: middle;
       }
       label {
         display: inline-flex;

@@ -14,6 +14,7 @@ export class HexUsername extends HexElement {
     css`
       :host {
         display: inline-flex;
+        vertical-align: middle;
         align-items: baseline;
         gap: 4px;
         font-weight: var(--hex-font-weight-bold);

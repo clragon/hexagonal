@@ -19,6 +19,7 @@ export class HexIcon extends HexElement {
     css`
       :host {
         display: inline-flex;
+        vertical-align: middle;
         flex-shrink: 0;
         line-height: 0;
         color: currentColor;

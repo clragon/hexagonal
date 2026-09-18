@@ -17,6 +17,7 @@ export class HexSwitch extends HexFormElement {
     css`
       :host {
         display: inline-flex;
+        vertical-align: middle;
       }
       label {
         display: inline-flex;

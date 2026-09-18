@@ -13,6 +13,7 @@ export class HexChip extends HexElement {
     css`
       :host {
         display: inline-flex;
+        vertical-align: middle;
         align-items: center;
         gap: 6px;
         font-size: var(--hex-fs-sm);

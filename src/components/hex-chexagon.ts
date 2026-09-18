@@ -12,6 +12,7 @@ export class HexChexagon extends HexElement {
     css`
       :host {
         display: inline-flex;
+        vertical-align: middle;
         line-height: 0;
       }
       svg {

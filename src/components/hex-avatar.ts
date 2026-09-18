@@ -25,6 +25,7 @@ export class HexAvatar extends HexElement {
     css`
       :host {
         display: inline-flex;
+        vertical-align: middle;
         --_hex-av-color: var(--hex-role-member);
         color: var(--_hex-av-color);
       }
