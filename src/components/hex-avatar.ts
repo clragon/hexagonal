@@ -89,11 +89,11 @@ export class HexAvatar extends HexElement {
     const fontSize = this.fontFor(this.size);
     return html`
       <div
-        class="sq"
+        class="sq" part="sq"
         style=${`width:${px}px;height:${px}px;border-radius:${radius}px;font-size:${fontSize}px;`}
       >
         ${this.src
-          ? html`<img src=${this.src} alt=${this.alt} />`
+          ? html`<img part="image" src=${this.src} alt=${this.alt} />`
           : html`${this.initials.slice(0, 2).toUpperCase()}`}
       </div>
     `;

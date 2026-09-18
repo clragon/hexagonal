@@ -105,7 +105,7 @@ export class HexTooltip extends HexElement {
         arrow
         distance="6"
       >
-        <div class="body" role="tooltip"><slot></slot></div>
+        <div class="body" part="body" role="tooltip"><slot></slot></div>
       </hex-popover>
     `;
   }

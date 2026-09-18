@@ -86,7 +86,7 @@ export class HexSection extends HexElement {
   override render() {
     return html`
       <div
-        class="header"
+        class="header" part="header"
         @click=${this.toggle}
         @keydown=${this.onKey}
         role="button"
@@ -94,9 +94,9 @@ export class HexSection extends HexElement {
         aria-expanded=${this.open}
         aria-controls="body"
       >
-        <div class="title">
+        <div class="title" part="title">
           <svg
-            class="chev"
+            class="chev" part="chev"
             width="14"
             height="14"
             viewBox="0 0 24 24"
@@ -113,8 +113,8 @@ export class HexSection extends HexElement {
         </div>
         <slot name="trailing"></slot>
       </div>
-      <div id="body" class="body" role="region">
-        <div class="content"><slot></slot></div>
+      <div id="body" class="body" part="body" role="region">
+        <div class="content" part="content"><slot></slot></div>
       </div>
     `;
   }

@@ -57,7 +57,7 @@ export class HexIcon extends HexElement {
       : null;
     if (!path) {
       return html`
-        <div class="slotted" style="width:${this.size}px;height:${this.size}px">
+        <div class="slotted" part="slotted" style="width:${this.size}px;height:${this.size}px">
           <slot></slot>
         </div>
       `;

@@ -147,13 +147,14 @@ export class HexDialog extends HexElement {
   override render() {
     return html`
       <dialog
+        part="base"
         role=${this.noClose ? "alertdialog" : "dialog"}
         aria-labelledby="heading"
         @close=${this.onClose}
         @click=${this.onClick}
       >
-        <div class="header">
-          <div id="heading" class="heading"><slot name="heading"></slot></div>
+        <div class="header" part="header">
+          <div id="heading" class="heading" part="heading"><slot name="heading"></slot></div>
           ${this.noClose
             ? nothing
             : html`
@@ -168,8 +169,8 @@ export class HexDialog extends HexElement {
                 ></hex-button>
               `}
         </div>
-        <div class="body"><slot></slot></div>
-        <div class="actions" ?hidden=${!this.hasActions}>
+        <div class="body" part="body"><slot></slot></div>
+        <div class="actions" part="actions" ?hidden=${!this.hasActions}>
           <slot
             name="actions"
             @slotchange=${(e: Event) => {

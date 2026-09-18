@@ -101,7 +101,7 @@ export class HexCheckbox extends HexFormElement {
           ?required=${this.required}
           @change=${this.onToggle}
         />
-        <span class="box">
+        <span class="box" part="box">
           ${this.checked ? html`<hex-icon name="check" size="13" stroke-width="3"></hex-icon>` : ""}
         </span>
         <slot></slot>

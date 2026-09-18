@@ -137,19 +137,19 @@ export class HexAlert extends HexElement {
   override render() {
     const iconName = VARIANT_ICON[this.variant];
     return html`
-      <span class="icon"><hex-icon name=${iconName} size="18" stroke-width="2"></hex-icon></span>
-      <div class="content">
+      <span class="icon" part="icon"><hex-icon name=${iconName} size="18" stroke-width="2"></hex-icon></span>
+      <div class="content" part="content">
         <div class="heading ${this.headingHasContent() ? "" : "empty"}">
           <slot name="heading" @slotchange=${() => this.requestUpdate()}></slot>
         </div>
-        <div class="msg"><slot></slot></div>
+        <div class="msg" part="msg"><slot></slot></div>
       </div>
-      <div class="actions"><slot name="actions"></slot></div>
+      <div class="actions" part="actions"><slot name="actions"></slot></div>
       ${this.noClose
         ? nothing
         : html`
             <hex-button
-              class="close"
+              class="close" part="close"
               variant="ghost"
               size="sm"
               icon-only

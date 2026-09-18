@@ -67,7 +67,7 @@ export class HexChip extends HexElement {
     return html`
       <slot></slot>
       ${this.removable
-        ? html`<span class="remove" @click=${this.onRemove}
+        ? html`<span class="remove" part="remove" @click=${this.onRemove}
             ><hex-icon name="close" size="11"></hex-icon
           ></span>`
         : nothing}

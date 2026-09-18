@@ -87,7 +87,7 @@ export class HexSpoiler extends HexElement {
   }
 
   override render() {
-    return html`<span class="content" ?inert=${!this.revealed}><slot></slot></span>`;
+    return html`<span class="content" part="content" ?inert=${!this.revealed}><slot></slot></span>`;
   }
 }
 

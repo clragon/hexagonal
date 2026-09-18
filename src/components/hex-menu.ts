@@ -141,7 +141,7 @@ export class HexMenu extends HexElement {
         dismiss="auto"
         @hex-close=${this.onPopoverClose}
       >
-        <div class="list" role="menu" @keydown=${this.onPanelKeydown}>
+        <div class="list" part="list" role="menu" @keydown=${this.onPanelKeydown}>
           <slot></slot>
         </div>
       </hex-popover>

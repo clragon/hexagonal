@@ -201,7 +201,7 @@ export class HexListbox extends HexElement {
   override render() {
     return html`
       <slot @slotchange=${this.onSlotChange} @click=${this.onClick}></slot>
-      <div class="empty" ?hidden=${this.count > 0 || !this.empty}>${this.empty}</div>
+      <div class="empty" part="empty" ?hidden=${this.count > 0 || !this.empty}>${this.empty}</div>
     `;
   }
 }

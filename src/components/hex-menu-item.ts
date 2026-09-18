@@ -76,7 +76,7 @@ export class HexMenuItem extends HexElement {
   override render() {
     return html`
       <button
-        class="item"
+        class="item" part="item"
         type="button"
         role="menuitem"
         tabindex="-1"

@@ -122,17 +122,17 @@ export class HexSkeleton extends HexElement {
     const style = this.barStyle();
     const probe = html`<slot @slotchange=${this.onSlotChange}></slot>`;
     if (this.hasContent) {
-      return html`<span class="text">${probe}</span>`;
+      return html`<span class="text" part="text">${probe}</span>`;
     }
     if (this.shape === "text" && this.lines > 1) {
       return html`
-        <div class="stack">
-          ${Array.from({ length: this.lines }, () => html`<div class="bar" style=${style}></div>`)}
+        <div class="stack" part="stack">
+          ${Array.from({ length: this.lines }, () => html`<div class="bar" part="bar" style=${style}></div>`)}
           <span hidden>${probe}</span>
         </div>
       `;
     }
-    return html`<div class="bar" style=${style}></div>
+    return html`<div class="bar" part="bar" style=${style}></div>
       <span hidden>${probe}</span>`;
   }
 }

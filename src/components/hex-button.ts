@@ -305,6 +305,7 @@ export class HexButton extends HexElement {
     const iconSize = this.size === "lg" ? 16 : 14;
     return html`
       <button
+        part="base"
         type=${this.type}
         ?disabled=${this.disabled}
         aria-busy=${this.loading ? "true" : "false"}

@@ -120,7 +120,7 @@ export class HexSwitch extends HexFormElement {
           ?disabled=${this.disabled}
           @change=${this.onToggle}
         />
-        <span class="track"><span class="thumb"></span></span>
+        <span class="track" part="track"><span class="thumb" part="thumb"></span></span>
         <slot></slot>
       </label>
     `;

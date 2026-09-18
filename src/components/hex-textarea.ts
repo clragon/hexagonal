@@ -139,6 +139,7 @@ export class HexTextarea extends HexFormElement {
     return html`
       ${this.label ? html`<label for="ta">${this.label}</label>` : nothing}
       <textarea
+          part="control"
         id="ta"
         .value=${this.value}
         rows=${this.rows}
@@ -152,14 +153,14 @@ export class HexTextarea extends HexFormElement {
         @input=${this.onInput}
         @change=${this.onChange}
       ></textarea>
-      <div class="footer">
+      <div class="footer" part="footer">
         ${this.error
-          ? html`<div id="error" class="error" role="alert">${this.error}</div>`
+          ? html`<div id="error" class="error" part="error" role="alert">${this.error}</div>`
           : this.hint
-            ? html`<div id="hint" class="hint">${this.hint}</div>`
+            ? html`<div id="hint" class="hint" part="hint">${this.hint}</div>`
             : nothing}
         ${this.counter && this.maxLength !== undefined
-          ? html`<div class="counter" ?data-over=${over} aria-live="polite">
+          ? html`<div class="counter" part="counter" ?data-over=${over} aria-live="polite">
               ${this.value.length} / ${this.maxLength}
             </div>`
           : nothing}

@@ -58,7 +58,7 @@ export class HexStatusPill extends HexElement {
   @property({ type: String, reflect: true }) status: HexStatus = "idle";
 
   override render() {
-    return html`<span class="dot"></span>${STATUS_LABELS[this.status] ?? STATUS_LABELS.idle}`;
+    return html`<span class="dot" part="dot"></span>${STATUS_LABELS[this.status] ?? STATUS_LABELS.idle}`;
   }
 }
 

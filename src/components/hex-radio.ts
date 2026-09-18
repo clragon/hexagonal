@@ -110,7 +110,7 @@ export class HexRadio extends HexFormElement {
           ?disabled=${this.disabled}
           @change=${this.onSelect}
         />
-        <span class="dot"></span>
+        <span class="dot" part="dot"></span>
         <slot></slot>
       </label>
     `;
