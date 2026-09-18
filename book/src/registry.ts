@@ -82,16 +82,15 @@ export const components: ComponentEntry[] = [
       <div style="text-align: center; padding: 36px 24px; max-width: 560px; margin: 0 auto;">
         <hex-logo width="200"></hex-logo>
         <p style="margin: 14px 0 0; opacity: 0.85; line-height: 1.5; font-size: 13px;">
-          A dark, navy-on-amber design system anchored in a repeating hexagonal tile pattern.
-          Utilitarian, slightly technical, and content-first.
+          A dark design system for e621 surfaces. Amber on navy, anchored in a repeating
+          hexagonal tile, and built for dense pages of tags, text and thumbnails.
         </p>
       </div>`,
     previewSurface: "empty",
     previewHeight: 360,
     usage: [
       {
-        text: "Wrap a whole view. It paints the page background and the hexagon tile, so nothing below it needs to. Use one per view, not one per section.",
-        demo: '<hex-page style="min-height:110px;padding:12px"><hex-card style="padding:10px">Content</hex-card></hex-page>',
+        text: "Wrap a whole view. It paints the page background and the hexagon tile, so nothing below it needs to. Use one per view, not one per section. The preview above is the page itself, at full bleed; there is no sensible way to show a page surface inside a card.",
       },
     ],
     props: [],
