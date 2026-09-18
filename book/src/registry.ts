@@ -88,6 +88,12 @@ export const components: ComponentEntry[] = [
       </div>`,
     previewSurface: "empty",
     previewHeight: 360,
+    usage: [
+      {
+        text: "Wrap a whole view. It paints the page background and the hexagon tile, so nothing below it needs to. Use one per view, not one per section.",
+        demo: '<hex-page style="min-height:110px;padding:12px"><hex-card style="padding:10px">Content</hex-card></hex-page>',
+      },
+    ],
     props: [],
   },
   {
@@ -108,6 +114,16 @@ export const components: ComponentEntry[] = [
         Region us-east-1 &middot; 12 nodes &middot; Version 2.14.0
       </p>`,
     previewSurface: "page",
+    usage: [
+      {
+        text: "Group content that belongs together on one surface. A card is the default home for content; reach for it before inventing a container.",
+        demo: '<hex-card style="padding:14px;max-width:320px">Content on the standard surface.</hex-card>',
+      },
+      {
+        text: "Use **dense** in lists and rows where full padding wastes vertical space, and **flat** when a card sits inside another card and a second shadow would muddy the stack.",
+        demo: '<div style="display:flex;gap:10px"><hex-card dense style="padding:10px">Dense</hex-card><hex-card flat style="padding:10px">Flat</hex-card></div>',
+      },
+    ],
     props: [
       { name: "dense", kind: "boolean", default: false, description: "Drops padding to 16px for dense data." },
       { name: "flat", kind: "boolean", default: false, description: "Removes texture and shadow for nested cards." },
@@ -181,6 +197,16 @@ export const components: ComponentEntry[] = [
     group: "Form",
     previewHeight: 220,
     description: "Text input with optional label, hint, error, and leading icon.",
+    usage: [
+      {
+        text: "Always give it a **label**. A placeholder is not a label: it disappears the moment someone types, which is exactly when they need to check what the field wanted.",
+        demo: '<div style="width:280px"><hex-input label="Cluster name" placeholder="production-1"></hex-input></div>',
+      },
+      {
+        text: "Use **hint** for guidance that is always true, and **error** for what went wrong this time. Setting `error` marks the field invalid and announces the message.",
+        demo: '<div style="width:280px;display:flex;flex-direction:column;gap:10px"><hex-input label="Name" hint="Lowercase, no spaces"></hex-input><hex-input label="Name" value="Bad Name" error="Lowercase letters only"></hex-input></div>',
+      },
+    ],
     props: [
       { name: "label", kind: "text", default: "Cluster name" },
       { name: "placeholder", kind: "text", default: "prod-east-1" },
@@ -236,6 +262,16 @@ export const components: ComponentEntry[] = [
     group: "Form",
     description: "Boolean toggle with an inline label.",
     defaultSlot: "Enable autoscaling",
+    usage: [
+      {
+        text: "Use a checkbox for an option that stands alone, where the alternative is simply not choosing it. For a setting that applies the moment it is flipped, reach for **switch**.",
+        demo: '<hex-checkbox checked>Include archived</hex-checkbox>',
+      },
+      {
+        text: "Write the label as the **positive** outcome. A negative label makes the unchecked state a double negative, which nobody parses correctly under time pressure.",
+        demo: '<div style="display:flex;flex-direction:column;gap:8px"><hex-checkbox>Send notifications</hex-checkbox><hex-checkbox disabled>Unavailable option</hex-checkbox></div>',
+      },
+    ],
     props: [
       { name: "checked", kind: "boolean", default: false },
       { name: "disabled", kind: "boolean", default: false },
@@ -253,6 +289,16 @@ export const components: ComponentEntry[] = [
       <option value="us-west-2">US West (Oregon)</option>
       <option value="eu-west-1">EU West (Ireland)</option>
       <option value="ap-southeast-1">Asia Pacific (Singapore)</option>`,
+    usage: [
+      {
+        text: "Use a select once the options outgrow a radio group, roughly past five. Below that, showing every option at once costs less effort than opening a list.",
+        demo: '<div style="width:260px"><hex-select label="Region"><option value="eu">Europe</option><option value="us">North America</option><option value="ap">Asia Pacific</option></hex-select></div>',
+      },
+      {
+        text: "Give it a **placeholder** only when choosing nothing is valid. If a value is always required, preselect a sensible default rather than making people open the list to find one.",
+        demo: '<div style="width:260px"><hex-select label="Owner" placeholder="Unassigned"><option>Ada</option><option>Grace</option></hex-select></div>',
+      },
+    ],
     props: [
       { name: "label", kind: "text", default: "Region" },
       { name: "value", kind: "text", default: "" },
@@ -270,6 +316,16 @@ export const components: ComponentEntry[] = [
     description:
       "Toggle switch. Use for boolean settings where the on/off state is the point. The native checkbox underneath gets `role=\"switch\"` so assistive tech announces it correctly.",
     defaultSlot: "Enable telemetry",
+    usage: [
+      {
+        text: "Use a switch for a setting that **takes effect immediately**. If the change only applies once a form is submitted, use a checkbox, because a switch promises the change already happened.",
+        demo: '<hex-switch checked>Safe mode</hex-switch>',
+      },
+      {
+        text: "Label the thing being switched, not the action. Safe mode reads correctly in both states, where Enable safe mode reads as a button and goes wrong once it is already on.",
+        demo: '<div style="display:flex;flex-direction:column;gap:8px"><hex-switch>Compact rows</hex-switch><hex-switch checked disabled>Locked by policy</hex-switch></div>',
+      },
+    ],
     props: [
       { name: "checked", kind: "boolean", default: true },
       { name: "disabled", kind: "boolean", default: false },
@@ -286,6 +342,16 @@ export const components: ComponentEntry[] = [
       <hex-radio value="public">Public client</hex-radio>
       <hex-radio value="confidential">Confidential client</hex-radio>
       <hex-radio value="internal" disabled>Internal (disabled)</hex-radio>`,
+    usage: [
+      {
+        text: "Use a radio group when the options are few and worth comparing side by side. Every option stays visible, which is the whole advantage over a select.",
+        demo: '<hex-radio-group label="Visibility" name="vis" value="team"><hex-radio value="private">Private</hex-radio><hex-radio value="team">Team</hex-radio><hex-radio value="public">Public</hex-radio></hex-radio-group>',
+      },
+      {
+        text: "Use horizontal direction only for two or three short labels. Beyond that the eye loses the association between a label and its control.",
+        demo: '<hex-radio-group label="Sort" name="sort" value="new" direction="horizontal"><hex-radio value="new">Newest</hex-radio><hex-radio value="old">Oldest</hex-radio></hex-radio-group>',
+      },
+    ],
     props: [
       { name: "label", kind: "text", default: "Client type" },
       { name: "name", kind: "text", default: "client-type" },
@@ -326,6 +392,12 @@ export const components: ComponentEntry[] = [
     group: "Brand",
     previewHeight: 120,
     description: "Verification badge: hex shape with a checkmark, in the brand artist amber-orange.",
+    usage: [
+      {
+        text: "Use it beside a name or a tag that has been verified, never as decoration. The badge means a claim was checked, so it stops meaning anything if it appears without one.",
+        demo: '<span style="display:inline-flex;align-items:center;gap:6px">rowan <hex-chexagon></hex-chexagon></span>',
+      },
+    ],
     props: [
       { name: "size", kind: "number", default: 18 },
     ],
@@ -337,6 +409,16 @@ export const components: ComponentEntry[] = [
     previewHeight: 120,
     description: "Generic inline chip for filter tokens, removable selections, and small status pills.",
     defaultSlot: "filter: errors",
+    usage: [
+      {
+        text: "Use a chip for a filter or a selection the reader can act on. Use **tag** instead for category-coloured metadata, which is read rather than toggled.",
+        demo: '<div style="display:flex;gap:6px"><hex-chip interactive>All</hex-chip><hex-chip interactive active>Pending</hex-chip><hex-chip interactive>Approved</hex-chip></div>',
+      },
+      {
+        text: "Add **removable** when the chip represents something the reader added and can take back, such as an applied filter.",
+        demo: '<div style="display:flex;gap:6px"><hex-chip removable pill>status:open</hex-chip><hex-chip removable pill>owner:ada</hex-chip></div>',
+      },
+    ],
     props: [
       { name: "active", kind: "boolean", default: false },
       { name: "pill", kind: "boolean", default: false, description: "Switch to fully rounded shape." },
@@ -351,6 +433,16 @@ export const components: ComponentEntry[] = [
     previewHeight: 120,
     description: "Category-tinted tag with a colored dot, used in tag clouds and listings.",
     defaultSlot: "rowan",
+    usage: [
+      {
+        text: "Tags are **read, not pressed**. The colour is the meaning, so it comes from the category rather than from anything about importance or state.",
+        demo: '<div style="display:flex;gap:6px;flex-wrap:wrap"><hex-tag category="artist">rowan</hex-tag><hex-tag category="character">vale</hex-tag><hex-tag category="species">canine</hex-tag><hex-tag category="copyright">series</hex-tag></div>',
+      },
+      {
+        text: "Keep the category truthful. A reader who knows the palette reads gold as artist and magenta as copyright, so mislabelling costs more than leaving a tag uncoloured would.",
+        demo: '<div style="display:flex;gap:6px;flex-wrap:wrap"><hex-tag category="general">outdoors</hex-tag><hex-tag category="meta">hi_res</hex-tag><hex-tag category="lore">canon</hex-tag><hex-tag category="invalid">bad_tag</hex-tag><hex-tag category="contributor">helper</hex-tag></div>',
+      },
+    ],
     props: [
       {
         name: "category",
@@ -529,6 +621,12 @@ export const components: ComponentEntry[] = [
     group: "Tokens",
     previewHeight: 120,
     description: "Compact health indicator. Shows a label and colored dot per status.",
+    usage: [
+      {
+        text: "Use it for the state of a system, not the outcome of an action. The label is fixed per status so the same state always reads the same way across views.",
+        demo: '<div style="display:flex;gap:8px;flex-wrap:wrap"><hex-status-pill status="healthy"></hex-status-pill><hex-status-pill status="degraded"></hex-status-pill><hex-status-pill status="failing"></hex-status-pill><hex-status-pill status="idle"></hex-status-pill></div>',
+      },
+    ],
     props: [
       { name: "status", kind: "select", options: ["healthy", "degraded", "failing", "idle"], default: "healthy" },
     ],
@@ -540,6 +638,12 @@ export const components: ComponentEntry[] = [
     previewHeight: 120,
     description: "Small monospace key cap. Use for keyboard shortcut hints in tooltips and help surfaces.",
     defaultSlot: "⌘K",
+    usage: [
+      {
+        text: "Use it for keys the reader is meant to press. Write them as they appear on the keyboard, and give each key its own element so the separator is yours to choose.",
+        demo: '<span>Press <hex-kbd>Ctrl</hex-kbd> + <hex-kbd>K</hex-kbd> to search, or <hex-kbd>Esc</hex-kbd> to dismiss.</span>',
+      },
+    ],
     props: [],
   },
   {
@@ -547,6 +651,16 @@ export const components: ComponentEntry[] = [
     title: "Avatar",
     group: "User",
     description: "Stroke-only rounded square avatar. Tinted by user role. Falls back to two-letter initials.",
+    usage: [
+      {
+        text: "Use **initials** as the fallback when there is no image. An avatar that silently renders empty is worse than one that shows two letters.",
+        demo: '<div style="display:flex;gap:8px;align-items:center"><hex-avatar initials="AL"></hex-avatar><hex-avatar initials="GH" role-color="moderator"></hex-avatar><hex-avatar initials="RS" role-color="admin"></hex-avatar></div>',
+      },
+      {
+        text: "Size by context rather than by importance: **xs** and **sm** inline beside text, **md** in rows, **lg** and **xl** on a profile.",
+        demo: '<div style="display:flex;gap:8px;align-items:center"><hex-avatar size="xs" initials="A"></hex-avatar><hex-avatar size="sm" initials="B"></hex-avatar><hex-avatar size="md" initials="C"></hex-avatar><hex-avatar size="lg" initials="D"></hex-avatar></div>',
+      },
+    ],
     props: [
       { name: "role-color", kind: "select", options: userRoles, default: "member" },
       { name: "size", kind: "select", options: ["xs", "sm", "md", "lg", "xl"], default: "md" },
@@ -561,6 +675,16 @@ export const components: ComponentEntry[] = [
     description:
       "Role-tinted username text. Adds a strikethrough for blocked users and an optional verified chexagon badge.",
     defaultSlot: "rowan",
+    usage: [
+      {
+        text: "The colour states a role, so use it only where the role matters. In a dense list, colouring every name turns the signal into noise.",
+        demo: '<div style="display:flex;gap:12px;flex-wrap:wrap"><hex-username>member</hex-username><hex-username role-color="moderator">moderator</hex-username><hex-username role-color="admin">admin</hex-username><hex-username role-color="former-staff">former staff</hex-username></div>',
+      },
+      {
+        text: "**blocked** strikes the name through, which is the one state readers must not miss. Add **verified** where the account has been confirmed.",
+        demo: '<div style="display:flex;gap:12px;flex-wrap:wrap"><hex-username role-color="blocked">blocked_user</hex-username><hex-username role-color="member" verified>verified_user</hex-username></div>',
+      },
+    ],
     props: [
       { name: "role-color", kind: "select", options: userRoles, default: "member" },
       { name: "verified", kind: "boolean", default: false },
@@ -605,6 +729,16 @@ export const components: ComponentEntry[] = [
     description:
       "Inline rounded quote block with a left-side accent stripe. Set `stripe-color` (or the `--hex-quote-stripe` CSS variable) to use any CSS color.",
     defaultSlot: "The hex tile is the brand. Every full-page surface uses a tiled hex pattern.",
+    usage: [
+      {
+        text: "Use it for words that came from somewhere else, most often rendered DText. It is not a callout: for something the reader must act on, use **alert**.",
+        demo: '<hex-quote>Approvals stay open until a second reviewer signs off.</hex-quote>',
+      },
+      {
+        text: "Set **stripe-color** when the quote is attributed and the colour carries that attribution, such as a tag category. Leave it alone otherwise.",
+        demo: '<div style="display:flex;flex-direction:column;gap:8px"><hex-quote variant="alt">An alternate surface, for a quote inside a quote.</hex-quote><hex-quote stripe-color="var(--hex-tag-artist)">Attributed to an artist.</hex-quote></div>',
+      },
+    ],
     props: [
       { name: "variant", kind: "select", options: ["default", "alt"], default: "default" },
       { name: "stripe-color", kind: "text", default: "", description: "Any CSS color overriding the variant." },
@@ -623,6 +757,16 @@ export const components: ComponentEntry[] = [
         'Cluster configuration <hex-chip pill style="font-size: 10px; padding: 2px 8px;">12</hex-chip>',
     },
     previewSurface: "page",
+    usage: [
+      {
+        text: "Collapse detail that most readers will skip, and **leave open what most readers need**. A section that hides the main content saves nothing and costs a click.",
+        demo: '<div style="width:340px"><hex-section open><span slot="heading">Request details</span>Everything a reviewer needs in order to decide.</hex-section></div>',
+      },
+      {
+        text: "Use the **trailing** slot for a count or a status, so the heading says how much is hidden before anyone opens it.",
+        demo: '<div style="width:340px"><hex-section><span slot="heading">Advanced</span><hex-status-pill slot="trailing" status="idle"></hex-status-pill>Options most readers never change.</hex-section></div>',
+      },
+    ],
     props: [{ name: "open", kind: "boolean", default: true }],
   },
   {
@@ -632,6 +776,16 @@ export const components: ComponentEntry[] = [
     previewHeight: 140,
     description: "Monospace code element. Inline by default; set `block` for a preformatted block.",
     defaultSlot: "--hex-color-primary",
+    usage: [
+      {
+        text: "Use the inline form for identifiers inside a sentence: a flag, a tag name, a field. It keeps the reading line intact.",
+        demo: '<span>Set <hex-code>--hex-radius-md</hex-code> to change the corner radius, or pass <hex-code>variant=\"raised\"</hex-code> for a physical button.</span>',
+      },
+      {
+        text: "Use **block** for anything the reader is meant to copy or scan line by line. It scrolls horizontally rather than wrapping, so code keeps its shape.",
+        demo: '<div style="width:340px"><hex-code block>import { dmarkHandlers } from \"hexagonal\";\nrenderAstToHtml(ast, { ...htmlHandlers, ...dmarkHandlers });</hex-code></div>',
+      },
+    ],
     props: [{ name: "block", kind: "boolean", default: false }],
   },
   {
@@ -641,6 +795,16 @@ export const components: ComponentEntry[] = [
     previewHeight: 140,
     description: "Inline censor that reveals on hover (desktop) or tap (mobile). Wraps cleanly across lines.",
     defaultSlot: "the Guardian of the Hexagon",
+    usage: [
+      {
+        text: "Click or keyboard activation reveals it, on every device. Hover deliberately does not, since a pointer passing over a spoiler is not consent to read it.",
+        demo: '<span>Ending: <hex-spoiler>the butler did it</hex-spoiler>.</span>',
+      },
+      {
+        text: "Links inside stay **inert until revealed**, so the first click can never navigate somewhere the reader has not seen yet. Hidden content is also kept out of the accessibility tree.",
+        demo: '<span>See <hex-spoiler>the <a href="#">full writeup</a> for details</hex-spoiler>.</span>',
+      },
+    ],
     props: [],
   },
   {
@@ -730,6 +894,16 @@ export const components: ComponentEntry[] = [
     },
     previewSurface: "page",
     previewHeight: 320,
+    usage: [
+      {
+        text: "Use an alert for something that happened and needs a response. **error** announces assertively; the other variants announce politely, so reserve error for what actually blocks the reader.",
+        demo: '<div style="display:flex;flex-direction:column;gap:8px;width:360px"><hex-alert variant="success"><span slot="heading">Saved</span>Your changes are live.</hex-alert><hex-alert variant="error"><span slot="heading">Could not save</span>The connection dropped before the write completed.</hex-alert></div>',
+      },
+      {
+        text: "Put the recovery in the **actions** slot. An error that states a problem without offering the next step leaves the reader to guess.",
+        demo: '<div style="width:360px"><hex-alert variant="warning"><span slot="heading">Session expiring</span>You will be signed out in two minutes.<hex-button slot="actions" size="sm">Stay signed in</hex-button></hex-alert></div>',
+      },
+    ],
     props: [
       {
         name: "variant",
