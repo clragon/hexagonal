@@ -82,8 +82,7 @@ export const components: ComponentEntry[] = [
       <div style="text-align: center; padding: 36px 24px; max-width: 560px; margin: 0 auto;">
         <hex-logo width="200"></hex-logo>
         <p style="margin: 14px 0 0; opacity: 0.85; line-height: 1.5; font-size: 13px;">
-          A dark design system for e621 surfaces. Amber on navy, anchored in a repeating
-          hexagonal tile, and built for pages of tags, text and forms.
+          A design for a blue honeycomb world.
         </p>
       </div>`,
     previewSurface: "empty",
