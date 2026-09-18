@@ -282,9 +282,9 @@ export const components: ComponentEntry[] = [
     tag: "hex-select",
     title: "Select",
     group: "Form",
-    previewHeight: 220,
+    previewHeight: 360,
     description:
-      "Select built on `hex-listbox`, so options are styled parts rather than browser chrome. Options stay light-DOM `<option>` children; add `data-category` or `data-count` for tinted labels and counts. A hidden native select carries form value and `required` validation.",
+      "Select whose options are styled parts rather than browser chrome. Options are light-DOM children: plain `<option>`, or `<hex-option>` when a row needs a category tint, a count or an antecedent. A hidden native select carries the form value and `required` validation.",
     defaultSlot: `
       <option value="us-east-1">US East (Virginia)</option>
       <option value="us-west-2">US West (Oregon)</option>
@@ -298,6 +298,17 @@ export const components: ComponentEntry[] = [
       {
         text: "Give it a **placeholder** only when choosing nothing is valid. If a value is always required, preselect a sensible default rather than making people open the list to find one.",
         demo: '<div style="width:260px"><hex-select label="Owner" placeholder="Unassigned"><option>Ada</option><option>Grace</option></hex-select></div>',
+      },
+      {
+        text: "Swap `<option>` for `<hex-option>` when a row needs more than a label. It takes **category** to tint the label with the matching tag colour, **count** to show a right-aligned figure in compact notation, and **antecedent** for a name the option resolves away from.",
+        demo: '<div style="width:280px"><hex-select label="Tag" placeholder="Pick a tag"><hex-option value="wolf" label="wolf" category="species" count="88400"></hex-option><hex-option value="patreon" label="patreon" category="meta" count="4120"></hex-option><hex-option value="canine" label="canine" category="species" count="512000" antecedent="dog"></hex-option></hex-select></div>',
+      },
+      {
+        text: "Plain `<option>` reaches the same rendering through `data-category` and `data-count`, which is easier when the markup comes from a template that only emits standard options.",
+        demo: '<div style="width:280px"><hex-select label="Tag" placeholder="Pick a tag"><option value="wolf" data-category="species" data-count="88400">wolf</option><option value="patreon" data-category="meta" data-count="4120">patreon</option></hex-select></div>',
+      },
+      {
+        text: "Both this and `hex-autocomplete` are built on `hex-listbox`, which owns highlight state, wrap-around movement, typeahead and click-to-select. It is exported for building a new combobox-like control, but reach for it only then: focus stays on the field and `aria-activedescendant` points at the option, so a listbox on its own does nothing useful.",
       },
     ],
     props: [
@@ -353,78 +364,6 @@ export const components: ComponentEntry[] = [
       { name: "max-results", kind: "number", default: 15 },
       { name: "delay", kind: "number", default: 225 },
       { name: "disabled", kind: "boolean", default: false },
-    ],
-  },
-  {
-    tag: "hex-listbox",
-    title: "Listbox",
-    group: "Form",
-    previewHeight: 260,
-    description:
-      "Selectable list of `hex-option` children, carrying `role=\"listbox\"` on the host so the flattened tree stays correct. It owns highlight state, wrap-around movement, typeahead, and scroll-into-view, but not focus: a combobox keeps focus on its own field and points `aria-activedescendant` at the active option.",
-    defaultSlot: `
-      <hex-option value="artist" label="artist" category="artist" count="128400"></hex-option>
-      <hex-option value="character" label="character" category="character" count="98211"></hex-option>
-      <hex-option value="species" label="species" category="species" count="45120"></hex-option>
-      <hex-option value="general" label="general" category="general" count="1204000"></hex-option>`,
-    usage: [
-      {
-        text: "Reach for it directly only when building a new combobox-like control. For an ordinary picker use `hex-select`, and for completion use `hex-autocomplete`; both are built on this.",
-      },
-      {
-        text: "Set **empty** to show a message in place of an empty list, rather than collapsing to nothing and leaving people unsure whether it loaded.",
-        demo: '<div style="width:240px"><hex-listbox empty="Nothing here yet"></hex-listbox></div>',
-      },
-    ],
-    props: [
-      { name: "value", kind: "text", default: "" },
-      { name: "empty", kind: "text", default: "" },
-    ],
-  },
-  {
-    tag: "hex-option",
-    title: "Option",
-    group: "Form",
-    previewHeight: 200,
-    description:
-      "One row in a `hex-listbox`. Renders a label, an optional right-aligned count in compact notation, and an optional struck-through `antecedent` for aliases. Set `match` and the matching run of the label is underlined.",
-    usage: [
-      {
-        text: "Set **category** to tint the label with the matching tag color, so a list of tags reads the same as tags do everywhere else.",
-        demo: '<div style="width:240px"><hex-listbox><hex-option value="a" label="wolf" category="species" count="88400"></hex-option><hex-option value="b" label="patreon" category="meta" count="4120"></hex-option></hex-listbox></div>',
-      },
-      {
-        text: "Set **antecedent** when the option resolves to a different tag, so people see what they typed and what they will get.",
-        demo: '<div style="width:240px"><hex-listbox><hex-option value="c" label="canine" antecedent="dog" category="species" count="512000"></hex-option></hex-listbox></div>',
-      },
-    ],
-    props: [
-      { name: "label", kind: "text", default: "wolf" },
-      { name: "value", kind: "text", default: "wolf" },
-      {
-        name: "category",
-        kind: "select",
-        options: [
-          "",
-          "artist",
-          "copyright",
-          "character",
-          "species",
-          "general",
-          "meta",
-          "lore",
-          "invalid",
-          "contributor",
-          "metatag",
-        ],
-        default: "species",
-      },
-      { name: "count", kind: "number", default: 88400 },
-      { name: "antecedent", kind: "text", default: "" },
-      { name: "match", kind: "text", default: "wol" },
-      { name: "disabled", kind: "boolean", default: false },
-      { name: "selected", kind: "boolean", default: false },
-      { name: "active", kind: "boolean", default: false },
     ],
   },
   {
@@ -719,7 +658,7 @@ export const components: ComponentEntry[] = [
       <hex-menu-item value="duplicate" icon="layers">Duplicate</hex-menu-item>
       <hex-menu-item value="delete" icon="trash" danger>Delete</hex-menu-item>
     `,
-    previewHeight: 280,
+    previewHeight: 340,
     previewExtras: `
       <hex-button variant="outline" color="secondary">Actions</hex-button>
     `,
@@ -744,7 +683,7 @@ export const components: ComponentEntry[] = [
     group: "Overlay",
     description: "Positioning primitive for overlays. Flips and shifts to stay in the viewport.",
     defaultSlot: `<div style="padding:10px 14px">Anchored, flipped and shifted as needed</div>`,
-    previewHeight: 240,
+    previewHeight: 320,
     previewExtras: `
       <hex-button>Open popover</hex-button>
     `,
