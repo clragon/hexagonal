@@ -2,6 +2,7 @@ import { LitElement, html, css } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import { components, GROUP_ORDER, type ComponentGroup, type ComponentEntry } from "./registry.js";
 import "./component-page.js";
+import "./intro.js";
 
 // Neutral docs chrome: white background, black text, gray borders. The brand
 // styling is reserved for the preview pane so component demos stand out
@@ -66,6 +67,9 @@ export class BookShell extends LitElement {
     }
     nav li {
       margin-bottom: 1px;
+    }
+    nav ul.home {
+      margin-bottom: 4px;
     }
     nav .group-label {
       font-size: 10px;
@@ -153,7 +157,7 @@ export class BookShell extends LitElement {
     }
   `;
 
-  @state() private currentTag: string = components[0]?.tag ?? "";
+  @state() private currentTag = "";
   @state() private navOpen = true;
   private wide = window.matchMedia("(min-width: 721px)");
 
@@ -174,7 +178,7 @@ export class BookShell extends LitElement {
   private syncFromHash = () => {
     const slug = window.location.hash.replace(/^#/, "").trim();
     const target = components.find((c) => c.tag === `hex-${slug}` || c.tag === slug);
-    this.currentTag = target?.tag ?? components[0]?.tag ?? "";
+    this.currentTag = target?.tag ?? "";
     if (!this.wide.matches) this.navOpen = false;
   };
 
@@ -191,7 +195,7 @@ export class BookShell extends LitElement {
   }
 
   private currentTitle() {
-    return components.find((c) => c.tag === this.currentTag)?.title ?? "Components";
+    return components.find((c) => c.tag === this.currentTag)?.title ?? "Overview";
   }
 
   private renderGroups() {
@@ -241,12 +245,19 @@ export class BookShell extends LitElement {
         >
           <summary>${this.currentTitle()}</summary>
           <nav>
+            <ul class="home">
+              <li>
+                <a href="#" class=${this.currentTag ? "" : "active"}>Overview</a>
+              </li>
+            </ul>
             ${this.renderGroups()}
           </nav>
         </details>
       </aside>
       <main>
-        <component-page tag=${this.currentTag}></component-page>
+        ${this.currentTag
+          ? html`<component-page tag=${this.currentTag}></component-page>`
+          : html`<book-intro></book-intro>`}
       </main>
     `;
   }

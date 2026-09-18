@@ -40,12 +40,19 @@ const baseOptions = {
   logLevel: "info",
 };
 
+const pkg = JSON.parse(readFileSync(resolve(root, "package.json"), "utf8"));
+const pkgRepo = pkg.repository.url.replace(/^git\+/, "").replace(/\.git$/, "");
+
 const bookOptions = {
   entryPoints: [resolve(root, "book/src/main.ts")],
   bundle: true,
   format: "esm",
   target: "es2022",
   plugins: [assetPlugin],
+  define: {
+    __HEX_VERSION__: JSON.stringify(pkg.version),
+    __HEX_REPO__: JSON.stringify(pkgRepo),
+  },
   logLevel: "info",
 };
 
