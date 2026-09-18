@@ -104,13 +104,24 @@ export class ComponentPage extends LitElement {
       border-radius: 3px;
       color: #e6e6e6;
     }
+    .usage-demo::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      border-radius: inherit;
+      background-image: var(--hex-texture);
+      background-repeat: repeat;
+      -webkit-mask-image: linear-gradient(to bottom, #000 0, transparent var(--hex-texture-fade));
+      mask-image: linear-gradient(to bottom, #000 0, transparent var(--hex-texture-fade));
+    }
     .usage-demo {
       padding: 24px 20px;
       border-radius: 4px;
       background-color: var(--hex-bg-card);
-      background-image: var(--hex-texture);
-      background-repeat: repeat-x;
-      background-position: left top;
+      position: relative;
+      isolation: isolate;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
       color: var(--hex-fg-1);
       font-family: var(--hex-font-family);

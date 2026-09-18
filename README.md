@@ -61,6 +61,27 @@ Without that stylesheet, the system falls back to the Verdana installed on the u
 | `<hex-menu>` | Menu anchored to the element before it, full keyboard navigation |
 | `<hex-prose>` | Scopes typography for rendered DText |
 
+## Brand surfaces
+
+`--hex-tile` and `--hex-texture` are **single repeating periods**, not pre-faded
+strips. Tile them on both axes and apply any fade yourself, the way `hex-card`
+does:
+
+```css
+.surface::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: var(--hex-texture);
+  background-repeat: repeat;
+  mask-image: linear-gradient(to bottom, #000 0, transparent var(--hex-texture-fade));
+}
+```
+
+`background-repeat: repeat-x` on its own draws one 17px band and nothing below
+it. `hex-page`, `hex-card` and `hex-dialog` already handle this.
+
 ## Rendering DText
 
 `dmark` emits ordinary HTML. Wrap it in `<hex-prose>` for typography, and pass

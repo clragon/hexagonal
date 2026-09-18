@@ -23,9 +23,19 @@
       }
       body.surface-card {
         background-color: var(--hex-bg-card);
+        position: relative;
+        isolation: isolate;
+      }
+      body.surface-card::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
         background-image: var(--hex-texture);
-        background-repeat: repeat-x;
-        background-position: left top;
+        background-repeat: repeat;
+        -webkit-mask-image: linear-gradient(to bottom, #000 0, transparent var(--hex-texture-fade));
+        mask-image: linear-gradient(to bottom, #000 0, transparent var(--hex-texture-fade));
       }
       body.surface-page {
         background-color: var(--hex-bg-page);
