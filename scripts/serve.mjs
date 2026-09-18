@@ -3,9 +3,12 @@ import { readFile, stat } from "node:fs/promises";
 import { extname, resolve, normalize, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { dirname } from "node:path";
+import { liveReload } from "./livereload.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const PORT = 47312; // arbitrary, avoid 3000/8080 etc.
+
+const reload = liveReload(root);
 
 const mime = {
   ".html": "text/html; charset=utf-8",
@@ -21,8 +24,15 @@ const mime = {
 
 createServer(async (req, res) => {
   try {
-    let urlPath = decodeURIComponent(req.url.split("?")[0]);
-    if (urlPath === "/") urlPath = "/book/index.html";
+    if (reload.handle(req, res)) return;
+    const urlPath = decodeURIComponent(req.url.split("?")[0]);
+    // Redirect rather than alias, so relative URLs inside the book resolve
+    // against /book/ instead of the server root.
+    if (urlPath === "/") {
+      res.writeHead(302, { Location: "/book/index.html" });
+      res.end();
+      return;
+    }
     const filePath = normalize(resolve(root, "." + urlPath));
     if (!filePath.startsWith(root + sep) && filePath !== root) {
       res.writeHead(403);
@@ -35,12 +45,14 @@ createServer(async (req, res) => {
       res.end("not found");
       return;
     }
+    const ext = extname(filePath);
     const data = await readFile(filePath);
+    const body = ext === ".html" ? reload.inject(data) : data;
     res.writeHead(200, {
-      "Content-Type": mime[extname(filePath)] || "application/octet-stream",
+      "Content-Type": mime[ext] || "application/octet-stream",
       "Cache-Control": "no-cache",
     });
-    res.end(data);
+    res.end(body);
   } catch (e) {
     res.writeHead(500);
     res.end(String(e));
