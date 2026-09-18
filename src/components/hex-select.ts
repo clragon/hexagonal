@@ -1,8 +1,7 @@
 import { html, css, nothing } from "lit";
 import { customElement, property, query, state } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
-import { HexFormElement } from "../shared/form-element.js";
-import { fieldStyles } from "../shared/field-styles.js";
+import { HexFieldElement } from "../shared/field-element.js";
 import "./hex-icon.js";
 import "./hex-listbox.js";
 import "./hex-option.js";
@@ -10,7 +9,6 @@ import "./hex-popover.js";
 import type { HexListbox, HexListboxSelectDetail } from "./hex-listbox.js";
 import type { HexOption, HexOptionCategory } from "./hex-option.js";
 import type { HexPopover } from "./hex-popover.js";
-import type { IconName } from "../shared/icons.js";
 
 interface OptionData {
   value: string;
@@ -22,10 +20,9 @@ interface OptionData {
 }
 
 @customElement("hex-select")
-export class HexSelect extends HexFormElement {
+export class HexSelect extends HexFieldElement {
   static override styles = [
-    HexFormElement.styles,
-    fieldStyles,
+    ...HexFieldElement.styles,
     css`
       .control {
         display: flex;
@@ -72,12 +69,8 @@ export class HexSelect extends HexFormElement {
     `,
   ];
 
-  @property({ type: String }) label = "";
   @property({ type: String }) value = "";
   @property({ type: String }) placeholder = "";
-  @property({ type: String }) hint = "";
-  @property({ type: String }) error = "";
-  @property({ type: String }) icon?: IconName;
 
   @state() private opts: OptionData[] = [];
   @state() private expanded = false;
@@ -116,8 +109,7 @@ export class HexSelect extends HexFormElement {
   }
 
   override updated(changed: Map<string, unknown>): void {
-    if (changed.has("icon")) this.toggleAttribute("with-icon", Boolean(this.icon));
-    if (changed.has("error")) this.toggleAttribute("invalid", Boolean(this.error));
+    this.syncFieldAttributes(changed);
     if (changed.has("value") || changed.has("required") || changed.has("error")) {
       if (this._select) this._select.value = this.value;
       this.commit(this.error || undefined);
@@ -287,24 +279,25 @@ export class HexSelect extends HexFormElement {
   };
 
   override render() {
-    const describedBy = this.error ? "error" : this.hint ? "hint" : undefined;
     const selected = this.selected;
     return html`
       ${this.label ? html`<label id="label" for="trigger">${this.label}</label>` : nothing}
-      <div class="field">
+      <div class="field" part="field">
         ${this.icon
-          ? html`<span class="icon"><hex-icon name=${this.icon} size="14"></hex-icon></span>`
+          ? html`<span class="icon" part="icon"><hex-icon name=${this.icon} size="14"></hex-icon></span>`
           : nothing}
+        ${this.renderPrefix()}
         <button
           id="trigger"
           class="control"
+          part="control"
           type="button"
           role="combobox"
           aria-haspopup="listbox"
           aria-expanded=${this.expanded ? "true" : "false"}
           aria-controls="listbox"
           aria-activedescendant=${ifDefined(this.activeId)}
-          aria-describedby=${ifDefined(describedBy)}
+          aria-describedby=${ifDefined(this.describedBy)}
           aria-invalid=${this.error ? "true" : "false"}
           aria-labelledby=${ifDefined(this.label ? "label trigger" : undefined)}
           ?disabled=${this.disabled}
@@ -363,11 +356,7 @@ export class HexSelect extends HexFormElement {
           )}
         </hex-listbox>
       </hex-popover>
-      ${this.error
-        ? html`<div id="error" class="error" role="alert">${this.error}</div>`
-        : this.hint
-          ? html`<div id="hint" class="hint">${this.hint}</div>`
-          : nothing}
+      ${this.renderMessage()}
     `;
   }
 }

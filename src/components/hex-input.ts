@@ -1,22 +1,16 @@
 import { html, nothing } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
-import { HexFormElement } from "../shared/form-element.js";
-import { fieldStyles } from "../shared/field-styles.js";
+import { HexFieldElement } from "../shared/field-element.js";
 import "./hex-icon.js";
-import type { IconName } from "../shared/icons.js";
 
 @customElement("hex-input")
-export class HexInput extends HexFormElement {
-  static override styles = [HexFormElement.styles, fieldStyles];
+export class HexInput extends HexFieldElement {
+  static override styles = HexFieldElement.styles;
 
-  @property({ type: String }) label = "";
   @property({ type: String }) value = "";
   @property({ type: String }) placeholder = "";
   @property({ type: String }) type: HTMLInputElement["type"] = "text";
-  @property({ type: String }) hint = "";
-  @property({ type: String }) error = "";
-  @property({ type: String }) icon?: IconName;
   @property({ type: String }) pattern?: string;
   @property({ type: Number, attribute: "minlength" }) minLength?: number;
   @property({ type: Number, attribute: "maxlength" }) maxLength?: number;
@@ -40,8 +34,7 @@ export class HexInput extends HexFormElement {
   }
 
   override updated(changed: Map<string, unknown>) {
-    if (changed.has("icon")) this.toggleAttribute("with-icon", Boolean(this.icon));
-    if (changed.has("error")) this.toggleAttribute("invalid", Boolean(this.error));
+    this.syncFieldAttributes(changed);
     if (changed.has("value") || changed.has("required") || changed.has("error")) {
       this.commit(this.error || undefined);
     }
@@ -64,16 +57,17 @@ export class HexInput extends HexFormElement {
   };
 
   override render() {
-    const describedBy = this.error ? "error" : this.hint ? "hint" : undefined;
     return html`
       ${this.label ? html`<label for="input">${this.label}</label>` : nothing}
-      <div class="field">
+      <div class="field" part="field">
         ${this.icon
-          ? html`<span class="icon"><hex-icon name=${this.icon} size="14"></hex-icon></span>`
+          ? html`<span class="icon" part="icon"><hex-icon name=${this.icon} size="14"></hex-icon></span>`
           : nothing}
+        ${this.renderPrefix()}
         <input
           id="input"
           class="control"
+          part="control"
           .value=${this.value}
           type=${this.type}
           name=${this.name}
@@ -83,17 +77,14 @@ export class HexInput extends HexFormElement {
           pattern=${ifDefined(this.pattern)}
           minlength=${ifDefined(this.minLength)}
           maxlength=${ifDefined(this.maxLength)}
-          aria-describedby=${ifDefined(describedBy)}
+          aria-describedby=${ifDefined(this.describedBy)}
           aria-invalid=${this.error ? "true" : "false"}
           @input=${this.onInput}
           @change=${this.onChange}
         />
+        ${this.renderSuffix()}
       </div>
-      ${this.error
-        ? html`<div id="error" class="error" role="alert">${this.error}</div>`
-        : this.hint
-          ? html`<div id="hint" class="hint">${this.hint}</div>`
-          : nothing}
+      ${this.renderMessage()}
     `;
   }
 }

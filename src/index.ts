@@ -57,7 +57,8 @@ export { styleMap } from "lit/directives/style-map.js";
 // HexElement (or HexFormElement for a form control) and composing these styles.
 export { HexElement, hostReset } from "./shared/base.js";
 export { HexFormElement } from "./shared/form-element.js";
-export { fieldStyles } from "./shared/field-styles.js";
+export { fieldStyles, type HexFieldSize } from "./shared/field-styles.js";
+export { HexFieldElement } from "./shared/field-element.js";
 
 export { tokensCss, registerTokens } from "./shared/tokens.js";
 export {

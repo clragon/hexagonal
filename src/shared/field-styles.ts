@@ -69,4 +69,41 @@ export const fieldStyles = css`
     opacity: 0.55;
     pointer-events: none;
   }
+
+  :host([size="sm"]) .control {
+    font-size: var(--hex-fs-xs);
+    padding: 6px 10px;
+  }
+  :host([size="lg"]) .control {
+    font-size: 14px;
+    padding: 10px 12px;
+  }
+
+  .prefix,
+  .suffix {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    color: var(--hex-fg-2);
+    font-size: var(--hex-fs-sm);
+  }
+  .prefix {
+    left: 10px;
+  }
+  .suffix {
+    right: 10px;
+  }
+  .prefix[hidden],
+  .suffix[hidden] {
+    display: none;
+  }
+  :host([has-prefix]) .control {
+    padding-left: var(--_hex-field-prefix, 30px);
+  }
+  :host([has-suffix]) .control {
+    padding-right: var(--_hex-field-suffix, 30px);
+  }
 `;
+export type HexFieldSize = "sm" | "md" | "lg";

@@ -1,8 +1,7 @@
 import { html, css, nothing, type TemplateResult } from "lit";
 import { customElement, property, query, state } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
-import { HexFormElement } from "../shared/form-element.js";
-import { fieldStyles } from "../shared/field-styles.js";
+import { HexFieldElement } from "../shared/field-element.js";
 import "./hex-icon.js";
 import "./hex-listbox.js";
 import "./hex-option.js";
@@ -11,7 +10,6 @@ import "./hex-spinner.js";
 import type { HexListbox, HexListboxSelectDetail } from "./hex-listbox.js";
 import type { HexOptionCategory } from "./hex-option.js";
 import type { HexPopover } from "./hex-popover.js";
-import type { IconName } from "../shared/icons.js";
 
 export interface HexAutocompleteItem {
   value: string;
@@ -47,10 +45,9 @@ function normalize(entry: string | HexAutocompleteItem): HexAutocompleteItem {
 }
 
 @customElement("hex-autocomplete")
-export class HexAutocomplete extends HexFormElement {
+export class HexAutocomplete extends HexFieldElement {
   static override styles = [
-    HexFormElement.styles,
-    fieldStyles,
+    ...HexFieldElement.styles,
     css`
       .control {
         padding-right: 30px;
@@ -85,12 +82,8 @@ export class HexAutocomplete extends HexFormElement {
     `,
   ];
 
-  @property({ type: String }) label = "";
   @property({ type: String }) value = "";
   @property({ type: String }) placeholder = "";
-  @property({ type: String }) hint = "";
-  @property({ type: String }) error = "";
-  @property({ type: String }) icon?: IconName;
   @property({ type: String }) empty = "";
   @property({ type: Number, attribute: "min-length" }) minLength = 1;
   @property({ type: Number, attribute: "max-results" }) maxResults = 15;
@@ -162,8 +155,7 @@ export class HexAutocomplete extends HexFormElement {
   }
 
   override updated(changed: Map<string, unknown>): void {
-    if (changed.has("icon")) this.toggleAttribute("with-icon", Boolean(this.icon));
-    if (changed.has("error")) this.toggleAttribute("invalid", Boolean(this.error));
+    this.syncFieldAttributes(changed);
     if (changed.has("value") || changed.has("required") || changed.has("error")) {
       this.commit(this.error || undefined);
     }
@@ -390,16 +382,17 @@ export class HexAutocomplete extends HexFormElement {
   };
 
   override render() {
-    const describedBy = this.error ? "error" : this.hint ? "hint" : undefined;
     return html`
       ${this.label ? html`<label for="input">${this.label}</label>` : nothing}
-      <div class="field">
+      <div class="field" part="field">
         ${this.icon
-          ? html`<span class="icon"><hex-icon name=${this.icon} size="14"></hex-icon></span>`
+          ? html`<span class="icon" part="icon"><hex-icon name=${this.icon} size="14"></hex-icon></span>`
           : nothing}
+        ${this.renderPrefix()}
         <input
           id="input"
           class="control"
+          part="control"
           .value=${this.value}
           type="text"
           name=${this.name}
@@ -411,7 +404,7 @@ export class HexAutocomplete extends HexFormElement {
           aria-controls="listbox"
           aria-autocomplete="list"
           aria-activedescendant=${ifDefined(this.activeId)}
-          aria-describedby=${ifDefined(describedBy)}
+          aria-describedby=${ifDefined(this.describedBy)}
           aria-invalid=${this.error ? "true" : "false"}
           ?disabled=${this.disabled}
           ?required=${this.required}
@@ -457,11 +450,7 @@ export class HexAutocomplete extends HexFormElement {
           })}
         </hex-listbox>
       </hex-popover>
-      ${this.error
-        ? html`<div id="error" class="error" role="alert">${this.error}</div>`
-        : this.hint
-          ? html`<div id="hint" class="hint">${this.hint}</div>`
-          : nothing}
+      ${this.renderMessage()}
       <span class="status" role="status" aria-live="polite">
         ${this.expanded ? `${this.items.length} results` : ""}
       </span>

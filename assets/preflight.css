@@ -244,3 +244,57 @@ hex-textarea[label]:not(:defined) {
 hex-textarea[label][counter]:not(:defined) {
   min-height: 202px;
 }
+
+hex-autocomplete[size="sm"]:not(:defined),
+hex-input[size="sm"]:not(:defined),
+hex-select[size="sm"]:not(:defined) {
+  min-height: 29px;
+}
+
+hex-autocomplete[size="sm"][label]:not(:defined),
+hex-input[size="sm"][label]:not(:defined),
+hex-select[size="sm"][label]:not(:defined) {
+  min-height: 50.5px;
+}
+
+hex-autocomplete[size="sm"][hint]:not(:defined),
+hex-input[size="sm"][hint]:not(:defined),
+hex-select[size="sm"][hint]:not(:defined) {
+  min-height: 49.5px;
+}
+
+hex-autocomplete[size="sm"][label][error]:not(:defined),
+hex-autocomplete[size="sm"][label][hint]:not(:defined),
+hex-input[size="sm"][label][error]:not(:defined),
+hex-input[size="sm"][label][hint]:not(:defined),
+hex-select[size="sm"][label][error]:not(:defined),
+hex-select[size="sm"][label][hint]:not(:defined) {
+  min-height: 71px;
+}
+
+hex-autocomplete[size="lg"]:not(:defined),
+hex-input[size="lg"]:not(:defined),
+hex-select[size="lg"]:not(:defined) {
+  min-height: 41px;
+}
+
+hex-autocomplete[size="lg"][label]:not(:defined),
+hex-input[size="lg"][label]:not(:defined),
+hex-select[size="lg"][label]:not(:defined) {
+  min-height: 62.5px;
+}
+
+hex-autocomplete[size="lg"][hint]:not(:defined),
+hex-input[size="lg"][hint]:not(:defined),
+hex-select[size="lg"][hint]:not(:defined) {
+  min-height: 61.5px;
+}
+
+hex-autocomplete[size="lg"][label][error]:not(:defined),
+hex-autocomplete[size="lg"][label][hint]:not(:defined),
+hex-input[size="lg"][label][error]:not(:defined),
+hex-input[size="lg"][label][hint]:not(:defined),
+hex-select[size="lg"][label][error]:not(:defined),
+hex-select[size="lg"][label][hint]:not(:defined) {
+  min-height: 83px;
+}
