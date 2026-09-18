@@ -13,7 +13,8 @@
       "types": "./dist/types/index.d.ts",
       "import": "./dist/hexagonal.js"
     },
-    "./fonts.css": "./dist/hexagonal-fonts.css"
+    "./fonts.css": "./dist/hexagonal-fonts.css",
+    "./preflight.css": "./dist/hexagonal-preflight.css"
   },
   "files": [
     "dist",
@@ -27,7 +28,7 @@
     "build": "node scripts/build.mjs",
     "build:watch": "node scripts/build.mjs --watch",
     "build:types": "tsc -p tsconfig.build.json",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit && tsc -p tsconfig.book.json --noEmit",
     "fmt": "oxfmt src scripts",
     "fmt:check": "oxfmt --check src scripts",
     "lint": "oxlint src",

@@ -92,13 +92,22 @@ if (watch) {
 `;
   writeFileSync(resolve(root, "dist/hexagonal-fonts.css"), fontsCss);
 
+  // Standalone preflight.css consumers <link> in <head> so unupgraded <hex-*>
+  // elements already occupy their final box, before the module evaluates.
+  writeFileSync(
+    resolve(root, "dist/hexagonal-preflight.css"),
+    readFileSync(resolve(root, "assets/preflight.css"), "utf8"),
+  );
+
   await build({
     ...bookOptions,
     outfile: resolve(root, "dist/book.js"),
     minify: false,
   });
 
-  console.log("[esbuild] built dist/hexagonal.js + .min.js + hexagonal-fonts.css + book.js");
+  console.log(
+    "[esbuild] built dist/hexagonal.js + .min.js + hexagonal-fonts.css + hexagonal-preflight.css + book.js",
+  );
 
   console.log("[tsc] emitting .d.ts ...");
   const tscBin = process.platform === "win32" ? "tsc.cmd" : "tsc";
