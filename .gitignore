@@ -17,3 +17,6 @@ Thumbs.db
 .idea/
 *.swp
 *.swo
+.stryker-tmp/
+reports/
+.vitest/

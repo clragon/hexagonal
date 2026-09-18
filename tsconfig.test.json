@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "types": [
+      "vitest/globals"
+    ],
+    "noUnusedLocals": false
+  },
+  "include": [
+    "src/**/*",
+    "test/**/*.ts",
+    "vitest.config.ts",
+    "vitest.preflight.config.ts"
+  ]
+}
