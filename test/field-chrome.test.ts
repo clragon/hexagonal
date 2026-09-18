@@ -159,3 +159,40 @@ test("every field control resolves to the same height for a given size", async (
   expect(sm).toBeLessThan(md as number);
   expect(md).toBeLessThan(lg as number);
 });
+
+async function radioGroup(direction: string) {
+  const el = document.createElement("hex-radio-group");
+  el.setAttribute("label", "Sort");
+  el.setAttribute("name", "sort");
+  el.setAttribute("value", "new");
+  el.setAttribute("direction", direction);
+  el.innerHTML = `<hex-radio value="new">Newest</hex-radio><hex-radio value="old">Oldest</hex-radio>`;
+  document.body.append(el);
+  mounted.push(el);
+  await (el as HTMLElement & { updateComplete: Promise<unknown> }).updateComplete;
+  await tick(20);
+  const radios = [...el.querySelectorAll("hex-radio")];
+  return {
+    label: el.shadowRoot!.querySelector(".label")!.getBoundingClientRect(),
+    first: radios[0]!.getBoundingClientRect(),
+    second: radios[1]!.getBoundingClientRect(),
+  };
+}
+
+test("a horizontal radio group keeps its label above the row", async () => {
+  const { label, first, second } = await radioGroup("horizontal");
+
+  expect(second.top, "the two radios sit on one row").toBe(first.top);
+  expect(
+    label.bottom,
+    "the label belongs above the radios, not beside them in the row",
+  ).toBeLessThanOrEqual(first.top);
+  expect(label.left, "the label starts at the same edge as the first radio").toBe(first.left);
+});
+
+test("a vertical radio group stacks its radios under the label", async () => {
+  const { label, first, second } = await radioGroup("vertical");
+
+  expect(second.top).toBeGreaterThan(first.top);
+  expect(label.bottom).toBeLessThanOrEqual(first.top);
+});

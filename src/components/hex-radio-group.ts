@@ -27,11 +27,6 @@ export class HexRadioGroup extends HexElement {
         flex-direction: column;
         gap: 8px;
       }
-      :host([direction="horizontal"]) {
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: 12px;
-      }
       .label {
         display: block;
         font-size: var(--hex-fs-xs);
