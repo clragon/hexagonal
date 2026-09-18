@@ -902,15 +902,15 @@ export const components: ComponentEntry[] = [
     title: "Spoiler",
     group: "Content",
     previewHeight: 140,
-    description: "Inline censor for content that should not be read by accident. Reveals on click and never on hover, since a pointer passing over something is not consent to read it.",
+    description: "Inline censor for content that should not be read by accident. Reveals on click, so moving a pointer across the page leaves it covered.",
     defaultSlot: "the Guardian of the Hexagon",
     usage: [
       {
-        text: "Click or keyboard activation reveals it, on every device. Hover deliberately does not, since a pointer passing over a spoiler is not consent to read it.",
+        text: "Click or keyboard activation reveals it. Hover does not, since a pointer passing over a spoiler is not consent to read it.",
         demo: '<span>Ending: <hex-spoiler>the butler did it</hex-spoiler>.</span>',
       },
       {
-        text: "Links inside stay **inert until revealed**, so the first click can never navigate somewhere the reader has not seen yet. Hidden content is also kept out of the accessibility tree.",
+        text: "Links inside stay **inert until revealed**, so the first click uncovers the text instead of following the link. Hidden content stays out of the accessibility tree.",
         demo: '<span>See <hex-spoiler>the <a href="#">full writeup</a> for details</hex-spoiler>.</span>',
       },
     ],
