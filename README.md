@@ -2,6 +2,8 @@
 
 A design for a blue honeycomb world.
 
+![Components of the system scattered across a hexagon-tiled page, around the Hexagonal wordmark](assets/hero.png)
+
 ## Use
 
 The bundle is 34 KB gzipped.
@@ -12,7 +14,7 @@ The bundle is 34 KB gzipped.
 <hex-page>
   <hex-card>
     <hex-button icon="download">Export</hex-button>
-    <hex-username role-color="admin" verified>NotMeNotYou</hex-username>
+    <hex-username role-color="admin" verified>velvet_otter</hex-username>
   </hex-card>
 </hex-page>
 ```
@@ -142,6 +144,7 @@ yarn dev            # book at http://localhost:47312, rebuilt on change
 yarn build          # dist bundles, types, fonts.css, preflight.css, book.js
 yarn verify         # fmt, lint, types, preflight freshness
 yarn preflight      # regenerate assets/preflight.css from component metadata
+yarn hero           # regenerate assets/hero.png from assets/hero.html
 yarn test           # component behaviour, in chromium
 yarn test:preflight # upgrade layout shift, against the built bundle
 yarn test:mutation  # stryker over the component suite

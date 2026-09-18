@@ -42,6 +42,7 @@
     "verify": "yarn fmt:check && yarn lint && yarn typecheck && yarn preflight:check",
     "preflight": "node scripts/preflight.mjs",
     "preflight:check": "node scripts/preflight.mjs --check",
+    "hero": "node scripts/hero.mjs",
     "serve": "node scripts/serve.mjs",
     "dev": "node scripts/dev.mjs",
     "test": "vitest run",

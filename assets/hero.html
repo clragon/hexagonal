@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Hexagonal</title>
+    <link rel="stylesheet" href="../dist/hexagonal-tokens.css" />
+    <link rel="stylesheet" href="../dist/hexagonal-fonts.css" />
+    <link rel="stylesheet" href="../dist/book-fonts.css" />
+    <script type="module" src="../dist/hexagonal.js"></script>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      #stage {
+        position: relative;
+        width: 1600px;
+        height: 800px;
+        overflow: hidden;
+      }
+      hex-page {
+        position: absolute;
+        inset: 0;
+      }
+      .tile {
+        position: absolute;
+        width: max-content;
+      }
+      .tile hex-card {
+        display: block;
+      }
+      .wordmark {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 3;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 560px;
+        height: 230px;
+      }
+      .wordmark::before {
+        content: "";
+        position: absolute;
+        inset: -40px;
+        background: radial-gradient(
+          ellipse at center,
+          var(--hex-color-background) 0%,
+          var(--hex-color-background) 30%,
+          transparent 70%
+        );
+      }
+      .wordmark hex-logo {
+        position: relative;
+      }
+      .stack {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .inline {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .caption {
+        font-family: Verdana, sans-serif;
+        font-size: 12px;
+        color: var(--hex-fg-2);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="stage">
+      <hex-page></hex-page>
+
+      <div class="tile" style="left: 62px; top: 58px; width: 380px; transform: rotate(-1.4deg)">
+        <hex-alert variant="warning" no-close>
+          <span slot="heading">Pending replacements</span>
+          Some tags here were aliased after upload.
+        </hex-alert>
+      </div>
+
+      <div class="tile" style="left: 516px; top: 44px; transform: rotate(1.1deg)">
+        <hex-card dense style="width: 260px">
+          <hex-listbox>
+            <hex-option label="wolf" match="wo"><span slot="trailing">88.4K</span></hex-option>
+            <hex-option label="wolfdog" match="wo" selected
+              ><span slot="trailing">2.1K</span></hex-option
+            >
+            <hex-option label="wolverine" match="wo"><span slot="trailing">940</span></hex-option>
+          </hex-listbox>
+        </hex-card>
+      </div>
+
+      <div class="tile" style="left: 1156px; top: 40px; transform: rotate(1.8deg)">
+        <hex-card style="width: 250px">
+          <div class="stack">
+            <hex-tag variant="row" category="artist" count="1204">rowan</hex-tag>
+            <hex-tag variant="row" category="species" count="88400">wolf</hex-tag>
+            <hex-tag variant="row" category="copyright" count="512">nocturne</hex-tag>
+            <hex-tag variant="row" category="meta" count="4120">patreon</hex-tag>
+          </div>
+        </hex-card>
+      </div>
+
+      <div class="tile" style="left: 178px; top: 296px; transform: rotate(0.9deg)">
+        <hex-card style="width: 300px">
+          <div class="stack">
+            <div class="inline">
+              <hex-button icon="download">Export</hex-button>
+              <hex-button variant="raised" color="primary">Post</hex-button>
+            </div>
+            <div class="inline">
+              <hex-button variant="outline" color="secondary" size="sm">Cancel</hex-button>
+              <hex-button variant="ghost" color="secondary" size="sm" icon="refresh"
+                >Retry</hex-button
+              >
+            </div>
+          </div>
+        </hex-card>
+      </div>
+
+      <div class="tile" style="left: 1164px; top: 292px; transform: rotate(-1.2deg)">
+        <hex-card style="width: 240px">
+          <hex-radio-group label="Rating" name="rating" value="s">
+            <hex-radio value="s">Safe</hex-radio>
+            <hex-radio value="q">Questionable</hex-radio>
+          </hex-radio-group>
+        </hex-card>
+      </div>
+
+      <div class="tile" style="left: 84px; top: 566px; transform: rotate(-0.8deg)">
+        <hex-card style="width: 320px">
+          <hex-skeleton lines="3"></hex-skeleton>
+        </hex-card>
+      </div>
+
+      <div class="tile" style="left: 462px; top: 588px; transform: rotate(1.3deg)">
+        <hex-card style="width: 300px">
+          <div class="inline">
+            <hex-avatar role-color="admin" initials="VO"></hex-avatar>
+            <div class="stack" style="gap: 4px">
+              <hex-username role-color="admin" verified>velvet_otter</hex-username>
+              <span class="caption">uploaded 12 minutes ago</span>
+            </div>
+          </div>
+        </hex-card>
+      </div>
+
+      <div class="tile" style="left: 838px; top: 600px; transform: rotate(-1.6deg)">
+        <hex-card dense style="width: 250px">
+          <div class="stack">
+            <div class="inline">
+              <hex-status-pill status="healthy"></hex-status-pill>
+              <hex-chip pill>v0.2.0</hex-chip>
+            </div>
+            <div class="inline">
+              <span class="caption">Search</span>
+              <hex-kbd>Ctrl</hex-kbd>
+              <hex-kbd>K</hex-kbd>
+            </div>
+          </div>
+        </hex-card>
+      </div>
+
+      <div class="tile" style="left: 1182px; top: 578px; transform: rotate(1.5deg)">
+        <hex-card style="width: 280px">
+          <div class="stack">
+            <hex-switch checked>Blacklist</hex-switch>
+            <hex-checkbox checked>Hide pending</hex-checkbox>
+          </div>
+        </hex-card>
+      </div>
+
+      <div class="tile" style="left: 852px; top: 60px; transform: rotate(-1.1deg)">
+        <hex-card dense style="width: 230px">
+          <div class="inline" style="flex-wrap: wrap; gap: 6px">
+            <hex-tag category="character">rowan</hex-tag>
+            <hex-tag category="species">canine</hex-tag>
+            <hex-tag category="general">forest</hex-tag>
+            <hex-tag category="lore">winter</hex-tag>
+          </div>
+        </hex-card>
+      </div>
+
+      <div class="tile" style="left: 96px; top: 452px; transform: rotate(1.7deg)">
+        <hex-card dense style="width: 250px">
+          <div class="stack" style="gap: 6px">
+            <span class="caption">Install</span>
+            <hex-code>yarn add hexagonal</hex-code>
+          </div>
+        </hex-card>
+      </div>
+
+      <div class="tile" style="left: 1226px; top: 456px; transform: rotate(-1.9deg)">
+        <hex-card dense style="width: 260px">
+          <hex-quote>Amber on navy, all the way down.</hex-quote>
+        </hex-card>
+      </div>
+
+      <div class="wordmark"><hex-logo width="420"></hex-logo></div>
+    </div>
+  </body>
+</html>
