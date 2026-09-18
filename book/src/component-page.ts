@@ -1,6 +1,7 @@
 import { LitElement, html, css, nothing } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import { ifDefined } from "lit/directives/if-defined.js";
 import { marked } from "marked";
 import { findComponent, type ComponentEntry } from "./registry.js";
 import "./playground.js";
@@ -88,6 +89,50 @@ export class ComponentPage extends LitElement {
       color: #888;
       font-style: italic;
     }
+    @media (max-width: 720px) {
+      .api,
+      .api tbody,
+      .api tr,
+      .api td {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .api thead {
+        display: none;
+      }
+      .api tr {
+        border: 1px solid #262626;
+        border-radius: 4px;
+        padding: 10px 12px;
+        margin-bottom: 10px;
+      }
+      .api td {
+        border-bottom: 0;
+        padding: 3px 0;
+      }
+      .api td:not([data-label]) {
+        display: none;
+      }
+      .api td[data-label="Type"]::before,
+      .api td[data-label="Default"]::before {
+        content: attr(data-label) ": ";
+        color: #888;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        font-weight: 700;
+      }
+      .api td[data-label="Description"] {
+        color: #b0b0b0;
+        margin-top: 4px;
+      }
+      .api code {
+        overflow-wrap: anywhere;
+        box-decoration-break: clone;
+        -webkit-box-decoration-break: clone;
+      }
+    }
     .usage-block {
       margin-bottom: 20px;
     }
@@ -160,16 +205,21 @@ export class ComponentPage extends LitElement {
                 </tr>
               </thead>
               <tbody>
-                ${entry.props.map(
-                  (p) => html`
+                ${entry.props.map((p) => {
+                  const hasDefault = p.default !== undefined && p.default !== "";
+                  return html`
                     <tr>
-                      <td><code>${p.name}</code></td>
-                      <td>${this.formatType(p)}</td>
-                      <td>${p.default !== undefined ? html`<code>${String(p.default)}</code>` : ""}</td>
-                      <td>${p.description ? unsafeHTML(md(p.description)) : ""}</td>
+                      <td data-label="Attribute"><code>${p.name}</code></td>
+                      <td data-label="Type">${this.formatType(p)}</td>
+                      <td data-label=${ifDefined(hasDefault ? "Default" : undefined)}>
+                        ${hasDefault ? html`<code>${String(p.default)}</code>` : ""}
+                      </td>
+                      <td data-label=${ifDefined(p.description ? "Description" : undefined)}>
+                        ${p.description ? unsafeHTML(md(p.description)) : ""}
+                      </td>
                     </tr>
-                  `,
-                )}
+                  `;
+                })}
               </tbody>
             </table>
           `}

@@ -205,8 +205,18 @@ export class BookPlayground extends LitElement {
       color: #ffffff;
     }
     @media (max-width: 720px) {
-      .control {
-        grid-template-columns: 90px minmax(0, 1fr);
+      .control,
+      .control.slot-control {
+        grid-template-columns: minmax(0, 1fr);
+        align-items: start;
+        gap: 4px;
+        margin-bottom: 12px;
+      }
+      .control.boolean-control {
+        grid-template-columns: auto minmax(0, 1fr);
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 8px;
       }
     }
   `;
@@ -366,7 +376,7 @@ export class BookPlayground extends LitElement {
         `;
       case "boolean":
         return html`
-          <div class="control">
+          <div class="control boolean-control">
             <label>${p.name}</label>
             <input
               type="checkbox"
