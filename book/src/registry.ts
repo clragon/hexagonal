@@ -307,7 +307,7 @@ export const components: ComponentEntry[] = [
       },
       {
         text: "Give it a **placeholder** only when choosing nothing is valid. If a value is always required, preselect a sensible default rather than making people open the list to find one.",
-        demo: '<div style="width:260px"><hex-select label="Owner" placeholder="Unassigned"><option>Ada</option><option>Grace</option></hex-select></div>',
+        demo: '<div style="width:260px"><hex-select label="Owner" placeholder="Unassigned"><option>brass_corvid</option><option>moss_lynx</option></hex-select></div>',
       },
       {
         text: "Swap `<option>` for `<hex-option>` when a row needs a figure or a badge on the right. Slot it as **trailing**, and set `--hex-option-color` where the label should carry a colour of its own.",
@@ -766,7 +766,7 @@ export const components: ComponentEntry[] = [
     usage: [
       {
         text: "Use **initials** as the fallback when there is no image. An avatar that silently renders empty is worse than one that shows two letters.",
-        demo: '<div style="display:flex;gap:8px;align-items:center"><hex-avatar initials="AL"></hex-avatar><hex-avatar initials="GH" role-color="moderator"></hex-avatar><hex-avatar initials="RS" role-color="admin"></hex-avatar></div>',
+        demo: '<div style="display:flex;gap:8px;align-items:center"><hex-avatar initials="VO"></hex-avatar><hex-avatar initials="BC" role-color="moderator"></hex-avatar><hex-avatar initials="ML" role-color="admin"></hex-avatar></div>',
       },
       {
         text: "Size by context rather than by importance. **xs** and **sm** sit inline beside text, while **md** suits a row. **lg** and **xl** belong on a profile.",
