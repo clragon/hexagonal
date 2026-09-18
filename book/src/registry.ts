@@ -283,7 +283,7 @@ export const components: ComponentEntry[] = [
     group: "Form",
     previewHeight: 220,
     description:
-      "Native `<select>` styled to match the input. Options live as light-DOM `<option>` children for free keyboard nav, screen-reader behavior, and the mobile picker.",
+      "Select built on `hex-listbox`, so options are styled parts rather than browser chrome. Options stay light-DOM `<option>` children; add `data-category` or `data-count` for tinted labels and counts. A hidden native select carries form value and `required` validation.",
     defaultSlot: `
       <option value="us-east-1">US East (Virginia)</option>
       <option value="us-west-2">US West (Oregon)</option>
@@ -307,6 +307,121 @@ export const components: ComponentEntry[] = [
       { name: "error", kind: "text", default: "" },
       { name: "icon", kind: "select", options: ICON_OPTIONS, default: "" },
       { name: "disabled", kind: "boolean", default: false },
+    ],
+  },
+  {
+    tag: "hex-autocomplete",
+    title: "Autocomplete",
+    group: "Form",
+    previewHeight: 320,
+    description:
+      "Combobox that completes as you type. Ships no domain knowledge: pass a `provider` with a `search(query, context)` method and it owns debouncing, cancellation, stale-response discard, keyboard, and ARIA. `context.signal` aborts superseded requests and `context.term` sets what gets highlighted.",
+    usage: [
+      {
+        text: "For a fixed list, skip the provider entirely and pass **source**. Matching is a case-insensitive substring and the matched run is underlined in each row.",
+        demo: '<div style="width:280px"><hex-autocomplete label="Species" placeholder="Start typing" source="canine, feline, equine, avian, reptile, cervine"></hex-autocomplete></div>',
+      },
+      {
+        text: "Set **min-length** when results cost a network round trip, so a single character does not fan out. Wildcards (`*`) do not count toward the threshold.",
+        demo: '<div style="width:280px"><hex-autocomplete label="Tag" min-length="3" hint="Three characters minimum" source="character, copyright, conditional_dnp, contributor"></hex-autocomplete></div>',
+      },
+      {
+        text: "Give **empty** a string to keep the panel open with a no-matches message. Leave it unset and the panel simply closes, which suits fields where an unmatched value is still valid.",
+        demo: '<div style="width:280px"><hex-autocomplete label="Artist" empty="No artists found" source="ada, grace, alan"></hex-autocomplete></div>',
+      },
+      {
+        text: "Hold <kbd>Ctrl</kbd> while picking with click, <kbd>Enter</kbd>, or <kbd>Tab</kbd> to insert and keep the list open. Pair it with a provider whose `insert` splices one word so people can complete several terms in one field without reopening.",
+      },
+    ],
+    props: [
+      { name: "label", kind: "text", default: "Tag" },
+      { name: "value", kind: "text", default: "" },
+      { name: "placeholder", kind: "text", default: "Start typing" },
+      {
+        name: "source",
+        kind: "text",
+        default: "canine, feline, equine, avian, reptile, cervine, bovine",
+      },
+      { name: "empty", kind: "text", default: "No matches" },
+      { name: "hint", kind: "text", default: "" },
+      { name: "error", kind: "text", default: "" },
+      { name: "icon", kind: "select", options: ICON_OPTIONS, default: "" },
+      { name: "min-length", kind: "number", default: 1 },
+      { name: "max-results", kind: "number", default: 15 },
+      { name: "delay", kind: "number", default: 225 },
+      { name: "disabled", kind: "boolean", default: false },
+    ],
+  },
+  {
+    tag: "hex-listbox",
+    title: "Listbox",
+    group: "Form",
+    previewHeight: 260,
+    description:
+      "Selectable list of `hex-option` children, carrying `role=\"listbox\"` on the host so the flattened tree stays correct. It owns highlight state, wrap-around movement, typeahead, and scroll-into-view, but not focus: a combobox keeps focus on its own field and points `aria-activedescendant` at the active option.",
+    defaultSlot: `
+      <hex-option value="artist" label="artist" category="artist" count="128400"></hex-option>
+      <hex-option value="character" label="character" category="character" count="98211"></hex-option>
+      <hex-option value="species" label="species" category="species" count="45120"></hex-option>
+      <hex-option value="general" label="general" category="general" count="1204000"></hex-option>`,
+    usage: [
+      {
+        text: "Reach for it directly only when building a new combobox-like control. For an ordinary picker use `hex-select`, and for completion use `hex-autocomplete`; both are built on this.",
+      },
+      {
+        text: "Set **empty** to show a message in place of an empty list, rather than collapsing to nothing and leaving people unsure whether it loaded.",
+        demo: '<div style="width:240px"><hex-listbox empty="Nothing here yet"></hex-listbox></div>',
+      },
+    ],
+    props: [
+      { name: "value", kind: "text", default: "" },
+      { name: "empty", kind: "text", default: "" },
+    ],
+  },
+  {
+    tag: "hex-option",
+    title: "Option",
+    group: "Form",
+    previewHeight: 200,
+    description:
+      "One row in a `hex-listbox`. Renders a label, an optional right-aligned count in compact notation, and an optional struck-through `antecedent` for aliases. Set `match` and the matching run of the label is underlined.",
+    usage: [
+      {
+        text: "Set **category** to tint the label with the matching tag color, so a list of tags reads the same as tags do everywhere else.",
+        demo: '<div style="width:240px"><hex-listbox><hex-option value="a" label="wolf" category="species" count="88400"></hex-option><hex-option value="b" label="patreon" category="meta" count="4120"></hex-option></hex-listbox></div>',
+      },
+      {
+        text: "Set **antecedent** when the option resolves to a different tag, so people see what they typed and what they will get.",
+        demo: '<div style="width:240px"><hex-listbox><hex-option value="c" label="canine" antecedent="dog" category="species" count="512000"></hex-option></hex-listbox></div>',
+      },
+    ],
+    props: [
+      { name: "label", kind: "text", default: "wolf" },
+      { name: "value", kind: "text", default: "wolf" },
+      {
+        name: "category",
+        kind: "select",
+        options: [
+          "",
+          "artist",
+          "copyright",
+          "character",
+          "species",
+          "general",
+          "meta",
+          "lore",
+          "invalid",
+          "contributor",
+          "metatag",
+        ],
+        default: "species",
+      },
+      { name: "count", kind: "number", default: 88400 },
+      { name: "antecedent", kind: "text", default: "" },
+      { name: "match", kind: "text", default: "wol" },
+      { name: "disabled", kind: "boolean", default: false },
+      { name: "selected", kind: "boolean", default: false },
+      { name: "active", kind: "boolean", default: false },
     ],
   },
   {

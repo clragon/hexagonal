@@ -31,7 +31,10 @@ import "./components/hex-section.js";
 import "./components/hex-code.js";
 import "./components/hex-spoiler.js";
 import "./components/hex-alert.js";
+import "./components/hex-option.js";
+import "./components/hex-listbox.js";
 import "./components/hex-select.js";
+import "./components/hex-autocomplete.js";
 import "./components/hex-textarea.js";
 import "./components/hex-radio.js";
 import "./components/hex-radio-group.js";
@@ -44,3 +47,10 @@ export { tokensCss, registerTokens } from "./shared/tokens.js";
 export { iconPaths, type IconName } from "./shared/icons.js";
 export { dmarkHandlers } from "./shared/dmark-handlers.js";
 export { assets } from "./shared/assets.js";
+export type {
+  HexAutocompleteItem,
+  HexAutocompleteContext,
+  HexAutocompleteProvider,
+} from "./components/hex-autocomplete.js";
+export type { HexListboxSelectDetail } from "./components/hex-listbox.js";
+export type { HexOptionCategory } from "./components/hex-option.js";
