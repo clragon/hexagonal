@@ -1,4 +1,4 @@
-import { html, css, nothing } from "lit";
+import { html, css, nothing, type TemplateResult } from "lit";
 import { customElement, property, query, state } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { HexFormElement } from "../shared/form-element.js";
@@ -36,6 +36,7 @@ export interface HexAutocompleteProvider {
     context: HexAutocompleteContext,
   ): Promise<HexAutocompleteItem[]> | HexAutocompleteItem[];
   insert?(input: HTMLInputElement, item: HexAutocompleteItem): void;
+  renderOption?(item: HexAutocompleteItem, index: number): TemplateResult;
 }
 
 const DEFAULT_DELAY = 225;
@@ -439,19 +440,21 @@ export class HexAutocomplete extends HexFormElement {
           @hex-activate=${this.onListboxActivate}
           @hex-select=${this.onListboxSelect}
         >
-          ${this.items.map(
-            (item) => html`
+          ${this.items.map((item, index) => {
+            const custom = this.activeProvider.renderOption?.(item, index);
+            return html`
               <hex-option
                 value=${item.value}
-                label=${item.label ?? item.value}
+                label=${custom ? "" : (item.label ?? item.value)}
                 category=${ifDefined(item.category)}
                 antecedent=${ifDefined(item.antecedent)}
                 count=${ifDefined(item.count)}
                 match=${this.term}
                 ?disabled=${item.disabled ?? false}
-              ></hex-option>
-            `,
-          )}
+                >${custom ?? nothing}</hex-option
+              >
+            `;
+          })}
         </hex-listbox>
       </hex-popover>
       ${this.error
