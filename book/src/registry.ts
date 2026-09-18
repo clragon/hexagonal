@@ -284,7 +284,7 @@ export const components: ComponentEntry[] = [
     group: "Form",
     previewHeight: 360,
     description:
-      "Select whose options are styled parts rather than browser chrome. Options are light-DOM children: plain `<option>`, or `<hex-option>` when a row needs a category tint, a count or an antecedent. A hidden native select carries the form value and `required` validation.",
+      "Picker for one value out of a known set. Options are ordinary `<option>` children, or `<hex-option>` when a row needs a category tint, a count or an antecedent.",
     defaultSlot: `
       <option value="us-east-1">US East (Virginia)</option>
       <option value="us-west-2">US West (Oregon)</option>
@@ -328,7 +328,7 @@ export const components: ComponentEntry[] = [
     group: "Form",
     previewHeight: 320,
     description:
-      "Text field that suggests values as you type. Use it when the valid answers are too many to put in a list, like tags, artists or users, and people roughly know what they are after.",
+      "Text field that suggests values as you type. Use it when the valid answers are too many to list, such as tags or users.",
     usage: [
       {
         text: "Suggestions come from one of two places: **source** for a fixed list, or a **provider** for anything that must be looked up, such as a server or a search index. A provider defines what counts as a match and may be async. Debouncing, responses that arrive out of order, keyboard navigation and screen-reader wiring are already covered.",
@@ -377,7 +377,7 @@ export const components: ComponentEntry[] = [
     title: "Switch",
     group: "Form",
     description:
-      "Toggle switch. Use for boolean settings where the on/off state is the point. The native checkbox underneath gets `role=\"switch\"` so assistive tech announces it correctly.",
+      "Toggle for a setting that takes effect the moment it is flipped. Use it where the on and off states are the point, rather than something applied on save.",
     defaultSlot: "Enable telemetry",
     usage: [
       {
@@ -400,7 +400,7 @@ export const components: ComponentEntry[] = [
     group: "Form",
     previewHeight: 240,
     description:
-      "Container for `<hex-radio>` children. Manages selection via `value`, propagates `name` to children, and fires `hex-change` on selection change.",
+      "A set of radios where exactly one can be chosen. Use it below roughly five options, where showing every choice at once costs less than opening a list.",
     defaultSlot: `
       <hex-radio value="public">Public client</hex-radio>
       <hex-radio value="confidential">Confidential client</hex-radio>
@@ -523,7 +523,7 @@ export const components: ComponentEntry[] = [
     group: "Tokens",
     previewHeight: 120,
     description:
-      "Category-tinted tag. The **chip** variant suits a wrap of tags where they flow like words; the **row** variant suits a sidebar list, where each tag gets a count and its own controls.",
+      "Category-tinted tag. The chip variant flows like words in a wrap; the row variant stacks into a sidebar list with a count and controls.",
     defaultSlot: "rowan",
     usage: [
       {
@@ -899,7 +899,7 @@ export const components: ComponentEntry[] = [
     title: "Spoiler",
     group: "Content",
     previewHeight: 140,
-    description: "Inline censor that reveals on hover (desktop) or tap (mobile). Wraps cleanly across lines.",
+    description: "Inline censor for content that should not be read by accident. Reveals on click and never on hover, since a pointer passing over something is not consent to read it.",
     defaultSlot: "the Guardian of the Hexagon",
     usage: [
       {
@@ -918,7 +918,7 @@ export const components: ComponentEntry[] = [
     title: "Dialog",
     group: "Surfaces",
     description:
-      "Modal dialog backed by the native `<dialog>` element. Free focus trap, ESC-to-close, top-layer rendering, and proper aria role. Slots: `heading`, default body, `actions` (primary on the right).",
+      "Modal for a decision that has to be made before anything else can continue. Keeps focus inside, closes on Escape, and sits above the rest of the page.",
     defaultSlot:
       "This will permanently remove the cluster and all of its data. This action cannot be undone.",
     namedSlots: {
@@ -991,7 +991,7 @@ export const components: ComponentEntry[] = [
     title: "Alert",
     group: "Content",
     description:
-      "Banner with variant tint, leading icon, heading slot, message body, action slot, and a close button. Click the close button to fire the `hex-dismiss` event; the element removes itself unless the event is `preventDefault()`'d.",
+      "Banner for something the reader needs to notice, tinted by how serious it is. Takes a heading, a message, and optional actions, and can be dismissed.",
     defaultSlot: "All 12 nodes updated to version 2.15.0",
     namedSlots: {
       heading: "Deployment successful",
