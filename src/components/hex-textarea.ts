@@ -1,101 +1,84 @@
 import { html, css, nothing } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
-import { HexFormElement } from "../shared/form-element.js";
+import { HexFieldElement } from "../shared/field-element.js";
+import "./hex-icon.js";
 
 @customElement("hex-textarea")
-export class HexTextarea extends HexFormElement {
+export class HexTextarea extends HexFieldElement {
   static preflight = {
-    base: { display: "block", visibility: "hidden", minHeight: "164px" },
+    base: { display: "block", visibility: "hidden", minHeight: "114px" },
     variants: [
-      { when: "[label]", style: { minHeight: "185.5px" } },
-      { when: "[label][counter]", style: { minHeight: "202px" } },
+      { when: "[label]", style: { minHeight: "135.5px" } },
+      { when: "[hint]", style: { minHeight: "134.5px" } },
+      { when: "[label][hint]", style: { minHeight: "156px" } },
+      { when: "[label][error]", style: { minHeight: "156px" } },
+      { when: "[counter]", style: { minHeight: "134.5px" } },
+      { when: "[label][counter]", style: { minHeight: "156px" } },
+      { when: '[size="sm"]', style: { minHeight: "104px" } },
+      { when: '[size="sm"][label]', style: { minHeight: "125.5px" } },
+      { when: '[size="sm"][hint]', style: { minHeight: "124.5px" } },
+      { when: '[size="sm"][label][hint]', style: { minHeight: "146px" } },
+      { when: '[size="sm"][label][error]', style: { minHeight: "146px" } },
+      { when: '[size="sm"][counter]', style: { minHeight: "124.5px" } },
+      { when: '[size="sm"][label][counter]', style: { minHeight: "146px" } },
+      { when: '[size="lg"]', style: { minHeight: "136px" } },
+      { when: '[size="lg"][label]', style: { minHeight: "157.5px" } },
+      { when: '[size="lg"][hint]', style: { minHeight: "156.5px" } },
+      { when: '[size="lg"][label][hint]', style: { minHeight: "178px" } },
+      { when: '[size="lg"][label][error]', style: { minHeight: "178px" } },
+      { when: '[size="lg"][counter]', style: { minHeight: "156.5px" } },
+      { when: '[size="lg"][label][counter]', style: { minHeight: "178px" } },
     ],
   };
 
   static override styles = [
-    HexFormElement.styles,
+    HexFieldElement.styles,
     css`
-      :host {
-        display: block;
+      .field {
+        align-items: stretch;
       }
-      label {
+      .control {
         display: block;
-        font-size: var(--hex-fs-xs);
-        text-transform: uppercase;
-        letter-spacing: 0.06em;
-        color: var(--hex-fg-2);
-        font-weight: var(--hex-font-weight-bold);
-        margin-bottom: 5px;
-      }
-      textarea {
-        width: 100%;
-        box-sizing: border-box;
-        min-height: 10rem;
         resize: vertical;
-        background: var(--hex-color-background);
-        color: var(--hex-fg-1);
-        border: 1px solid var(--hex-border-strong);
-        font-family: inherit;
-        font-size: var(--hex-fs-md);
-        line-height: var(--hex-line-normal);
-        padding: 8px 10px;
-        border-radius: var(--hex-radius-md);
-        outline: none;
-        display: block;
-        transition:
-          border-color var(--hex-dur-fast) var(--hex-ease),
-          box-shadow var(--hex-dur-fast) var(--hex-ease);
       }
-      textarea:focus {
-        border-color: var(--hex-color-primary);
-        box-shadow: var(--hex-shadow-focus);
+      .icon,
+      .prefix,
+      .suffix {
+        top: calc(8px + var(--_hex-control-line) / 2);
       }
-      :host([invalid]) textarea {
-        border-color: var(--hex-color-danger);
+      :host([size="sm"]) .icon,
+      :host([size="sm"]) .prefix,
+      :host([size="sm"]) .suffix {
+        top: calc(6px + var(--_hex-control-line) / 2);
       }
-      :host([invalid]) textarea:focus {
-        box-shadow: var(--hex-shadow-focus-danger);
+      :host([size="lg"]) .icon,
+      :host([size="lg"]) .prefix,
+      :host([size="lg"]) .suffix {
+        top: calc(10px + var(--_hex-control-line) / 2);
       }
       .footer {
         display: flex;
         align-items: baseline;
         justify-content: space-between;
         gap: var(--hex-space-3);
-        margin-top: 4px;
       }
-      .hint,
-      .error,
       .counter {
         font-size: var(--hex-fs-xs);
-      }
-      .hint {
-        color: var(--hex-fg-2);
-      }
-      .error {
-        color: var(--hex-color-danger);
-      }
-      .counter {
         color: var(--hex-fg-2);
         font-variant-numeric: tabular-nums;
+        margin-top: 4px;
         margin-left: auto;
         flex-shrink: 0;
       }
       .counter[data-over] {
         color: var(--hex-color-danger);
       }
-      :host([disabled]) {
-        opacity: 0.55;
-        pointer-events: none;
-      }
     `,
   ];
 
-  @property({ type: String }) label = "";
   @property({ type: String }) value = "";
   @property({ type: String }) placeholder = "";
-  @property({ type: String }) hint = "";
-  @property({ type: String }) error = "";
   @property({ type: Number }) rows = 6;
   @property({ type: Number, attribute: "maxlength" }) maxLength?: number;
   @property({ type: Boolean, reflect: true }) counter = false;
@@ -119,7 +102,7 @@ export class HexTextarea extends HexFormElement {
   }
 
   override updated(changed: Map<string, unknown>) {
-    if (changed.has("error")) this.toggleAttribute("invalid", Boolean(this.error));
+    this.syncFieldAttributes(changed);
     if (changed.has("value") || changed.has("required") || changed.has("error")) {
       this.commit(this.error || undefined);
     }
@@ -142,31 +125,36 @@ export class HexTextarea extends HexFormElement {
   };
 
   override render() {
-    const describedBy = this.error ? "error" : this.hint ? "hint" : undefined;
     const over = this.maxLength !== undefined && this.value.length > this.maxLength;
     return html`
       ${this.label ? html`<label for="ta">${this.label}</label>` : nothing}
-      <textarea
-        part="control"
-        id="ta"
-        .value=${this.value}
-        rows=${this.rows}
-        name=${this.name}
-        placeholder=${this.placeholder}
-        ?disabled=${this.disabled}
-        ?required=${this.required}
-        maxlength=${ifDefined(this.maxLength)}
-        aria-describedby=${ifDefined(describedBy)}
-        aria-invalid=${this.error ? "true" : "false"}
-        @input=${this.onInput}
-        @change=${this.onChange}
-      ></textarea>
+      <div class="field" part="field">
+        ${this.icon
+          ? html`<span class="icon" part="icon"
+              ><hex-icon name=${this.icon} size="14"></hex-icon
+            ></span>`
+          : nothing}
+        ${this.renderPrefix()}
+        <textarea
+          class="control"
+          part="control"
+          id="ta"
+          .value=${this.value}
+          rows=${this.rows}
+          name=${this.name}
+          placeholder=${this.placeholder}
+          ?disabled=${this.disabled}
+          ?required=${this.required}
+          maxlength=${ifDefined(this.maxLength)}
+          aria-describedby=${ifDefined(this.describedBy)}
+          aria-invalid=${this.error ? "true" : "false"}
+          @input=${this.onInput}
+          @change=${this.onChange}
+        ></textarea>
+        ${this.renderSuffix()}
+      </div>
       <div class="footer" part="footer">
-        ${this.error
-          ? html`<div id="error" class="error" part="error" role="alert">${this.error}</div>`
-          : this.hint
-            ? html`<div id="hint" class="hint" part="hint">${this.hint}</div>`
-            : nothing}
+        ${this.renderMessage()}
         ${this.counter && this.maxLength !== undefined
           ? html`<div class="counter" part="counter" ?data-over=${over} aria-live="polite">
               ${this.value.length} / ${this.maxLength}
