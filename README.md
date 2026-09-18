@@ -1,8 +1,6 @@
 # Hexagonal
 
-A dark design system for e621 surfaces, built as CDN-able web components. The
-palette is amber on navy and the page carries a repeating hexagonal tile. The
-components cover tags, text and forms.
+A design for a blue honeycomb world.
 
 ## Use
 
@@ -29,15 +27,13 @@ Importing the bundle:
 The bundle injects tokens at runtime, so CSS that runs before the script cannot
 use `var(--hex-*)`.
 
-Optional bundled fonts (Verdana, Paulistana Ipe):
+The fonts stylesheet embeds Verdana for body text and Paulistana Ipe for the
+wordmark. It costs 120 KB gzipped, against 34 KB for the bundle itself. Omitting
+it leaves body text to the Verdana installed on the machine.
 
 ```html
 <link rel="stylesheet" href="https://libs.cdn.clynamic.net/hexagonal/0.2.0/hexagonal-fonts.css" />
 ```
-
-Paulistana Ipe carries the wordmark. Without the stylesheet `hex-logo` renders it
-in Verdana, which is a different typeface. Body text is unaffected on any machine
-that has Verdana.
 
 ## The first paint
 
@@ -55,7 +51,7 @@ The bundle detects tokens that are already present and leaves them alone, so
 linking the stylesheet costs nothing beyond the request.
 
 Custom elements have no size until their definition loads, so content shifts when
-they upgrade. `preflight.css` reserves the measured box of each component:
+they upgrade. `preflight.css` holds that space with measured values:
 
 ```html
 <link rel="stylesheet" href="https://libs.cdn.clynamic.net/hexagonal/0.2.0/hexagonal-preflight.css" />
@@ -82,7 +78,7 @@ These four slot into a parent: `hex-listbox` `hex-menu-item` `hex-option` `hex-r
 
 
 `yarn dev` serves the component book, which carries props, guidance and live
-examples for each component.
+examples.
 
 ## Rendering DText
 
