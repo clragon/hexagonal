@@ -1,7 +1,16 @@
 import { html, css, svg, type SVGTemplateResult } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { HexElement } from "../shared/base.js";
-import { iconPaths, type IconName } from "../shared/icons.js";
+import { iconPaths, ICONS_CHANGED, type IconName } from "../shared/icons.js";
+
+// One shared listener refreshes every mounted icon when the registry changes,
+// so a lazily registered glyph appears without the caller hunting instances.
+const mounted = new Set<HexIcon>();
+if (typeof window !== "undefined") {
+  window.addEventListener(ICONS_CHANGED, () => {
+    for (const icon of mounted) icon.requestUpdate();
+  });
+}
 
 @customElement("hex-icon")
 export class HexIcon extends HexElement {
@@ -29,6 +38,16 @@ export class HexIcon extends HexElement {
   ];
 
   @property({ type: String }) name: IconName | "" = "";
+
+  override connectedCallback(): void {
+    super.connectedCallback();
+    mounted.add(this);
+  }
+
+  override disconnectedCallback(): void {
+    mounted.delete(this);
+    super.disconnectedCallback();
+  }
   @property({ type: Number }) size = 16;
   @property({ type: Number, attribute: "stroke-width" }) strokeWidth = 1.6;
 

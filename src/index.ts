@@ -60,7 +60,15 @@ export { HexFormElement } from "./shared/form-element.js";
 export { fieldStyles } from "./shared/field-styles.js";
 
 export { tokensCss, registerTokens } from "./shared/tokens.js";
-export { iconPaths, renderIcon, type IconName } from "./shared/icons.js";
+export {
+  iconPaths,
+  renderIcon,
+  registerIcon,
+  registerIcons,
+  type IconName,
+  ICONS_CHANGED,
+  type BuiltinIconName,
+} from "./shared/icons.js";
 export { dmarkHandlers } from "./shared/dmark-handlers.js";
 export { assets } from "./shared/assets.js";
 

@@ -3,9 +3,7 @@ import { svg, type SVGTemplateResult } from "lit";
 // Lucide-derived stroke icons + a few Hexagonal-specific shapes (hex, chexagon).
 // All icons render in a 24x24 viewBox; size/stroke are controlled by <hex-icon>.
 
-export type IconName = keyof typeof iconPaths;
-
-export const iconPaths = {
+const builtinIcons = {
   hex: svg`<polygon points="12 2 22 8 22 16 12 22 2 16 2 8" />`,
   "hex-fill": svg`
     <polygon points="12 2 22 8 22 16 12 22 2 16 2 8" fill="currentColor" stroke="none"/>
@@ -68,6 +66,30 @@ export const iconPaths = {
   `,
   "info-circle": svg`<circle cx="12" cy="12" r="9"/><path d="M12 16v-4m0-4h.01"/>`,
 } as const;
+
+export type BuiltinIconName = keyof typeof builtinIcons;
+
+// Any string is accepted so consumers can register their own glyphs; the
+// union keeps editor completion for the built-ins.
+export type IconName = BuiltinIconName | (string & {});
+
+export const iconPaths: Record<string, SVGTemplateResult> = { ...builtinIcons };
+
+export const ICONS_CHANGED = "hex-icons-changed";
+
+function notifyIconsChanged(): void {
+  if (typeof window !== "undefined") window.dispatchEvent(new CustomEvent(ICONS_CHANGED));
+}
+
+export function registerIcon(name: string, path: SVGTemplateResult): void {
+  iconPaths[name] = path;
+  notifyIconsChanged();
+}
+
+export function registerIcons(icons: Record<string, SVGTemplateResult>): void {
+  Object.assign(iconPaths, icons);
+  notifyIconsChanged();
+}
 
 export function renderIcon(name: IconName): SVGTemplateResult | null {
   return iconPaths[name] ?? null;
