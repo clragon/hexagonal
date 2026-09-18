@@ -27,11 +27,8 @@ export class HexSpoiler extends HexElement {
         box-decoration-break: clone;
         -webkit-box-decoration-break: clone;
       }
-      @media (hover: hover) {
-        :host(:hover) {
-          background: transparent;
-          color: var(--hex-fg-1);
-        }
+      .content {
+        display: contents;
       }
       :host([revealed]) {
         background: transparent;
@@ -43,25 +40,54 @@ export class HexSpoiler extends HexElement {
   ];
 
   @property({ type: Boolean, reflect: true }) revealed = false;
+  @property({ type: String }) hint = "Spoiler, activate to reveal";
+
+  private sticky = false;
 
   constructor() {
     super();
     if (!this.hasAttribute("role")) this.setAttribute("role", "button");
     if (!this.hasAttribute("tabindex")) this.setAttribute("tabindex", "0");
-    if (!this.hasAttribute("aria-label")) this.setAttribute("aria-label", "Spoiler, hidden text");
     this.addEventListener("click", this.onClick);
     this.addEventListener("keydown", this.onKey);
+    this.addEventListener("pointerenter", this.onEnter);
+    this.addEventListener("pointerleave", this.onLeave);
   }
 
   override updated(changed: Map<string, unknown>) {
-    if (changed.has("revealed")) {
-      this.setAttribute("aria-expanded", String(this.revealed));
-    }
+    if (!changed.has("revealed")) return;
+    this.setAttribute("aria-expanded", String(this.revealed));
+    if (this.revealed) this.removeAttribute("aria-label");
+    else this.setAttribute("aria-label", this.hint);
   }
 
-  private onClick = () => {
-    // Hover-capable devices already reveal via CSS; only toggle on touch.
-    if (matchMedia("(hover: none)").matches) this.toggle();
+  private get hoverCapable(): boolean {
+    return matchMedia("(hover: hover)").matches;
+  }
+
+  private readonly onEnter = (): void => {
+    if (this.hoverCapable) this.revealed = true;
+  };
+
+  private readonly onLeave = (): void => {
+    if (this.hoverCapable && !this.sticky) this.revealed = false;
+  };
+
+  private onClick = (e: Event) => {
+    if (this.revealed) {
+      const path = e.composedPath();
+      const onControl = path.some(
+        (n) =>
+          n instanceof HTMLElement && n !== this && n.matches("a[href], button, [role='link']"),
+      );
+      if (onControl) return;
+    }
+    if (this.hoverCapable) {
+      this.sticky = !this.sticky;
+      if (this.sticky) this.revealed = true;
+      return;
+    }
+    this.toggle();
   };
 
   private onKey = (e: KeyboardEvent) => {
@@ -74,6 +100,7 @@ export class HexSpoiler extends HexElement {
 
   private toggle() {
     this.revealed = !this.revealed;
+    if (!this.revealed) this.sticky = false;
     this.dispatchEvent(
       new CustomEvent("hex-toggle", {
         detail: { revealed: this.revealed },
@@ -84,7 +111,7 @@ export class HexSpoiler extends HexElement {
   }
 
   override render() {
-    return html`<slot></slot>`;
+    return html`<span class="content" ?inert=${!this.revealed}><slot></slot></span>`;
   }
 }
 
