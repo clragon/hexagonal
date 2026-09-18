@@ -199,6 +199,10 @@ export const components: ComponentEntry[] = [
     description: "Text input with optional label, hint, error, and leading icon.",
     usage: [
       {
+        text: "To join a field to a button, square off the edges where they meet with `::part`. The focus ring still wraps the field correctly, so this needs no wrapper element:\n\n`hex-input::part(control) { border-top-right-radius: 0; border-bottom-right-radius: 0 }`\n\n`hex-button::part(base) { border-top-left-radius: 0; border-bottom-left-radius: 0 }`",
+        demo: '<div style="display:flex;align-items:stretch;width:300px"><style>.ig hex-input::part(control){border-top-right-radius:0;border-bottom-right-radius:0}.ig hex-button::part(base){border-top-left-radius:0;border-bottom-left-radius:0}</style><span class="ig" style="display:flex;width:100%"><hex-input value="wolf" style="flex:1"></hex-input><hex-button>Search</hex-button></span></div>',
+      },
+      {
         text: "Always give it a **label**. A placeholder is not a label: it disappears the moment someone types, which is exactly when they need to check what the field wanted.",
         demo: '<div style="width:280px"><hex-input label="Cluster name" placeholder="production-1"></hex-input></div>',
       },
