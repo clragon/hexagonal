@@ -28,14 +28,25 @@ export class HexDialog extends HexElement {
         display: contents;
       }
       dialog {
+        position: relative;
+        isolation: isolate;
         background: var(--hex-bg-card);
-        background-image: var(--hex-texture);
-        background-repeat: repeat-x;
-        background-position: left top;
         color: var(--hex-fg-1);
         border: 1px solid var(--hex-border);
         border-radius: var(--hex-radius-lg);
         box-shadow: var(--hex-shadow-popover);
+      }
+      dialog::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+        border-radius: inherit;
+        background-image: var(--hex-texture);
+        background-repeat: repeat;
+        -webkit-mask-image: linear-gradient(to bottom, #000 0, transparent var(--hex-texture-fade));
+        mask-image: linear-gradient(to bottom, #000 0, transparent var(--hex-texture-fade));
         padding: 0;
         font-family: var(--hex-font-family);
         font-size: var(--hex-fs-md);

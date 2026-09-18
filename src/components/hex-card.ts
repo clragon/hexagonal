@@ -2,7 +2,7 @@ import { html, css } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { HexElement } from "../shared/base.js";
 
-// Standard card surface: navy fill + hex-texture watermark fading down + soft shadow.
+// Standard card surface: navy fill, a masked hex-texture layer fading down, soft shadow.
 // `dense` drops internal padding from 24 to 16 for data-heavy surfaces.
 // `flat` removes the texture for nested card-on-card-on-card cases.
 
@@ -13,20 +13,33 @@ export class HexCard extends HexElement {
     css`
       :host {
         display: block;
+        position: relative;
+        isolation: isolate;
         background-color: var(--hex-bg-card);
-        background-image: var(--hex-texture);
-        background-repeat: repeat-x;
-        background-position: left top;
         border-radius: var(--hex-radius-md);
         box-shadow: var(--hex-shadow-card);
         color: var(--hex-fg-1);
         padding: var(--hex-space-5);
       }
+      :host::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+        border-radius: inherit;
+        background-image: var(--hex-texture);
+        background-repeat: repeat;
+        -webkit-mask-image: linear-gradient(to bottom, #000 0, transparent var(--hex-texture-fade));
+        mask-image: linear-gradient(to bottom, #000 0, transparent var(--hex-texture-fade));
+      }
       :host([dense]) {
         padding: var(--hex-space-4);
       }
+      :host([flat])::before {
+        display: none;
+      }
       :host([flat]) {
-        background-image: none;
         background-color: var(--hex-bg-section);
         box-shadow: none;
       }

@@ -101,6 +101,8 @@ export const tokensCss = /* css */ `
   --hex-shadow-focus:   0 0 0 2px rgba(232, 196, 70, 0.45);
   --hex-shadow-focus-danger: 0 0 0 2px rgba(224, 123, 107, 0.35);
 
+  --hex-texture-fade: 200px;
+
   --hex-raise-depth: 4px;
   --hex-raise-press: 2px;
 
