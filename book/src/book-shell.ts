@@ -54,9 +54,10 @@ export class BookShell extends LitElement {
     .brand-sub {
       font-size: 11px;
       color: #888;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
       margin-top: 4px;
+    }
+    .nav-drawer > summary {
+      display: none;
     }
     nav ul {
       list-style: none;
@@ -109,36 +110,76 @@ export class BookShell extends LitElement {
     @media (max-width: 720px) {
       :host {
         grid-template-columns: 1fr;
-        grid-template-rows: auto 1fr;
+        grid-template-rows: auto minmax(0, 1fr);
       }
       aside {
         border-right: 0;
         border-bottom: 1px solid #262626;
+        max-height: 60vh;
       }
       main {
         padding: 24px 20px 60px;
+      }
+      .nav-drawer > summary {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 9px 12px;
+        border: 1px solid #2e2e2e;
+        border-radius: 6px;
+        background: #1d1d1d;
+        color: #e6e6e6;
+        font-size: 13px;
+        cursor: pointer;
+        list-style: none;
+        box-sizing: border-box;
+      }
+      .nav-drawer > summary::-webkit-details-marker {
+        display: none;
+      }
+      .nav-drawer > summary::after {
+        content: "▾";
+        color: #888;
+      }
+      .nav-drawer[open] > summary::after {
+        content: "▴";
       }
     }
   `;
 
   @state() private currentTag: string = components[0]?.tag ?? "";
+  @state() private navOpen = true;
+  private wide = window.matchMedia("(min-width: 721px)");
 
   override connectedCallback() {
     super.connectedCallback();
+    this.navOpen = this.wide.matches;
     this.syncFromHash();
     window.addEventListener("hashchange", this.syncFromHash);
+    this.wide.addEventListener("change", this.onWidthChange);
   }
 
   override disconnectedCallback() {
     super.disconnectedCallback();
     window.removeEventListener("hashchange", this.syncFromHash);
+    this.wide.removeEventListener("change", this.onWidthChange);
   }
 
   private syncFromHash = () => {
     const slug = window.location.hash.replace(/^#/, "").trim();
     const target = components.find((c) => c.tag === `hex-${slug}` || c.tag === slug);
     this.currentTag = target?.tag ?? components[0]?.tag ?? "";
+    if (!this.wide.matches) this.navOpen = false;
   };
+
+  private onWidthChange = (e: MediaQueryListEvent) => {
+    this.navOpen = e.matches;
+  };
+
+  private currentTitle() {
+    return components.find((c) => c.tag === this.currentTag)?.title ?? "Components";
+  }
 
   private renderGroups() {
     const byGroup = new Map<ComponentGroup, ComponentEntry[]>();
@@ -178,9 +219,18 @@ export class BookShell extends LitElement {
             <div class="brand-sub">Components</div>
           </div>
         </div>
-        <nav>
-          ${this.renderGroups()}
-        </nav>
+        <details
+          class="nav-drawer"
+          ?open=${this.navOpen}
+          @toggle=${(e: Event) => {
+            this.navOpen = (e.target as HTMLDetailsElement).open;
+          }}
+        >
+          <summary>${this.currentTitle()}</summary>
+          <nav>
+            ${this.renderGroups()}
+          </nav>
+        </details>
       </aside>
       <main>
         <component-page tag=${this.currentTag}></component-page>
