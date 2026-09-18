@@ -37,30 +37,39 @@ export class HexTag extends HexElement {
       }
       :host([category="artist"]) {
         --tag-color: var(--hex-tag-artist);
+        --tag-color-alt: var(--hex-tag-artist-alt);
       }
       :host([category="copyright"]) {
         --tag-color: var(--hex-tag-copyright);
+        --tag-color-alt: var(--hex-tag-copyright-alt);
       }
       :host([category="character"]) {
         --tag-color: var(--hex-tag-character);
+        --tag-color-alt: var(--hex-tag-character-alt);
       }
       :host([category="species"]) {
         --tag-color: var(--hex-tag-species);
+        --tag-color-alt: var(--hex-tag-species-alt);
       }
       :host([category="general"]) {
         --tag-color: var(--hex-tag-general);
+        --tag-color-alt: var(--hex-tag-general-alt);
       }
       :host([category="lore"]) {
         --tag-color: var(--hex-tag-lore);
+        --tag-color-alt: var(--hex-tag-lore-alt);
       }
       :host([category="invalid"]) {
         --tag-color: var(--hex-tag-invalid);
+        --tag-color-alt: var(--hex-tag-invalid-alt);
       }
       :host([category="contributor"]) {
         --tag-color: var(--hex-tag-contributor);
+        --tag-color-alt: var(--hex-tag-contributor-alt);
       }
       :host([category="meta"]) {
         --tag-color: var(--hex-tag-meta);
+        --tag-color-alt: var(--hex-tag-meta-alt);
         color: #fff;
       }
       .dot {

@@ -44,6 +44,16 @@ export const tokensCss = /* css */ `
   --hex-tag-invalid:   #ff3d3d;
   --hex-tag-contributor: #c0c0c0;
 
+  --hex-tag-artist-alt:      #fbd67f;
+  --hex-tag-copyright-alt:   #ff5eff;
+  --hex-tag-character-alt:   #2bff2b;
+  --hex-tag-species-alt:     #f6b295;
+  --hex-tag-general-alt:     #2e76b4;
+  --hex-tag-meta-alt:        #666666;
+  --hex-tag-lore-alt:        #5fdb5f;
+  --hex-tag-invalid-alt:     #ffbcbc;
+  --hex-tag-contributor-alt: #71706e;
+
   --hex-bg-page:    var(--hex-color-background);
   --hex-bg-card:    var(--hex-color-foreground);
   --hex-bg-section: var(--hex-color-section);
