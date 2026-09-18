@@ -13,6 +13,7 @@ export class HexPage extends HexElement {
       :host {
         display: block;
         min-height: 100vh;
+        scrollbar-gutter: stable;
         background-color: var(--hex-bg-page);
         background-image: var(--hex-tile);
         background-repeat: repeat;
