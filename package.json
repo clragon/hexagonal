@@ -28,25 +28,36 @@
     "build": "node scripts/build.mjs",
     "build:watch": "node scripts/build.mjs --watch",
     "build:types": "tsc -p tsconfig.build.json",
-    "typecheck": "tsc --noEmit && tsc -p tsconfig.book.json --noEmit",
+    "typecheck": "tsc --noEmit && tsc -p tsconfig.book.json --noEmit && tsc -p tsconfig.test.json --noEmit",
     "fmt": "oxfmt src scripts",
     "fmt:check": "oxfmt --check src scripts",
     "lint": "oxlint src",
     "lint:fix": "oxlint --fix src",
     "check": "yarn fmt:check && yarn lint && yarn typecheck",
     "serve": "node scripts/serve.mjs",
-    "dev": "node scripts/dev.mjs"
+    "dev": "node scripts/dev.mjs",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:preflight": "yarn build && vitest run --config vitest.preflight.config.ts",
+    "test:all": "yarn test && yarn test:preflight",
+    "test:mutation": "stryker run"
   },
   "dependencies": {
     "lit": "^3.2.1"
   },
   "devDependencies": {
+    "@stryker-mutator/core": "^10.0.0",
+    "@stryker-mutator/vitest-runner": "^10.0.0",
     "@types/node": "^22.9.0",
+    "@vitest/browser": "^5.0.1",
+    "@vitest/browser-playwright": "^5.0.1",
     "esbuild": "^0.24.0",
     "marked": "^18.0.3",
     "oxfmt": "^0.48.0",
     "oxlint": "^1.63.0",
-    "playwright": "^1.59.1",
-    "typescript": "^5.6.3"
+    "playwright": "1.60.0",
+    "typescript": "^5.6.3",
+    "vite": "^8.3.0",
+    "vitest": "^5.0.1"
   }
 }
