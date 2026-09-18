@@ -1,8 +1,11 @@
 hex-alert:not(:defined),
+hex-autocomplete:not(:defined),
 hex-card:not(:defined),
 hex-divider:not(:defined),
 hex-input:not(:defined),
+hex-listbox:not(:defined),
 hex-menu-item:not(:defined),
+hex-option:not(:defined),
 hex-quote:not(:defined),
 hex-section:not(:defined),
 hex-select:not(:defined),
@@ -46,6 +49,7 @@ hex-dialog:not(:defined) {
 }
 
 hex-alert:not(:defined),
+hex-autocomplete:not(:defined),
 hex-avatar:not(:defined),
 hex-button:not(:defined),
 hex-card:not(:defined),
@@ -57,8 +61,10 @@ hex-divider:not(:defined),
 hex-icon:not(:defined),
 hex-input:not(:defined),
 hex-kbd:not(:defined),
+hex-listbox:not(:defined),
 hex-logo:not(:defined),
 hex-menu-item:not(:defined),
+hex-option:not(:defined),
 hex-page:not(:defined),
 hex-prose:not(:defined),
 hex-quote:not(:defined),
@@ -110,8 +116,17 @@ hex-icon:not(:defined) {
   width: 16px;
   height: 16px;
 }
+hex-autocomplete:not(:defined) {
+  min-height: 36px;
+}
 hex-input:not(:defined) {
-  min-height: 34px;
+  min-height: 36px;
+}
+hex-listbox:not(:defined) {
+  min-height: 8px;
+}
+hex-option:not(:defined) {
+  min-height: 31.5px;
 }
 hex-kbd:not(:defined) {
   min-height: 20.19px;
@@ -132,7 +147,7 @@ hex-section:not(:defined) {
   min-height: 35px;
 }
 hex-select:not(:defined) {
-  min-height: 34px;
+  min-height: 36px;
 }
 hex-skeleton:not(:defined) {
   min-height: 16px;
@@ -202,20 +217,24 @@ hex-divider[orientation="vertical"]:not(:defined) {
   width: 1px;
 }
 
+hex-autocomplete[label]:not(:defined),
 hex-input[label]:not(:defined),
 hex-select[label]:not(:defined) {
-  min-height: 55.5px;
+  min-height: 57.5px;
 }
 
+hex-autocomplete[hint]:not(:defined),
 hex-input[hint]:not(:defined) {
-  min-height: 54.5px;
+  min-height: 56.5px;
 }
 
+hex-autocomplete[label][hint]:not(:defined),
+hex-autocomplete[label][error]:not(:defined),
 hex-input[label][hint]:not(:defined),
 hex-input[label][error]:not(:defined),
 hex-select[label][hint]:not(:defined),
 hex-select[label][error]:not(:defined) {
-  min-height: 76px;
+  min-height: 78px;
 }
 
 hex-textarea[label]:not(:defined) {
