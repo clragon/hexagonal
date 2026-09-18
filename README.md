@@ -1,8 +1,8 @@
 # Hexagonal
 
-A dark design system for e621 surfaces, built as CDN-able web components.
-Amber on navy, anchored in a repeating hexagonal tile, and built for dense pages
-of tags, text and thumbnails.
+A dark design system for e621 surfaces, built as CDN-able web components. The
+palette is amber on navy and the page carries a repeating hexagonal tile. The
+components cover tags, text and forms.
 
 ## Use
 
@@ -26,8 +26,8 @@ Importing the bundle:
 - injects the design tokens onto `:root`, so consumer CSS can use `var(--hex-*)`
 - inlines the brand textures as base64 data URIs
 
-The bundle injects tokens at runtime. Anything that runs **before** the
-JavaScript lands cannot use `var(--hex-*)`.
+The bundle injects tokens at runtime, so CSS that runs before the script cannot
+use `var(--hex-*)`.
 
 Optional bundled fonts (Verdana, Paulistana Ipe):
 
@@ -35,15 +35,16 @@ Optional bundled fonts (Verdana, Paulistana Ipe):
 <link rel="stylesheet" href="https://libs.cdn.clynamic.net/hexagonal/0.2.0/hexagonal-fonts.css" />
 ```
 
-Without it the system falls back to the Verdana installed on the OS.
+Paulistana Ipe carries the wordmark. Without the stylesheet `hex-logo` renders it
+in Verdana, which is a different typeface. Body text is unaffected on any machine
+that has Verdana.
 
 ## The first paint
 
-A page that renders before the bundle evaluates starts blank and then shifts. Two
-stylesheets cover that window, and each stops mattering once the bundle runs.
+A page that renders before the bundle evaluates starts blank and then shifts.
 
-Tokens arrive with the bundle, so the palette is absent until then and a dark
-design system starts out white. Linking the tokens supplies the palette early:
+Tokens arrive with the bundle, so the page renders white until the script runs.
+Linking the tokens supplies the palette earlier:
 
 ```html
 <link rel="stylesheet" href="https://libs.cdn.clynamic.net/hexagonal/0.2.0/hexagonal-tokens.css" />
@@ -80,7 +81,8 @@ These four slot into a parent: `hex-listbox` `hex-menu-item` `hex-option` `hex-r
 
 
 
-Run `yarn dev` for the component book: every component with its props, guidance and live examples.
+`yarn dev` serves the component book, which carries props, guidance and live
+examples for each component.
 
 ## Rendering DText
 
@@ -145,8 +147,8 @@ yarn test:mutation  # stryker over the component suite
 ```
 
 Tests run in a real browser because these components depend on shadow DOM,
-`ElementInternals`, the popover top layer and real layout. jsdom has no layout
-engine, so a geometry assertion under it reports a number nothing produced.
+`ElementInternals`, the popover top layer and layout. jsdom has no layout engine
+and cannot measure geometry.
 
 The toolchain is Lit 3 and TypeScript, bundled by esbuild, with tsc emitting
 declarations. oxlint and oxfmt handle lint and format, vitest and playwright run
