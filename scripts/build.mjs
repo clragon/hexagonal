@@ -88,9 +88,12 @@ if (watch) {
     "base64",
   );
   const fontsCss = `@font-face{font-family:"Verdana";src:url(data:font/ttf;base64,${verdana}) format("truetype");font-weight:400;font-style:normal;font-display:swap}
-@font-face{font-family:"Paulistana Ipe";src:url(data:font/ttf;base64,${paulistana}) format("truetype");font-weight:400;font-style:normal;font-display:swap}
 `;
   writeFileSync(resolve(root, "dist/hexagonal-fonts.css"), fontsCss);
+
+  const bookFontsCss = `@font-face{font-family:"Paulistana Ipe";src:url(data:font/ttf;base64,${paulistana}) format("truetype");font-weight:400;font-style:normal;font-display:swap}
+`;
+  writeFileSync(resolve(root, "dist/book-fonts.css"), bookFontsCss);
 
   // Standalone preflight.css consumers <link> in <head> so unupgraded <hex-*>
   // elements already occupy their final box, before the module evaluates.
@@ -120,7 +123,7 @@ if (watch) {
   });
 
   console.log(
-    "[esbuild] built dist/hexagonal.js + .min.js + hexagonal-tokens.css + hexagonal-fonts.css + hexagonal-preflight.css + book.js",
+    "[esbuild] built dist/hexagonal.js + .min.js + hexagonal-tokens.css + hexagonal-fonts.css + book-fonts.css + hexagonal-preflight.css + book.js",
   );
 
   console.log("[tsc] emitting .d.ts ...");

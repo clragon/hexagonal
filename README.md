@@ -15,20 +15,18 @@ A design for a blue honeycomb world.
 </hex-page>
 ```
 
-The bundle defines the `--hex-*` tokens on `:root`.
+The bundle is 34 KB gzipped and defines the `--hex-*` tokens on `:root`.
 
-The fonts stylesheet embeds Verdana and the wordmark face. It costs 120 KB
-gzipped, against 34 KB for the bundle.
+The fonts stylesheet embeds Verdana, at 108 KB gzipped. Windows and macOS install
+the font.
 
 ```html
 <link rel="stylesheet" href="https://libs.cdn.clynamic.net/hexagonal/0.2.0/hexagonal-fonts.css" />
 ```
 
-## The first paint
+## FOUC and layout shift
 
-Before the bundle evaluates the page has no palette and no component sizes, so it
-renders white and then shifts. The tokens and preflight stylesheets cover that
-window:
+To prevent both, link the tokens and preflight stylesheets:
 
 ```html
 <link rel="stylesheet" href="https://libs.cdn.clynamic.net/hexagonal/0.2.0/hexagonal-tokens.css" />
