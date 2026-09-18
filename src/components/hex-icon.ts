@@ -3,8 +3,6 @@ import { customElement, property } from "lit/decorators.js";
 import { HexElement } from "../shared/base.js";
 import { iconPaths, ICONS_CHANGED, type IconName } from "../shared/icons.js";
 
-// One shared listener refreshes every mounted icon when the registry changes,
-// so a lazily registered glyph appears without the caller hunting instances.
 const mounted = new Set<HexIcon>();
 if (typeof window !== "undefined") {
   window.addEventListener(ICONS_CHANGED, () => {

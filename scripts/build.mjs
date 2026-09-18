@@ -99,8 +99,6 @@ if (watch) {
     readFileSync(resolve(root, "assets/preflight.css"), "utf8"),
   );
 
-  // The same tokens the bundle injects, as a stylesheet. Linking it means the
-  // palette resolves before any script runs, so a page is not blank until then.
   const tokensBundle = resolve(root, "dist/.tokens.mjs");
   await build({
     entryPoints: [resolve(root, "src/shared/tokens.ts")],

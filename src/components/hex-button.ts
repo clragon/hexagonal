@@ -237,8 +237,6 @@ export class HexButton extends HexElement {
         justify-content: center;
         gap: 0;
       }
-      /* Give the glyph the same line box text gets, so an icon-only button
-         is exactly as tall as a labelled one. */
       :host([icon-only]) button > *,
       :host([icon-only]) ::slotted([slot="icon"]) {
         width: var(--_hex-control-line);

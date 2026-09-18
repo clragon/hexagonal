@@ -43,9 +43,6 @@ import "./components/hex-username.js";
 
 registerTokens();
 
-// Lit authoring primitives, re-exported so extenders never install lit
-// themselves. A second copy of lit would ship duplicate bytes and register a
-// separate reactive-element registry.
 export { html, css, svg, nothing, unsafeCSS, LitElement } from "lit";
 export type { TemplateResult, CSSResultGroup } from "lit";
 export { customElement, property, state, query } from "lit/decorators.js";
@@ -53,8 +50,6 @@ export { ifDefined } from "lit/directives/if-defined.js";
 export { classMap } from "lit/directives/class-map.js";
 export { styleMap } from "lit/directives/style-map.js";
 
-// Extension surface: build a new component in the house style by extending
-// HexElement (or HexFormElement for a form control) and composing these styles.
 export { HexElement, hostReset } from "./shared/base.js";
 export { HexFormElement } from "./shared/form-element.js";
 export { fieldStyles, type HexFieldSize } from "./shared/field-styles.js";
@@ -73,7 +68,6 @@ export {
 export { dmarkHandlers } from "./shared/dmark-handlers.js";
 export { assets } from "./shared/assets.js";
 
-// Component classes, so consumers can subclass or type against them.
 export { HexAlert } from "./components/hex-alert.js";
 export type { HexAlertVariant } from "./components/hex-alert.js";
 export { HexAutocomplete } from "./components/hex-autocomplete.js";

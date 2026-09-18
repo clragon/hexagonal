@@ -69,8 +69,6 @@ const builtinIcons = {
 
 export type BuiltinIconName = keyof typeof builtinIcons;
 
-// Any string is accepted so consumers can register their own glyphs; the
-// union keeps editor completion for the built-ins.
 export type IconName = BuiltinIconName | (string & {});
 
 export const iconPaths: Record<string, SVGTemplateResult> = { ...builtinIcons };
