@@ -115,7 +115,12 @@ export class BookShell extends LitElement {
       aside {
         border-right: 0;
         border-bottom: 1px solid #262626;
-        max-height: 60vh;
+      }
+      :host([nav-open]) aside {
+        position: fixed;
+        inset: 0;
+        z-index: 20;
+        border-bottom: 0;
       }
       main {
         padding: 24px 20px 60px;
@@ -176,6 +181,10 @@ export class BookShell extends LitElement {
   private onWidthChange = (e: MediaQueryListEvent) => {
     this.navOpen = e.matches;
   };
+
+  override updated() {
+    this.toggleAttribute("nav-open", this.navOpen && !this.wide.matches);
+  }
 
   private currentTitle() {
     return components.find((c) => c.tag === this.currentTag)?.title ?? "Components";
