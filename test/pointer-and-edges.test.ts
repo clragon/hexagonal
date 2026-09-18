@@ -326,3 +326,50 @@ test("clicking the control itself toggles it once, not twice", async () => {
   await tick(30);
   expect(el.checked).toBe(false);
 });
+
+test("a repeated letter advances to the next match after a pause", async () => {
+  const el = mount<HexListbox>(
+    "hex-listbox",
+    `<hex-option value="banana" label="banana"></hex-option><hex-option value="berry" label="berry"></hex-option><hex-option value="cherry" label="cherry"></hex-option>`,
+  );
+  await el.updateComplete;
+
+  expect(el.typeahead("b")).toBe(true);
+  expect(el.activeIndex).toBe(0);
+
+  await tick(600);
+
+  expect(el.typeahead("b"), "a second b should move off banana").toBe(true);
+  expect(el.activeIndex).toBe(1);
+
+  await tick(600);
+
+  expect(el.typeahead("b"), "a third b should wrap back to banana").toBe(true);
+  expect(el.activeIndex).toBe(0);
+});
+
+test("a repeated letter cycles without waiting for the buffer to drop", async () => {
+  const el = mount<HexListbox>(
+    "hex-listbox",
+    `<hex-option value="banana" label="banana"></hex-option><hex-option value="berry" label="berry"></hex-option>`,
+  );
+  await el.updateComplete;
+
+  expect(el.typeahead("b")).toBe(true);
+  expect(el.activeIndex).toBe(0);
+  expect(el.typeahead("b"), "bb matches no label, so it must cycle on b").toBe(true);
+  expect(el.activeIndex).toBe(1);
+});
+
+test("a repeated letter skips a disabled option", async () => {
+  const el = mount<HexListbox>(
+    "hex-listbox",
+    `<hex-option value="banana" label="banana"></hex-option><hex-option value="berry" label="berry" disabled></hex-option><hex-option value="blue" label="blue"></hex-option>`,
+  );
+  await el.updateComplete;
+
+  expect(el.typeahead("b")).toBe(true);
+  expect(el.activeIndex).toBe(0);
+  expect(el.typeahead("b")).toBe(true);
+  expect(el.activeIndex, "berry is disabled, so blue is next").toBe(2);
+});

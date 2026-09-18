@@ -143,12 +143,14 @@ export class HexListbox extends HexElement {
     this.typeaheadTimer = setTimeout(() => (this.typeaheadBuffer = ""), 500);
     const needle = this.typeaheadBuffer;
     const options = this.options;
-    const start = this.activeIndex < 0 ? 0 : this.activeIndex;
+    const repeated = [...needle].every((c) => c === needle[0]);
+    const search = repeated ? (needle[0] ?? "") : needle;
+    const start = this.activeIndex < 0 ? 0 : this.activeIndex + (repeated ? 1 : 0);
     for (let i = 0; i < options.length; i++) {
       const at = (start + i) % options.length;
       const option = options[at];
       if (!option || option.disabled) continue;
-      if (option.text.toLowerCase().startsWith(needle)) {
+      if (option.text.toLowerCase().startsWith(search)) {
         this.activate(at);
         return true;
       }
