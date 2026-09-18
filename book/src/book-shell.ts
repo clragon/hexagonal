@@ -182,8 +182,12 @@ export class BookShell extends LitElement {
     this.navOpen = e.matches;
   };
 
-  override updated() {
+  override updated(changed: Map<string, unknown>) {
     this.toggleAttribute("nav-open", this.navOpen && !this.wide.matches);
+    if (changed.has("currentTag")) {
+      this.renderRoot.querySelector("main")?.scrollTo({ top: 0 });
+      window.scrollTo({ top: 0 });
+    }
   }
 
   private currentTitle() {
