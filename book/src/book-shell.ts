@@ -216,7 +216,7 @@ export class BookShell extends LitElement {
           <hex-logo class="brand-mark" mark-only width="32"></hex-logo>
           <div class="brand-text">
             <div class="brand-title">Hexagonal</div>
-            <div class="brand-sub">Components</div>
+            <div class="brand-sub">A design for a blue honeycomb world.</div>
           </div>
         </div>
         <details
