@@ -50,79 +50,29 @@ bundle does.
 
 ## Components
 
-**Surfaces**
+**Surfaces** &middot; `hex-card` `hex-dialog` `hex-page` `hex-section`
 
-| Tag | |
-| --- | --- |
-| `<hex-card>` | Standard card surface with the brand hex-texture watermark fading down from the top |
-| `<hex-dialog>` | Modal for a decision that has to be made before anything else can continue |
-| `<hex-page>` | Full-bleed page surface |
-| `<hex-section>` | Collapsible section |
+**Layout** &middot; `hex-divider` `hex-skeleton` `hex-spinner`
 
-**Layout**
+**Form** &middot; `hex-autocomplete` `hex-button` `hex-checkbox` `hex-input` `hex-radio-group` `hex-select` `hex-switch` `hex-textarea`
 
-| Tag | |
-| --- | --- |
-| `<hex-divider>` | Rule separating content |
-| `<hex-skeleton>` | Placeholder that reserves the exact box its content will occupy |
-| `<hex-spinner>` | Indeterminate activity indicator for work with no measurable progress |
+**Overlay** &middot; `hex-menu` `hex-popover` `hex-tooltip`
 
-**Form**
+**Content** &middot; `hex-alert` `hex-code` `hex-markup` `hex-quote` `hex-spoiler`
 
-| Tag | |
-| --- | --- |
-| `<hex-autocomplete>` | Text field that suggests values as you type |
-| `<hex-button>` | Action element |
-| `<hex-checkbox>` | Boolean toggle with an inline label |
-| `<hex-input>` | Text input with optional label, hint, error, and leading icon |
-| `<hex-radio-group>` | A set of radios where exactly one can be chosen |
-| `<hex-select>` | Picker for one value out of a known set |
-| `<hex-switch>` | Toggle for a setting that takes effect the moment it is flipped |
-| `<hex-textarea>` | Multi-line text field |
+**Tokens** &middot; `hex-chip` `hex-kbd` `hex-status-pill` `hex-tag`
 
-**Overlay**
+**User** &middot; `hex-avatar` `hex-username`
 
-| Tag | |
-| --- | --- |
-| `<hex-menu>` | Menu anchored to the element before it, with full keyboard navigation |
-| `<hex-popover>` | Positioning primitive for overlays |
-| `<hex-tooltip>` | Short description for the element before it |
+**Brand** &middot; `hex-chexagon` `hex-icon` `hex-logo`
 
-**Content**
 
-| Tag | |
-| --- | --- |
-| `<hex-alert>` | Banner for something the reader needs to notice, tinted by how serious it is |
-| `<hex-code>` | Monospace code element |
-| `<hex-markup>` | Scopes typography for rendered DText |
-| `<hex-quote>` | Inline rounded quote block with a left-side accent stripe |
-| `<hex-spoiler>` | Inline censor for content that should not be read by accident |
 
-**Tokens**
+Slotted into a parent rather than used alone: `hex-listbox` `hex-menu-item` `hex-option` `hex-radio`.
 
-| Tag | |
-| --- | --- |
-| `<hex-chip>` | Generic inline chip for filter tokens, removable selections, and small status pills |
-| `<hex-kbd>` | Small monospace key cap |
-| `<hex-status-pill>` | Compact health indicator |
-| `<hex-tag>` | Category-tinted tag |
 
-**User**
 
-| Tag | |
-| --- | --- |
-| `<hex-avatar>` | Stroke-only rounded square avatar |
-| `<hex-username>` | Role-tinted username text |
-
-**Brand**
-
-| Tag | |
-| --- | --- |
-| `<hex-chexagon>` | Verification badge: hex shape with a checkmark, in the brand artist amber-orange |
-| `<hex-icon>` | Inline stroke icon |
-| `<hex-logo>` | Wordmark and mark |
-
-Documented inside their parent: `<hex-listbox>`, `<hex-menu-item>`, `<hex-option>`, `<hex-radio>`.
+Run `yarn dev` for the component book: every component with its props, guidance and live examples.
 
 ## Rendering DText
 
