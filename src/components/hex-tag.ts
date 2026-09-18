@@ -14,7 +14,7 @@ export type HexTagCategory =
   | "contributor";
 
 // Category-tinted tag. Renders as a dark-bg chip with a 1px currentColor
-// border + a category-color dot. Label color follows the category color
+// border. Label color follows the category color
 // except for the "meta" category (white), which uses white text.
 
 @customElement("hex-tag")
@@ -72,20 +72,13 @@ export class HexTag extends HexElement {
         --tag-color-alt: var(--hex-tag-meta-alt);
         color: #fff;
       }
-      .dot {
-        width: 6px;
-        height: 6px;
-        border-radius: var(--hex-radius-pill);
-        background: var(--tag-color);
-        flex-shrink: 0;
-      }
     `,
   ];
 
   @property({ type: String, reflect: true }) category: HexTagCategory = "general";
 
   override render() {
-    return html`<span class="dot"></span><slot></slot>`;
+    return html`<slot></slot>`;
   }
 }
 
