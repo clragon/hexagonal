@@ -36,6 +36,7 @@ jobs:
           <!doctype html>
           <meta charset="utf-8">
           <title>Hexagonal</title>
+          <script>location.replace("book/index.html" + location.hash);</script>
           <meta http-equiv="refresh" content="0; url=book/index.html">
           <link rel="canonical" href="book/index.html">
           <a href="book/index.html">Hexagonal component book</a>
