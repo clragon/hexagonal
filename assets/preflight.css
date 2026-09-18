@@ -1,121 +1,180 @@
-hex-page:not(:defined),
-hex-card:not(:defined),
-hex-section:not(:defined),
 hex-alert:not(:defined),
-hex-quote:not(:defined),
+hex-card:not(:defined),
+hex-divider:not(:defined),
 hex-input:not(:defined),
+hex-menu-item:not(:defined),
+hex-quote:not(:defined),
+hex-section:not(:defined),
 hex-select:not(:defined),
-hex-radio-group:not(:defined),
-hex-divider:not(:defined) {
+hex-skeleton:not(:defined),
+hex-textarea:not(:defined) {
   display: block;
 }
 
-hex-button:not(:defined),
-hex-icon:not(:defined),
-hex-chip:not(:defined),
-hex-tag:not(:defined),
-hex-status-pill:not(:defined),
 hex-avatar:not(:defined),
+hex-button:not(:defined),
 hex-checkbox:not(:defined),
-hex-radio:not(:defined),
-hex-switch:not(:defined),
 hex-chexagon:not(:defined),
-hex-logo:not(:defined) {
+hex-chip:not(:defined),
+hex-code:not(:defined),
+hex-icon:not(:defined),
+hex-kbd:not(:defined),
+hex-logo:not(:defined),
+hex-radio:not(:defined),
+hex-spinner:not(:defined),
+hex-spoiler:not(:defined),
+hex-status-pill:not(:defined),
+hex-switch:not(:defined),
+hex-tag:not(:defined),
+hex-username:not(:defined) {
   display: inline-flex;
   vertical-align: middle;
 }
 
-hex-kbd:not(:defined),
-hex-code:not(:defined),
-hex-username:not(:defined),
-hex-spoiler:not(:defined) {
-  display: inline-block;
+hex-page:not(:defined) {
+  display: block;
+  min-height: 100vh;
+}
+
+hex-prose:not(:defined),
+hex-radio-group:not(:defined) {
+  display: block;
 }
 
 hex-dialog:not(:defined) {
   display: none;
 }
 
-hex-page:not(:defined),
-hex-card:not(:defined),
-hex-section:not(:defined),
 hex-alert:not(:defined),
-hex-quote:not(:defined),
-hex-input:not(:defined),
-hex-select:not(:defined),
-hex-radio-group:not(:defined),
-hex-divider:not(:defined),
-hex-button:not(:defined),
-hex-icon:not(:defined),
-hex-chip:not(:defined),
-hex-tag:not(:defined),
-hex-status-pill:not(:defined),
 hex-avatar:not(:defined),
+hex-button:not(:defined),
+hex-card:not(:defined),
 hex-checkbox:not(:defined),
-hex-radio:not(:defined),
-hex-switch:not(:defined),
 hex-chexagon:not(:defined),
-hex-logo:not(:defined),
-hex-kbd:not(:defined),
+hex-chip:not(:defined),
 hex-code:not(:defined),
-hex-username:not(:defined),
-hex-spoiler:not(:defined) {
+hex-divider:not(:defined),
+hex-icon:not(:defined),
+hex-input:not(:defined),
+hex-kbd:not(:defined),
+hex-logo:not(:defined),
+hex-menu-item:not(:defined),
+hex-page:not(:defined),
+hex-prose:not(:defined),
+hex-quote:not(:defined),
+hex-radio:not(:defined),
+hex-radio-group:not(:defined),
+hex-section:not(:defined),
+hex-select:not(:defined),
+hex-skeleton:not(:defined),
+hex-spinner:not(:defined),
+hex-spoiler:not(:defined),
+hex-status-pill:not(:defined),
+hex-switch:not(:defined),
+hex-tag:not(:defined),
+hex-textarea:not(:defined),
+hex-username:not(:defined) {
   visibility: hidden;
 }
 
-hex-page:not(:defined) {
-  min-height: 100vh;
+hex-alert:not(:defined) {
+  min-height: 52px;
 }
-
+hex-avatar:not(:defined) {
+  width: 36px;
+  height: 36px;
+}
 hex-button:not(:defined) {
-  box-sizing: border-box;
   min-height: 31px;
-  padding: 8px 16px;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  font-size: 13px;
-  font-weight: 700;
-  line-height: 1;
+}
+hex-card:not(:defined) {
+  min-height: 48px;
+}
+hex-checkbox:not(:defined) {
+  min-height: 24px;
+}
+hex-chexagon:not(:defined) {
+  width: 18px;
+  height: 18px;
+}
+hex-chip:not(:defined) {
+  min-height: 24px;
+}
+hex-code:not(:defined) {
+  min-height: 14px;
+}
+hex-divider:not(:defined) {
+  min-height: 1px;
+}
+hex-icon:not(:defined) {
+  width: 16px;
+  height: 16px;
+}
+hex-input:not(:defined) {
+  min-height: 34px;
+}
+hex-kbd:not(:defined) {
+  min-height: 20.19px;
+}
+hex-logo:not(:defined) {
+  min-height: 42.66px;
+}
+hex-menu-item:not(:defined) {
+  min-height: 31.5px;
+}
+hex-quote:not(:defined) {
+  min-height: 24px;
+}
+hex-radio:not(:defined) {
+  min-height: 24px;
+}
+hex-section:not(:defined) {
+  min-height: 35px;
+}
+hex-select:not(:defined) {
+  min-height: 34px;
+}
+hex-skeleton:not(:defined) {
+  min-height: 16px;
+}
+hex-spinner:not(:defined) {
+  width: 16px;
+  height: 16px;
+}
+hex-spoiler:not(:defined) {
+  min-height: 18px;
+}
+hex-status-pill:not(:defined) {
+  min-height: 17px;
+}
+hex-switch:not(:defined) {
+  min-height: 24px;
+}
+hex-tag:not(:defined) {
+  min-height: 22px;
+}
+hex-textarea:not(:defined) {
+  min-height: 164px;
+}
+hex-username:not(:defined) {
+  min-height: 19.5px;
 }
 
 hex-button[size="sm"]:not(:defined) {
   min-height: 25px;
-  padding: 6px 10px;
-  font-size: 11px;
 }
 
 hex-button[size="lg"]:not(:defined) {
   min-height: 36px;
-  padding: 10px 20px;
-  font-size: 14px;
-}
-
-hex-button[variant="ghost"]:not(:defined) {
-  padding-inline: 10px;
-}
-
-hex-button[icon-only]:not(:defined) {
-  padding: 8px;
-  aspect-ratio: 1 / 1;
-}
-
-hex-button[full]:not(:defined) {
-  display: flex;
-  width: 100%;
 }
 
 hex-button[variant="raised"]:not(:defined) {
   margin-bottom: 4px;
 }
 
-hex-icon:not(:defined) {
-  width: 16px;
-  height: 16px;
-}
-
-hex-avatar:not(:defined) {
-  width: 36px;
-  height: 36px;
+hex-button[full]:not(:defined) {
+  display: flex;
+  width: 100%;
 }
 
 hex-avatar[size="xs"]:not(:defined) {
@@ -138,17 +197,31 @@ hex-avatar[size="xl"]:not(:defined) {
   height: 64px;
 }
 
-hex-switch:not(:defined) {
-  min-width: 40px;
-  min-height: 22px;
-}
-
-hex-divider:not(:defined) {
-  height: 1px;
-  width: 100%;
-}
-
 hex-divider[orientation="vertical"]:not(:defined) {
-  height: auto;
+  min-height: 0;
   width: 1px;
+}
+
+hex-input[label]:not(:defined),
+hex-select[label]:not(:defined) {
+  min-height: 55.5px;
+}
+
+hex-input[hint]:not(:defined) {
+  min-height: 54.5px;
+}
+
+hex-input[label][hint]:not(:defined),
+hex-input[label][error]:not(:defined),
+hex-select[label][hint]:not(:defined),
+hex-select[label][error]:not(:defined) {
+  min-height: 76px;
+}
+
+hex-textarea[label]:not(:defined) {
+  min-height: 185.5px;
+}
+
+hex-textarea[label][counter]:not(:defined) {
+  min-height: 202px;
 }
