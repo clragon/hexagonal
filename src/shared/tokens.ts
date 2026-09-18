@@ -143,6 +143,10 @@ export const tokensCss = /* css */ `
   --hex-fs-h2: 38px;
   --hex-fs-h1: 48px;
 
+  --hex-control-line-sm: 15px;
+  --hex-control-line-md: 18px;
+  --hex-control-line-lg: 19px;
+
   --hex-line-tight:  1.2;
   --hex-line-normal: 1.5;
   --hex-line-loose:  1.7;

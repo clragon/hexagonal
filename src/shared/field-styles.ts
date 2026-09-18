@@ -3,6 +3,13 @@ import { css } from "lit";
 export const fieldStyles = css`
   :host {
     display: block;
+    --_hex-control-line: var(--hex-control-line-md);
+  }
+  :host([size="sm"]) {
+    --_hex-control-line: var(--hex-control-line-sm);
+  }
+  :host([size="lg"]) {
+    --_hex-control-line: var(--hex-control-line-lg);
   }
   label {
     display: block;
@@ -36,6 +43,7 @@ export const fieldStyles = css`
     font-size: var(--hex-fs-md);
     padding: 8px 10px;
     border-radius: var(--hex-radius-md);
+    line-height: var(--_hex-control-line);
     outline: none;
     transition:
       border-color var(--hex-dur-fast) var(--hex-ease),
