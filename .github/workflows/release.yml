@@ -38,6 +38,10 @@ jobs:
 
       - run: yarn check
 
+      - run: npx playwright install --with-deps chromium
+
+      - run: yarn test:all
+
       - name: bump version
         run: |
           npm version ${{ inputs.version }} --no-git-tag-version
