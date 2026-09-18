@@ -1,6 +1,6 @@
 {
   "name": "@clynamic/hexagonal",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "A design for a blue honeycomb world.",
   "homepage": "https://clragon.github.io/hexagonal/",
   "repository": {
