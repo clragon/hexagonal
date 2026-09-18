@@ -37,19 +37,33 @@ Optional bundled fonts (Verdana, Paulistana Ipe):
 
 Without it the system falls back to the Verdana installed on the OS.
 
-## Preventing layout shift
+## Before the bundle arrives
 
-Custom elements have no size until their definition loads, so a page that renders
-before the bundle arrives will jump when it upgrades. `preflight.css` reserves the
-measured box of every component ahead of time:
+A page that renders before the bundle evaluates has two problems, and a stylesheet
+for each. Both are optional, and both stop mattering once the bundle runs.
+
+**The page is blank.** Tokens normally arrive with the bundle, so the palette does
+not exist yet and a dark design system starts out white. Link the tokens and paint
+with them:
+
+```html
+<link rel="stylesheet" href="https://libs.cdn.clynamic.net/hexagonal/0.2.0/hexagonal-tokens.css" />
+<style>html { background: var(--hex-color-background) }</style>
+```
+
+The bundle detects tokens that are already present and leaves them alone, so
+linking the stylesheet costs nothing beyond the request.
+
+**The layout jumps.** Custom elements have no size until their definition loads,
+so content shifts when they upgrade. `preflight.css` reserves the measured box of
+every component ahead of time:
 
 ```html
 <link rel="stylesheet" href="https://libs.cdn.clynamic.net/hexagonal/0.2.0/hexagonal-preflight.css" />
 ```
 
-It is plain CSS with literal values, no tokens, and it stops applying the moment
-each element is defined. Load it in `<head>` if the markup can appear before the
-bundle does.
+It carries literal values rather than tokens, so it works on its own, and each
+rule stops applying as soon as that element is defined.
 
 ## Components
 
@@ -151,24 +165,9 @@ for mutation testing.
 
 - `dist/hexagonal.js`: ESM bundle carrying the Lit runtime and every element. Injects tokens on import.
 - `dist/hexagonal.min.js`: the minified build
+- `dist/hexagonal-tokens.css`: the design tokens, for use before the bundle loads
 - `dist/hexagonal-preflight.css`: the layout-shift reservations described above
 - `dist/hexagonal-fonts.css`: optional bundled brand fonts
 - `dist/types/`: the `.d.ts` declarations
 
 `yarn build` prints the current bundle sizes.
-
-## Breaking changes
-
-### 0.2.0
-
-- **`<hex-prose>` is now `<hex-markup>`** (`HexProse` → `HexMarkup`). It styles
-  generic typography as well as DText, so it was named after the wrong half.
-- **`--hex-texture` changed meaning**, from a pre-faded strip to a repeating
-  period. Anything doing `background-repeat: repeat-x` with it breaks silently;
-  use `repeat` and the `--hex-texture-mask` token for the fade.
-- **Component-internal custom properties are namespaced.** Previously bare names
-  like `--btn-color` and `--tag-color` are now `--_hex-*`. They were never
-  documented, but they were reachable, and a consumer setting one would have
-  collided with the component.
-- **Selection controls activate from an external `<label for>`.** Previously the
-  label associated but did nothing on click.
