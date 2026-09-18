@@ -328,10 +328,16 @@ export const components: ComponentEntry[] = [
     group: "Form",
     previewHeight: 320,
     description:
-      "Combobox that completes as you type. Ships no domain knowledge: pass a `provider` with a `search(query, context)` method and it owns debouncing, cancellation, stale-response discard, keyboard, and ARIA. `context.signal` aborts superseded requests and `context.term` sets what gets highlighted.",
+      "Text field that suggests values as you type. Use it when the valid answers are too many to put in a list, like tags, artists or users, and people roughly know what they are after.",
     usage: [
       {
-        text: "For a fixed list, skip the provider entirely and pass **source**. Matching is a case-insensitive substring and the matched run is underlined in each row.",
+        text: "Suggestions come from one of two places: **source** for a fixed list, or a **provider** for anything that must be looked up, such as a server or a search index. A provider defines what counts as a match and may be async. Debouncing, responses that arrive out of order, keyboard navigation and screen-reader wiring are already covered.",
+      },
+      {
+        text: "A provider may also define what gets written into the field when a suggestion is picked, and what each row looks like. This matters for a field holding several values at once, such as a tag search, where picking a suggestion should replace only the word under the cursor rather than the whole box.",
+      },
+      {
+        text: "With a fixed **source**, matching is a case-insensitive substring and the matched run is underlined so people can see why a row is there.",
         demo: '<div style="width:280px"><hex-autocomplete label="Species" placeholder="Start typing" source="canine, feline, equine, avian, reptile, cervine"></hex-autocomplete></div>',
       },
       {
@@ -516,7 +522,8 @@ export const components: ComponentEntry[] = [
     title: "Tag",
     group: "Tokens",
     previewHeight: 120,
-    description: "Category-tinted tag with a colored dot, used in tag clouds and listings.",
+    description:
+      "Category-tinted tag. The **chip** variant suits a wrap of tags where they flow like words; the **row** variant suits a sidebar list, where each tag gets a count and its own controls.",
     defaultSlot: "rowan",
     usage: [
       {
@@ -527,6 +534,18 @@ export const components: ComponentEntry[] = [
         text: "Keep the category truthful. A reader who knows the palette reads gold as artist and magenta as copyright, so mislabelling costs more than leaving a tag uncoloured would.",
         demo: '<div style="display:flex;gap:6px;flex-wrap:wrap"><hex-tag category="general">outdoors</hex-tag><hex-tag category="meta">hi_res</hex-tag><hex-tag category="lore">canon</hex-tag><hex-tag category="invalid">bad_tag</hex-tag><hex-tag category="contributor">helper</hex-tag></div>',
       },
+      {
+        text: "Switch to **row** for a vertical list. The chip border becomes a coloured leading edge, which reads down a column where a full outline would fight the stack. Width follows the content, so the ragged right edge stays readable.",
+        demo: '<div style="display:flex;flex-direction:column;gap:4px;width:220px"><hex-tag variant="row" category="artist" count="128">rowan</hex-tag><hex-tag variant="row" category="character" count="1200">vale</hex-tag><hex-tag variant="row" category="species" count="512000">canine</hex-tag></div>',
+      },
+      {
+        text: "A **count** is formatted compactly, so a column of tags stays aligned whether a tag has been used twice or two million times.",
+        demo: '<div style="display:flex;flex-direction:column;gap:4px;width:220px"><hex-tag variant="row" category="general" count="2">rare_tag</hex-tag><hex-tag variant="row" category="general" count="2100000">solo</hex-tag></div>',
+      },
+      {
+        text: "Put per-tag controls in the **lead** and **actions** slots. Searching, excluding and blacklisting are decisions for the surrounding application, so the tag supplies the segments and the colour rather than the behaviour. Dividers appear only where a slot is filled.",
+        demo: '<div style="display:flex;flex-direction:column;gap:4px;width:250px"><hex-tag variant="row" category="species" count="512000"><span slot="lead" style="display:flex"><a href="#" style="padding:0 5px;color:inherit;opacity:.7;text-decoration:none">?</a><a href="#" style="padding:0 5px;color:inherit;opacity:.7;text-decoration:none">+</a><a href="#" style="padding:0 5px;color:inherit;opacity:.7;text-decoration:none">&ndash;</a></span>canine</hex-tag><hex-tag variant="row" category="artist" count="128">no controls</hex-tag></div>',
+      },
     ],
     props: [
       {
@@ -535,6 +554,8 @@ export const components: ComponentEntry[] = [
         options: tagCategories,
         default: "artist",
       },
+      { name: "variant", kind: "select", options: ["chip", "row"], default: "chip" },
+      { name: "count", kind: "number", default: 0 },
     ],
   },
   {
