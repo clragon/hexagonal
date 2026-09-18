@@ -2,49 +2,48 @@ import { html, css, nothing } from "lit";
 import { customElement, property, query, state } from "lit/decorators.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { HexFormElement } from "../shared/form-element.js";
+import { fieldStyles } from "../shared/field-styles.js";
 import "./hex-icon.js";
+import "./hex-listbox.js";
+import "./hex-option.js";
+import "./hex-popover.js";
+import type { HexListbox, HexListboxSelectDetail } from "./hex-listbox.js";
+import type { HexOptionCategory } from "./hex-option.js";
+import type { HexPopover } from "./hex-popover.js";
 import type { IconName } from "../shared/icons.js";
-
-// Native `<select>` styled to match hex-input. Options are provided as light
-// DOM `<option>` children, mirrored into the shadow select on connect /
-// child-list mutation. We rely on the platform select for keyboard nav,
-// screen-reader behavior, and the mobile picker.
 
 interface OptionData {
   value: string;
   label: string;
   disabled: boolean;
+  category?: HexOptionCategory;
+  count?: number;
 }
 
 @customElement("hex-select")
 export class HexSelect extends HexFormElement {
   static override styles = [
     HexFormElement.styles,
+    fieldStyles,
     css`
-      :host {
-        display: block;
-      }
-      label {
-        display: block;
-        font-size: var(--hex-fs-xs);
-        text-transform: uppercase;
-        letter-spacing: 0.06em;
-        color: var(--hex-fg-2);
-        font-weight: var(--hex-font-weight-bold);
-        margin-bottom: 5px;
-      }
-      .field {
-        position: relative;
+      .control {
         display: flex;
         align-items: center;
+        text-align: left;
+        padding-right: 30px;
+        cursor: pointer;
+        line-height: normal;
       }
-      .icon {
-        position: absolute;
-        left: 10px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: var(--hex-color-secondary-dark);
-        pointer-events: none;
+      .value {
+        flex: 1 1 auto;
+        min-width: 0;
+        min-height: 1lh;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .value[data-placeholder] {
+        color: var(--hex-fg-2);
       }
       .chev {
         position: absolute;
@@ -54,61 +53,20 @@ export class HexSelect extends HexFormElement {
         color: var(--hex-color-secondary-dark);
         pointer-events: none;
       }
-      select {
-        width: 100%;
-        box-sizing: border-box;
-        background: var(--hex-color-background);
-        color: var(--hex-fg-1);
-        border: 1px solid var(--hex-border-strong);
-        font-family: inherit;
-        font-size: var(--hex-fs-md);
-        padding: 8px 30px 8px 10px;
-        border-radius: var(--hex-radius-md);
-        outline: none;
-        appearance: none;
-        -webkit-appearance: none;
-        cursor: pointer;
-        transition:
-          border-color var(--hex-dur-fast) var(--hex-ease),
-          box-shadow var(--hex-dur-fast) var(--hex-ease);
-      }
-      :host([with-icon]) select {
-        padding-left: 30px;
-      }
-      select:focus {
-        border-color: var(--hex-color-primary);
-        box-shadow: var(--hex-shadow-focus);
-      }
-      :host([invalid]) select {
-        border-color: var(--hex-color-danger);
-      }
-      :host([invalid]) select:focus {
-        box-shadow: var(--hex-shadow-focus-danger);
-      }
-      option {
-        background: var(--hex-bg-card);
-        color: var(--hex-fg-1);
-      }
-      /* Mute the displayed value while the hidden placeholder option is the
-         active one (no real selection made yet). */
-      select:has(option[hidden]:checked),
-      select:invalid {
-        color: var(--hex-fg-2);
-      }
-      .hint,
-      .error {
-        font-size: var(--hex-fs-xs);
-        margin-top: 4px;
-      }
-      .hint {
-        color: var(--hex-fg-2);
-      }
-      .error {
-        color: var(--hex-color-danger);
-      }
-      :host([disabled]) {
-        opacity: 0.55;
+      .native {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
         pointer-events: none;
+        border: 0;
+        padding: 0;
+        margin: 0;
+        bottom: 0;
+        left: 10px;
+      }
+      hex-popover::part(surface) {
+        min-width: var(--select-width, 12rem);
       }
     `,
   ];
@@ -121,8 +79,14 @@ export class HexSelect extends HexFormElement {
   @property({ type: String }) icon?: IconName;
 
   @state() private opts: OptionData[] = [];
+  @state() private expanded = false;
+  @state() private activeId?: string;
 
+  @query(".control") private _button!: HTMLButtonElement;
+  @query(".field") private _field!: HTMLElement;
   @query("select") private _select!: HTMLSelectElement;
+  @query("hex-popover") private _popover!: HexPopover;
+  @query("hex-listbox") private _listbox!: HexListbox;
 
   private observer?: MutationObserver;
 
@@ -138,81 +102,252 @@ export class HexSelect extends HexFormElement {
     this.value = "";
   }
 
-  override connectedCallback() {
+  override connectedCallback(): void {
     super.connectedCallback();
     this.syncOptions();
     this.observer = new MutationObserver(() => this.syncOptions());
     this.observer.observe(this, { childList: true, subtree: true, characterData: true });
   }
 
-  override disconnectedCallback() {
-    super.disconnectedCallback();
+  override disconnectedCallback(): void {
     this.observer?.disconnect();
+    super.disconnectedCallback();
   }
 
-  override updated(changed: Map<string, unknown>) {
+  override updated(changed: Map<string, unknown>): void {
     if (changed.has("icon")) this.toggleAttribute("with-icon", Boolean(this.icon));
     if (changed.has("error")) this.toggleAttribute("invalid", Boolean(this.error));
     if (changed.has("value") || changed.has("required") || changed.has("error")) {
+      if (this._select) this._select.value = this.value;
       this.commit(this.error || undefined);
     }
   }
 
-  override focus() {
-    this._select?.focus();
+  override focus(): void {
+    this._button?.focus();
   }
 
-  private syncOptions() {
+  private syncOptions(): void {
     const lightOptions = Array.from(this.querySelectorAll<HTMLOptionElement>("option"));
-    this.opts = lightOptions.map((opt) => ({
-      value: opt.value || (opt.textContent ?? ""),
-      label: opt.textContent ?? "",
-      disabled: opt.disabled,
-    }));
+    this.opts = lightOptions.map((opt) => {
+      const count = opt.dataset.count;
+      return {
+        value: opt.value || (opt.textContent ?? "").trim(),
+        label: (opt.textContent ?? "").trim(),
+        disabled: opt.disabled,
+        category: opt.dataset.category as HexOptionCategory | undefined,
+        count: count === undefined ? undefined : Number(count),
+      };
+    });
   }
 
-  private onChange = (e: Event) => {
-    const value = (e.target as HTMLSelectElement).value;
+  private get selected(): OptionData | undefined {
+    return this.opts.find((o) => o.value === this.value);
+  }
+
+  private open(focus: "selected" | "first" | "last" = "selected"): void {
+    if (this.expanded || this.disabled) return;
+    if (this._field) {
+      this._popover?.style.setProperty("--select-width", `${this._field.offsetWidth}px`);
+    }
+    this.expanded = true;
+    this._popover?.show();
+    void (async () => {
+      await this.updateComplete;
+      const listbox = this._listbox;
+      if (!listbox) return;
+      if (focus === "last") listbox.last();
+      else if (focus === "first" || !this.value) listbox.first();
+      else listbox.activateByValue(this.value);
+      this.activeId = listbox.activeDescendant;
+    })();
+  }
+
+  private close(refocus = true): void {
+    if (!this.expanded) return;
+    this.expanded = false;
+    this.activeId = undefined;
+    this._popover?.hide();
+    this._listbox?.clearActive();
+    if (refocus) this._button?.focus();
+  }
+
+  private commitValue(value: string): void {
+    if (value === this.value) return;
     this.value = value;
+    if (this._select) this._select.value = value;
+    this.commit(this.error || undefined);
     this.dispatchEvent(
       new CustomEvent("hex-change", { detail: { value }, bubbles: true, composed: true }),
     );
+  }
+
+  private readonly onButtonClick = (): void => {
+    if (this.expanded) this.close();
+    else this.open();
+  };
+
+  private readonly onKeydown = (e: KeyboardEvent): void => {
+    const listbox = this._listbox;
+
+    if (!this.expanded) {
+      if (e.key === "ArrowDown" || e.key === "ArrowUp" || e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        this.open(e.key === "ArrowUp" ? "last" : "selected");
+      } else if (e.key.length === 1 && /\S/.test(e.key)) {
+        this.open();
+        void (async () => {
+          await this.updateComplete;
+          this._listbox?.typeahead(e.key);
+          this.activeId = this._listbox?.activeDescendant;
+        })();
+      }
+      return;
+    }
+
+    if (!listbox) return;
+    switch (e.key) {
+      case "ArrowDown":
+        e.preventDefault();
+        listbox.move(1);
+        this.activeId = listbox.activeDescendant;
+        break;
+      case "ArrowUp":
+        e.preventDefault();
+        listbox.move(-1);
+        this.activeId = listbox.activeDescendant;
+        break;
+      case "Home":
+        e.preventDefault();
+        listbox.first();
+        this.activeId = listbox.activeDescendant;
+        break;
+      case "End":
+        e.preventDefault();
+        listbox.last();
+        this.activeId = listbox.activeDescendant;
+        break;
+      case "Enter":
+      case " ":
+        e.preventDefault();
+        if (listbox.selectActive()) return;
+        this.close();
+        break;
+      case "Escape":
+        e.preventDefault();
+        this.close();
+        break;
+      case "Tab":
+        this.close(false);
+        break;
+      default:
+        if (e.key.length === 1 && /\S/.test(e.key)) {
+          listbox.typeahead(e.key);
+          this.activeId = listbox.activeDescendant;
+        }
+        break;
+    }
+  };
+
+  private readonly onListboxActivate = (e: Event): void => {
+    e.stopPropagation();
+    this.activeId = this._listbox?.activeDescendant;
+  };
+
+  private readonly onListboxSelect = (e: Event): void => {
+    e.stopPropagation();
+    const detail = (e as CustomEvent<HexListboxSelectDetail>).detail;
+    this.commitValue(detail.value);
+    this.close();
+  };
+
+  private readonly onPanelMousedown = (e: MouseEvent): void => {
+    e.preventDefault();
+  };
+
+  private readonly onPopoverClose = (): void => {
+    if (this.expanded) {
+      this.expanded = false;
+      this.activeId = undefined;
+    }
   };
 
   override render() {
     const describedBy = this.error ? "error" : this.hint ? "hint" : undefined;
+    const selected = this.selected;
     return html`
-      ${this.label ? html`<label for="select">${this.label}</label>` : nothing}
+      ${this.label ? html`<label id="label" for="trigger">${this.label}</label>` : nothing}
       <div class="field">
         ${this.icon
           ? html`<span class="icon"><hex-icon name=${this.icon} size="14"></hex-icon></span>`
           : nothing}
+        <button
+          id="trigger"
+          class="control"
+          type="button"
+          role="combobox"
+          aria-haspopup="listbox"
+          aria-expanded=${this.expanded ? "true" : "false"}
+          aria-controls="listbox"
+          aria-activedescendant=${ifDefined(this.activeId)}
+          aria-describedby=${ifDefined(describedBy)}
+          aria-invalid=${this.error ? "true" : "false"}
+          aria-labelledby=${ifDefined(this.label ? "label trigger" : undefined)}
+          ?disabled=${this.disabled}
+          @click=${this.onButtonClick}
+          @keydown=${this.onKeydown}
+        >
+          <span class="value" ?data-placeholder=${!selected}
+            >${selected ? selected.label : this.placeholder}</span
+          >
+        </button>
+        <span class="chev"><hex-icon name="chev-down" size="14"></hex-icon></span>
         <select
-          id="select"
+          class="native"
+          tabindex="-1"
+          aria-hidden="true"
           name=${this.name}
           ?disabled=${this.disabled}
           ?required=${this.required}
-          aria-describedby=${ifDefined(describedBy)}
-          aria-invalid=${this.error ? "true" : "false"}
-          @change=${this.onChange}
         >
-          ${this.placeholder
-            ? html`
-                <option value="" disabled hidden ?selected=${!this.value}>
-                  ${this.placeholder}
-                </option>
-              `
-            : nothing}
+          <option value="" ?selected=${!this.value}></option>
           ${this.opts.map(
-            (o) => html`
-              <option value=${o.value} ?disabled=${o.disabled} ?selected=${o.value === this.value}>
-                ${o.label}
-              </option>
-            `,
+            (o) => html`<option value=${o.value} ?selected=${o.value === this.value}>
+              ${o.label}
+            </option>`,
           )}
         </select>
-        <span class="chev"><hex-icon name="chev-down" size="14"></hex-icon></span>
       </div>
+      <hex-popover
+        .anchorElement=${this._field ?? null}
+        trigger="none"
+        dismiss="auto"
+        placement="bottom"
+        align="start"
+        distance="4"
+        @hex-close=${this.onPopoverClose}
+        @mousedown=${this.onPanelMousedown}
+      >
+        <hex-listbox
+          id="listbox"
+          .value=${this.value}
+          aria-labelledby=${ifDefined(this.label ? "label" : undefined)}
+          @hex-activate=${this.onListboxActivate}
+          @hex-select=${this.onListboxSelect}
+        >
+          ${this.opts.map(
+            (o) => html`
+              <hex-option
+                value=${o.value}
+                label=${o.label}
+                category=${ifDefined(o.category)}
+                count=${ifDefined(o.count)}
+                ?disabled=${o.disabled}
+              ></hex-option>
+            `,
+          )}
+        </hex-listbox>
+      </hex-popover>
       ${this.error
         ? html`<div id="error" class="error" role="alert">${this.error}</div>`
         : this.hint
