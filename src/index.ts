@@ -42,4 +42,5 @@ registerTokens();
 
 export { tokensCss, registerTokens } from "./shared/tokens.js";
 export { iconPaths, type IconName } from "./shared/icons.js";
+export { dmarkHandlers } from "./shared/dmark-handlers.js";
 export { assets } from "./shared/assets.js";

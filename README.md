@@ -53,6 +53,26 @@ Without that stylesheet, the system falls back to the Verdana installed on the u
 | `<hex-spoiler>` | Censor that reveals on hover (desktop) or tap (mobile) |
 | `<hex-alert>` | Banner with variant tint, icon, heading, actions slot, close button |
 | `<hex-divider>` | Rule between content, horizontal or vertical, optionally labelled |
+| `<hex-textarea>` | Multi-line field, reserves its height, manual resize, optional counter |
+| `<hex-skeleton>` | Placeholder that reserves the exact box, slot real text to shape it |
+| `<hex-spinner>` | Hexagon-wedge activity indicator, inherits `currentColor` |
+| `<hex-popover>` | Positioning primitive on the native Popover API, flips and shifts |
+| `<hex-tooltip>` | Description for the element before it, on hover and focus |
+| `<hex-menu>` | Menu anchored to the element before it, full keyboard navigation |
+| `<hex-prose>` | Scopes typography for rendered DText |
+
+## Rendering DText
+
+`dmark` emits ordinary HTML. Wrap it in `<hex-prose>` for typography, and pass
+`dmarkHandlers` to its renderer so quotes, spoilers, sections and code render as
+components with their own reveal, collapse and keyboard behaviour rather than as inert markup.
+
+```js
+import { renderAstToHtml, htmlHandlers } from "@clynamic/dmark";
+import { dmarkHandlers } from "hexagonal";
+
+const html = renderAstToHtml(ast, { ...htmlHandlers, ...dmarkHandlers });
+```
 
 ## Develop
 
