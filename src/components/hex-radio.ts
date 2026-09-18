@@ -25,11 +25,10 @@ export class HexRadio extends HexFormElement {
         user-select: none;
       }
       .dot {
-        position: relative;
         width: 18px;
         height: 18px;
         border-radius: var(--hex-radius-pill);
-        border: 1px solid var(--hex-border-strong);
+        border: 2px solid var(--hex-border-strong);
         background: var(--hex-color-background);
         flex-shrink: 0;
         transition:
@@ -37,18 +36,9 @@ export class HexRadio extends HexFormElement {
           border-color var(--hex-dur-fast) var(--hex-ease);
       }
       :host([checked]) .dot {
+        border-width: 4px;
         border-color: var(--hex-color-primary);
-      }
-      :host([checked]) .dot::after {
-        content: "";
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 8px;
-        height: 8px;
-        border-radius: var(--hex-radius-pill);
-        background: var(--hex-color-primary);
-        transform: translate(-50%, -50%);
+        background: var(--hex-fg-on-primary);
       }
       :host([disabled]) {
         opacity: 0.4;
