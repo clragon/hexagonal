@@ -93,7 +93,7 @@ hex-avatar:not(:defined) {
   height: 36px;
 }
 hex-button:not(:defined) {
-  min-height: 36px;
+  min-height: 34px;
 }
 hex-card:not(:defined) {
   min-height: 48px;
@@ -119,10 +119,10 @@ hex-icon:not(:defined) {
   height: 16px;
 }
 hex-autocomplete:not(:defined) {
-  min-height: 36px;
+  min-height: 34px;
 }
 hex-input:not(:defined) {
-  min-height: 36px;
+  min-height: 34px;
 }
 hex-listbox:not(:defined) {
   min-height: 8px;
@@ -149,7 +149,7 @@ hex-section:not(:defined) {
   min-height: 35px;
 }
 hex-select:not(:defined) {
-  min-height: 36px;
+  min-height: 34px;
 }
 hex-skeleton:not(:defined) {
   min-height: 16px;
@@ -218,12 +218,12 @@ hex-divider[orientation="vertical"]:not(:defined) {
 hex-autocomplete[label]:not(:defined),
 hex-input[label]:not(:defined),
 hex-select[label]:not(:defined) {
-  min-height: 57.5px;
+  min-height: 55.5px;
 }
 
 hex-autocomplete[hint]:not(:defined),
 hex-input[hint]:not(:defined) {
-  min-height: 56.5px;
+  min-height: 54.5px;
 }
 
 hex-autocomplete[label][hint]:not(:defined),
@@ -232,7 +232,7 @@ hex-input[label][hint]:not(:defined),
 hex-input[label][error]:not(:defined),
 hex-select[label][hint]:not(:defined),
 hex-select[label][error]:not(:defined) {
-  min-height: 78px;
+  min-height: 76px;
 }
 
 hex-textarea[label]:not(:defined) {
