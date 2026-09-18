@@ -90,7 +90,8 @@ export class HexAvatar extends HexElement {
     const fontSize = this.fontFor(this.size);
     return html`
       <div
-        class="sq" part="sq"
+        class="sq"
+        part="sq"
         style=${`width:${px}px;height:${px}px;border-radius:${radius}px;font-size:${fontSize}px;`}
       >
         ${this.src

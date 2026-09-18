@@ -138,8 +138,8 @@ export class HexOption extends HexElement {
     if (at < 0) return text;
     const end = at + needle.length;
     return html`${text.slice(0, at)}<mark part="match">${text.slice(at, end)}</mark>${text.slice(
-      end,
-    )}`;
+        end,
+      )}`;
   }
 
   override render() {

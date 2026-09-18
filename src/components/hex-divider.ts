@@ -82,7 +82,9 @@ export class HexDivider extends HexElement {
   };
 
   override render() {
-    return html`<span class="label" part="label"><slot @slotchange=${this.syncLabel}></slot></span>`;
+    return html`<span class="label" part="label"
+      ><slot @slotchange=${this.syncLabel}></slot
+    ></span>`;
   }
 }
 

@@ -45,7 +45,8 @@ export abstract class HexFieldElement extends HexFormElement {
   }
 
   protected renderMessage(): TemplateResult | typeof nothing {
-    if (this.error) return html`<div id="error" class="error" part="error" role="alert">${this.error}</div>`;
+    if (this.error)
+      return html`<div id="error" class="error" part="error" role="alert">${this.error}</div>`;
     if (this.hint) return html`<div id="hint" class="hint" part="hint">${this.hint}</div>`;
     return nothing;
   }

@@ -139,7 +139,7 @@ export class HexTextarea extends HexFormElement {
     return html`
       ${this.label ? html`<label for="ta">${this.label}</label>` : nothing}
       <textarea
-          part="control"
+        part="control"
         id="ta"
         .value=${this.value}
         rows=${this.rows}

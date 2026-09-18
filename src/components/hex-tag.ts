@@ -139,20 +139,24 @@ export class HexTag extends HexElement {
 
   private readonly onSlotChange = (e: Event): void => {
     const slot = e.target as HTMLSlotElement;
-    const filled = slot.assignedNodes({ flatten: true }).some(
-      (n) => n.nodeType !== Node.TEXT_NODE || (n.textContent ?? "").trim() !== "",
-    );
+    const filled = slot
+      .assignedNodes({ flatten: true })
+      .some((n) => n.nodeType !== Node.TEXT_NODE || (n.textContent ?? "").trim() !== "");
     this.toggleAttribute(slot.name === "lead" ? "has-lead" : "has-actions", filled);
   };
 
   override render() {
     return html`
-      <span class="lead" part="lead"><slot name="lead" @slotchange=${this.onSlotChange}></slot></span>
+      <span class="lead" part="lead"
+        ><slot name="lead" @slotchange=${this.onSlotChange}></slot
+      ></span>
       <span class="name" part="name"><slot></slot></span>
       ${this.count === undefined
         ? nothing
         : html`<span class="count" part="count">${compactCount.format(this.count)}</span>`}
-      <span class="actions" part="actions"><slot name="actions" @slotchange=${this.onSlotChange}></slot></span>
+      <span class="actions" part="actions"
+        ><slot name="actions" @slotchange=${this.onSlotChange}></slot
+      ></span>
     `;
   }
 }

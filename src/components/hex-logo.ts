@@ -94,8 +94,16 @@ export class HexLogo extends HexElement {
           />
           <polygon points="22,12 36,20 36,28 22,36 8,28 8,20" fill=${this.markColor} />
         </g>
-        <text x="72" y="46" font-size="36" textLength="118"
-              lengthAdjust="spacingAndGlyphs" fill=${this.color}>Hexagonal</text>
+        <text
+          x="72"
+          y="46"
+          font-size="36"
+          textLength="118"
+          lengthAdjust="spacingAndGlyphs"
+          fill=${this.color}
+        >
+          Hexagonal
+        </text>
       </svg>
     `;
   }

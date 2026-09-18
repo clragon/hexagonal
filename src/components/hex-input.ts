@@ -61,7 +61,9 @@ export class HexInput extends HexFieldElement {
       ${this.label ? html`<label for="input">${this.label}</label>` : nothing}
       <div class="field" part="field">
         ${this.icon
-          ? html`<span class="icon" part="icon"><hex-icon name=${this.icon} size="14"></hex-icon></span>`
+          ? html`<span class="icon" part="icon"
+              ><hex-icon name=${this.icon} size="14"></hex-icon
+            ></span>`
           : nothing}
         ${this.renderPrefix()}
         <input

@@ -127,7 +127,10 @@ export class HexSkeleton extends HexElement {
     if (this.shape === "text" && this.lines > 1) {
       return html`
         <div class="stack" part="stack">
-          ${Array.from({ length: this.lines }, () => html`<div class="bar" part="bar" style=${style}></div>`)}
+          ${Array.from(
+            { length: this.lines },
+            () => html`<div class="bar" part="bar" style=${style}></div>`,
+          )}
           <span hidden>${probe}</span>
         </div>
       `;

@@ -71,7 +71,11 @@ export { assets } from "./shared/assets.js";
 export { HexAlert } from "./components/hex-alert.js";
 export type { HexAlertVariant } from "./components/hex-alert.js";
 export { HexAutocomplete } from "./components/hex-autocomplete.js";
-export type { HexAutocompleteItem, HexAutocompleteContext, HexAutocompleteProvider } from "./components/hex-autocomplete.js";
+export type {
+  HexAutocompleteItem,
+  HexAutocompleteContext,
+  HexAutocompleteProvider,
+} from "./components/hex-autocomplete.js";
 export { HexAvatar } from "./components/hex-avatar.js";
 export type { HexUserRole, HexAvatarSize } from "./components/hex-avatar.js";
 export { HexButton } from "./components/hex-button.js";

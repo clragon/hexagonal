@@ -86,7 +86,8 @@ export class HexSection extends HexElement {
   override render() {
     return html`
       <div
-        class="header" part="header"
+        class="header"
+        part="header"
         @click=${this.toggle}
         @keydown=${this.onKey}
         role="button"
@@ -96,7 +97,8 @@ export class HexSection extends HexElement {
       >
         <div class="title" part="title">
           <svg
-            class="chev" part="chev"
+            class="chev"
+            part="chev"
             width="14"
             height="14"
             viewBox="0 0 24 24"

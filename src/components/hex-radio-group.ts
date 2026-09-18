@@ -86,8 +86,15 @@ export class HexRadioGroup extends HexElement {
 
   override render() {
     return html`
-      ${this.label ? html`<div id="group-label" class="label" part="label">${this.label}</div>` : ""}
-      <div class="options" part="options" role="radiogroup" aria-labelledby=${this.label ? "group-label" : ""}>
+      ${this.label
+        ? html`<div id="group-label" class="label" part="label">${this.label}</div>`
+        : ""}
+      <div
+        class="options"
+        part="options"
+        role="radiogroup"
+        aria-labelledby=${this.label ? "group-label" : ""}
+      >
         <slot @slotchange=${() => this.syncChildren()}></slot>
       </div>
     `;

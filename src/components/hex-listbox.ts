@@ -187,7 +187,9 @@ export class HexListbox extends HexElement {
   };
 
   private readonly onClick = (e: MouseEvent): void => {
-    const option = e.composedPath().find((n): n is HexOption => n instanceof HTMLElement && n.localName === "hex-option");
+    const option = e
+      .composedPath()
+      .find((n): n is HexOption => n instanceof HTMLElement && n.localName === "hex-option");
     if (!option || option.disabled) return;
     this.activate(this.options.indexOf(option));
     this.choose(option);
