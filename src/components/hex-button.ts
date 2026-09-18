@@ -25,6 +25,7 @@ export class HexButton extends HexElement {
     HexElement.styles,
     css`
       :host {
+        --_hex-control-line: var(--hex-control-line-md);
         display: inline-flex;
         vertical-align: middle;
         position: relative;
@@ -93,7 +94,7 @@ export class HexButton extends HexElement {
         padding: 8px 16px;
         border-radius: var(--hex-radius-md);
         cursor: pointer;
-        line-height: 1;
+        line-height: var(--_hex-control-line);
         display: inline-flex;
         align-items: center;
         gap: 6px;
@@ -208,6 +209,12 @@ export class HexButton extends HexElement {
         box-shadow: none;
       }
 
+      :host([size="sm"]) {
+        --_hex-control-line: var(--hex-control-line-sm);
+      }
+      :host([size="lg"]) {
+        --_hex-control-line: var(--hex-control-line-lg);
+      }
       :host([size="sm"]) button {
         font-size: var(--hex-fs-xs);
         padding: 6px 10px;
@@ -229,6 +236,15 @@ export class HexButton extends HexElement {
         aspect-ratio: 1 / 1;
         justify-content: center;
         gap: 0;
+      }
+      /* Give the glyph the same line box text gets, so an icon-only button
+         is exactly as tall as a labelled one. */
+      :host([icon-only]) button > *,
+      :host([icon-only]) ::slotted([slot="icon"]) {
+        width: var(--_hex-control-line);
+        height: var(--_hex-control-line);
+        align-items: center;
+        justify-content: center;
       }
       :host([icon-only][size="sm"]) button {
         padding: 6px;

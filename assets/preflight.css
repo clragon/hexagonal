@@ -91,7 +91,7 @@ hex-avatar:not(:defined) {
   height: 36px;
 }
 hex-button:not(:defined) {
-  min-height: 31px;
+  min-height: 36px;
 }
 hex-card:not(:defined) {
   min-height: 48px;
@@ -176,11 +176,11 @@ hex-username:not(:defined) {
 }
 
 hex-button[size="sm"]:not(:defined) {
-  min-height: 25px;
+  min-height: 29px;
 }
 
 hex-button[size="lg"]:not(:defined) {
-  min-height: 36px;
+  min-height: 41px;
 }
 
 hex-button[variant="raised"]:not(:defined) {

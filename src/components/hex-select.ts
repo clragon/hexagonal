@@ -30,12 +30,11 @@ export class HexSelect extends HexFieldElement {
         text-align: left;
         padding-right: 30px;
         cursor: pointer;
-        line-height: normal;
       }
       .value {
         flex: 1 1 auto;
         min-width: 0;
-        min-height: 1lh;
+        height: var(--_hex-control-line);
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
