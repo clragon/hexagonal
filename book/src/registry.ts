@@ -6,11 +6,21 @@ export type ControlKind = "select" | "boolean" | "text" | "number";
 
 export type PreviewSurface = "page" | "card" | "empty";
 
-export type ComponentGroup = "Surfaces" | "Form" | "User" | "Tokens" | "Content" | "Brand";
+export type ComponentGroup =
+  | "Surfaces"
+  | "Layout"
+  | "Form"
+  | "Overlay"
+  | "Content"
+  | "Tokens"
+  | "User"
+  | "Brand";
 
 export const GROUP_ORDER: ComponentGroup[] = [
   "Surfaces",
+  "Layout",
   "Form",
+  "Overlay",
   "Content",
   "Tokens",
   "User",
@@ -59,7 +69,7 @@ export interface ComponentEntry {
 export const DEFAULT_PREVIEW_HEIGHT = 180;
 
 const userRoles = ["member", "privileged", "blocked", "former-staff", "janitor", "moderator", "admin"];
-const tagCategories = ["artist", "copyright", "character", "species", "general", "meta", "lore", "invalid"];
+const tagCategories = ["artist", "contributor", "copyright", "character", "species", "general", "meta", "lore", "invalid"];
 
 export const components: ComponentEntry[] = [
   {
@@ -116,6 +126,11 @@ export const components: ComponentEntry[] = [
         demo: '<hex-button>Save changes</hex-button>',
       },
       {
+        text: "Use **raised** for actions that should feel physical, where the click is the point rather than a step in a form. The lip is the button's own dark shade, and the press consumes it so the footprint never changes.",
+        demo:
+          '<hex-button variant="raised">Save changes</hex-button> <hex-button variant="raised" color="secondary">Reload</hex-button> <hex-button variant="raised" color="danger" icon="trash">Delete</hex-button>',
+      },
+      {
         text: "Use **outline** for the cancel or alternative paired with a primary action. **Primary action goes on the right** so the visual flow ends on action, not on retreat.",
         demo:
           '<hex-button variant="outline" color="secondary">Cancel</hex-button> <hex-button>Save changes</hex-button>',
@@ -131,6 +146,10 @@ export const components: ComponentEntry[] = [
           '<hex-button variant="ghost" color="secondary">Cancel</hex-button> <hex-button color="danger" icon="trash">Delete cluster</hex-button>',
       },
       {
+        text: "Pass a custom glyph with `slot=\"icon\"` when the built-in set doesn't carry it. Wrap it in a `hex-icon` so it picks up the button's icon sizing.",
+        demo: '<hex-button variant="outline" color="secondary" icon-only aria-label="More"><hex-icon slot="icon" size="14"><svg viewBox=\"0 0 24 24\" fill=\"currentColor\"><circle cx=\"12\" cy=\"5\" r=\"1.6\"/><circle cx=\"12\" cy=\"12\" r=\"1.6\"/><circle cx=\"12\" cy=\"19\" r=\"1.6\"/></svg></hex-icon></hex-button> <hex-button variant="outline" color="secondary"><hex-icon slot="icon" size="14"><svg viewBox=\"0 0 24 24\" fill=\"currentColor\"><circle cx=\"12\" cy=\"5\" r=\"1.6\"/><circle cx=\"12\" cy=\"12\" r=\"1.6\"/><circle cx=\"12\" cy=\"19\" r=\"1.6\"/></svg></hex-icon>More</hex-button>',
+      },
+      {
         text: "Use **icon-only** for compact toolbars and action rails. Always pass `aria-label` so screen readers announce the action.",
         demo:
           '<hex-button icon-only icon="plus" aria-label="Add"></hex-button> <hex-button variant="outline" color="secondary" icon-only icon="refresh" aria-label="Reload"></hex-button> <hex-button variant="ghost" color="danger" icon-only icon="trash" aria-label="Delete"></hex-button>',
@@ -140,7 +159,7 @@ export const components: ComponentEntry[] = [
       {
         name: "variant",
         kind: "select",
-        options: ["solid", "outline", "ghost"],
+        options: ["solid", "raised", "outline", "ghost"],
         default: "solid",
       },
       {
@@ -252,6 +271,16 @@ export const components: ComponentEntry[] = [
     group: "Brand",
     previewHeight: 120,
     description: "Inline stroke icon. The full set of available names is exported as `iconPaths`.",
+    usage: [
+      {
+        text: "Set `name` to one of the built-in icons. The full set is exported as `iconPaths`.",
+        demo: '<hex-icon name="settings" size="24"></hex-icon> <hex-icon name="bell" size="24"></hex-icon> <hex-icon name="trash" size="24"></hex-icon>',
+      },
+      {
+        text: "Leave `name` unset and **slot your own SVG** for any glyph the set doesn't carry. The slotted icon is sized to `size`, so it lines up with the built-ins.",
+        demo: '<hex-icon size="24"><svg viewBox=\"0 0 24 24\" fill=\"currentColor\"><circle cx=\"12\" cy=\"5\" r=\"1.6\"/><circle cx=\"12\" cy=\"12\" r=\"1.6\"/><circle cx=\"12\" cy=\"19\" r=\"1.6\"/></svg></hex-icon> <hex-icon name="settings" size="24"></hex-icon>',
+      },
+    ],
     props: [
       { name: "name", kind: "select", options: Object.keys(iconPaths) as IconName[], default: "settings" },
       { name: "size", kind: "number", default: 16 },
@@ -296,6 +325,169 @@ export const components: ComponentEntry[] = [
         options: tagCategories,
         default: "artist",
       },
+    ],
+  },
+  {
+    tag: "hex-divider",
+    title: "Divider",
+    group: "Layout",
+    previewHeight: 160,
+    description: "Rule separating content. Horizontal or vertical, optionally labelled.",
+    usage: [
+      {
+        text: "Use a plain divider to separate sections of related content. Prefer spacing alone when the grouping is already obvious.",
+        demo: '<div style="width:320px"><hex-divider></hex-divider></div>',
+      },
+      {
+        text: "Use **subtle** inside an already-bordered surface such as a card, where a full-strength rule would compete with the container edge.",
+        demo: '<div style="width:320px"><hex-divider subtle></hex-divider></div>',
+      },
+      {
+        text: "Slot text to **label** the break. Useful for separating a primary path from a fallback, such as a login form and its alternatives.",
+        demo: '<div style="width:320px"><hex-divider>or</hex-divider></div>',
+      },
+      {
+        text: "Use `orientation=\"vertical\"` between inline items in a toolbar or action row.",
+        demo: '<div style="display:flex;align-items:center;gap:12px;height:32px"><hex-button variant="ghost" color="secondary" icon="eye">View</hex-button><hex-divider orientation="vertical"></hex-divider><hex-button variant="ghost" color="secondary" icon="trash">Delete</hex-button></div>',
+      },
+    ],
+    props: [
+      { name: "orientation", kind: "select", options: ["horizontal", "vertical"], default: "horizontal" },
+      { name: "subtle", kind: "boolean", default: false },
+      { name: "inset", kind: "boolean", default: false },
+    ],
+  },
+  {
+    tag: "hex-skeleton",
+    title: "Skeleton",
+    group: "Layout",
+    previewHeight: 200,
+    description: "Placeholder that reserves the exact box its content will occupy.",
+    defaultSlot: "Kesha Rosalind Aldritch has been a contributor since 2019.",
+    usage: [
+      {
+        text: "**Slot the text you are waiting for.** The skeleton renders it transparent over a shaded background, so it occupies the exact box, wraps at the same points, and the last line is short because the sentence is. Nothing moves when the real content arrives.",
+        demo: '<div style="width:320px"><hex-skeleton>Kesha Rosalind Aldritch has been a contributor since 2019.</hex-skeleton></div>',
+      },
+      {
+        text: "Slot nothing and you get abstract bars instead. Use these only when the content is genuinely unknown, such as a list whose length has not arrived yet, and remember `lines` is a guess where slotted text is a measurement.",
+        demo: '<div style="width:320px"><hex-skeleton lines="3"></hex-skeleton></div>',
+      },
+      {
+        text: "Use `aspect` for media, so the box is reserved before the image knows its own size.",
+        demo: '<div style="width:220px"><hex-skeleton shape="block" aspect="16/9"></hex-skeleton></div>',
+      },
+      {
+        text: "Match the shape of what is loading: **circle** for avatars, **pill** for chips and tags.",
+        demo: '<div style="display:flex;gap:10px;align-items:center"><hex-skeleton shape="circle" width="36px" height="36px"></hex-skeleton><hex-skeleton shape="pill" width="90px" height="20px"></hex-skeleton></div>',
+      },
+    ],
+    props: [
+      { name: "shape", kind: "select", options: ["text", "block", "circle", "pill"], default: "text" },
+      { name: "lines", kind: "number", default: 1 },
+      { name: "width", kind: "text", default: "" },
+      { name: "height", kind: "text", default: "" },
+      { name: "aspect", kind: "text", default: "" },
+    ],
+  },
+  {
+    tag: "hex-spinner",
+    title: "Spinner",
+    group: "Layout",
+    previewHeight: 140,
+    description: "Indeterminate activity indicator for work with no measurable progress.",
+    usage: [
+      {
+        text: "Use a spinner only where the wait has **no known extent** and no layout to reserve. Where content is arriving into a known box, a skeleton is better, because it reserves the space instead of occupying it.",
+        demo: '<hex-spinner size="16"></hex-spinner> <hex-spinner size="24"></hex-spinner> <hex-spinner size="32"></hex-spinner>',
+      },
+      {
+        text: "Inside a button, keep the label so the button does not resize while the action is in flight.",
+        demo: '<hex-button><hex-spinner slot="icon" size="14"></hex-spinner>Saving</hex-button>',
+      },
+    ],
+    props: [
+      { name: "size", kind: "number", default: 16 },
+      { name: "stroke-width", kind: "number", default: 2 },
+      { name: "label", kind: "text", default: "Loading" },
+    ],
+  },
+  {
+    tag: "hex-tooltip",
+    title: "Tooltip",
+    group: "Overlay",
+    description: "Short description for the element before it. Shows on hover and on focus.",
+    defaultSlot: "Runs a full resync. This can take several minutes.",
+    previewHeight: 200,
+    previewExtras: `
+      <hex-button>Hover or focus me</hex-button>
+    `,
+    usage: [
+      {
+        text: "Place the tooltip **immediately after** the element it describes. It wires `aria-describedby` to itself, so the description reaches screen readers as well as pointers.",
+        demo: '<hex-button icon="refresh">Resync</hex-button> <hex-tooltip>Runs a full resync. This can take several minutes.</hex-tooltip>',
+      },
+      {
+        text: "A tooltip must never carry the only copy of something important. It is unavailable to touch users and disappears on Escape, so treat it as a hint rather than as content.",
+        demo: '<hex-button variant="outline" color="secondary" icon-only icon="refresh" aria-label="Reload"></hex-button> <hex-tooltip placement="bottom">Reload the current view</hex-tooltip>',
+      },
+    ],
+    props: [
+      { name: "placement", kind: "select", options: ["top", "bottom", "left", "right"], default: "top" },
+      { name: "delay", kind: "number", default: 150 },
+      { name: "disabled", kind: "boolean", default: false },
+    ],
+  },
+  {
+    tag: "hex-menu",
+    title: "Menu",
+    group: "Overlay",
+    description: "Menu anchored to the element before it, with full keyboard navigation.",
+    defaultSlot: `
+      <hex-menu-item value="rename" icon="settings">Rename</hex-menu-item>
+      <hex-menu-item value="duplicate" icon="layers">Duplicate</hex-menu-item>
+      <hex-menu-item value="delete" icon="trash" danger>Delete</hex-menu-item>
+    `,
+    previewHeight: 280,
+    previewExtras: `
+      <hex-button variant="outline" color="secondary">Actions</hex-button>
+    `,
+    usage: [
+      {
+        text: "Put the menu **after its trigger**. It sets `aria-haspopup` and `aria-expanded` on the trigger, opens on click or arrow key, moves with arrows and Home/End, and returns focus to the trigger when it closes.",
+        demo: '<hex-button variant="outline" color="secondary" icon-only aria-label="More"><hex-icon slot=\"icon\" size=\"14\"><svg viewBox=\"0 0 24 24\" fill=\"currentColor\"><circle cx=\"12\" cy=\"5\" r=\"1.6\"/><circle cx=\"12\" cy=\"12\" r=\"1.6\"/><circle cx=\"12\" cy=\"19\" r=\"1.6\"/></svg></hex-icon></hex-button> <hex-menu><hex-menu-item value="rename" icon="settings">Rename</hex-menu-item><hex-menu-item value="duplicate" icon="layers">Duplicate</hex-menu-item><hex-menu-item value="delete" icon="trash" danger>Delete</hex-menu-item></hex-menu>',
+      },
+      {
+        text: "Mark destructive entries with **danger**, and keep them last so the pointer does not pass over them on the way to anything else.",
+        demo: '<hex-button>Actions</hex-button> <hex-menu align="start"><hex-menu-item icon="download">Export CSV</hex-menu-item><hex-menu-item icon="refresh">Resync</hex-menu-item><hex-menu-item icon="trash" danger>Delete cluster</hex-menu-item></hex-menu>',
+      },
+    ],
+    props: [
+      { name: "placement", kind: "select", options: ["bottom", "top", "left", "right"], default: "bottom" },
+      { name: "align", kind: "select", options: ["start", "center", "end"], default: "start" },
+    ],
+  },
+  {
+    tag: "hex-popover",
+    title: "Popover",
+    group: "Overlay",
+    description: "Positioning primitive for overlays. Flips and shifts to stay in the viewport.",
+    defaultSlot: `<div style="padding:10px 14px">Anchored, flipped and shifted as needed</div>`,
+    previewHeight: 240,
+    previewExtras: `
+      <hex-button>Open popover</hex-button>
+    `,
+    usage: [
+      {
+        text: "Use `hex-popover` directly only when building a new overlay. For descriptions reach for **tooltip**, for action lists reach for **menu**; both are built on this.",
+        demo: '<hex-button id="pop-demo-trigger">Open popover</hex-button> <hex-popover placement="bottom"><div style="padding:10px 14px">Anchored, flipped and shifted as needed</div></hex-popover>',
+      },
+    ],
+    props: [
+      { name: "placement", kind: "select", options: ["bottom", "top", "left", "right"], default: "bottom" },
+      { name: "align", kind: "select", options: ["center", "start", "end"], default: "center" },
+      { name: "distance", kind: "number", default: 6 },
+      { name: "open", kind: "boolean", default: false },
     ],
   },
   {

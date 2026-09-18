@@ -9,7 +9,7 @@ The Hexagonal Design System as CDN-able web components.
 
 <hex-page>
   <hex-card>
-    <hex-button variant="primary" icon="download">Export</hex-button>
+    <hex-button icon="download">Export</hex-button>
     <hex-username role-color="admin" verified>sam_h</hex-username>
   </hex-card>
 </hex-page>
@@ -35,14 +35,14 @@ Without that stylesheet, the system falls back to the Verdana installed on the u
 | --- | --- |
 | `<hex-page>` | Full-bleed page surface (navy + tiled hex bg) |
 | `<hex-card>` | Standard card surface with hex-texture watermark |
-| `<hex-button>` | 5 variants (primary, secondary, ghost, text-primary, danger), 3 sizes, optional icon |
+| `<hex-button>` | 4 variants (solid, raised, outline, ghost) x 3 colors (primary, secondary, danger), 3 sizes, built-in or slotted icon |
 | `<hex-input>` | Text input with label, hint, error, optional icon |
 | `<hex-checkbox>` | Boolean toggle |
-| `<hex-icon>` | 28 inline Lucide-style stroke icons + the brand hex/chexagon |
+| `<hex-icon>` | 28 inline Lucide-style stroke icons, or slot your own SVG |
 | `<hex-logo>` | Wordmark + mark, or `mark-only` for tight spaces |
 | `<hex-chexagon>` | Verified badge (hex shape + check) |
 | `<hex-chip>` | Generic chip (filter, removable, pill, active states) |
-| `<hex-tag>` | Category-tinted tag (8 categories) |
+| `<hex-tag>` | Category-tinted tag (9 categories) |
 | `<hex-status-pill>` | healthy / degraded / failing / idle |
 | `<hex-kbd>` | Keyboard shortcut chip |
 | `<hex-avatar>` | Stroke-only rounded square, 5 sizes, role-tinted |
@@ -52,6 +52,7 @@ Without that stylesheet, the system falls back to the Verdana installed on the u
 | `<hex-code>` | Inline `<code>` or `block` `<pre>` |
 | `<hex-spoiler>` | Censor that reveals on hover (desktop) or tap (mobile) |
 | `<hex-alert>` | Banner with variant tint, icon, heading, actions slot, close button |
+| `<hex-divider>` | Rule between content, horizontal or vertical, optionally labelled |
 
 ## Develop
 
