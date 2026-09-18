@@ -801,8 +801,8 @@ export const components: ComponentEntry[] = [
     ],
   },
   {
-    tag: "hex-prose",
-    title: "Prose",
+    tag: "hex-markup",
+    title: "Markup",
     group: "Content",
     previewHeight: 420,
     previewSurface: "card",
@@ -817,16 +817,16 @@ export const components: ComponentEntry[] = [
     description: "Scopes typography for rendered DText. Styles the markup rather than replacing it.",
     usage: [
       {
-        text: "Wrap **rendered DText** in `hex-prose`. dmark emits ordinary HTML carrying `dtext-*` classes, so this styles that output in place instead of asking you to swap every node for a custom element.",
-        demo: '<hex-prose><h3>Heading</h3><p>A paragraph with a <a class="dtext-link" href="#">link</a> and <span class="inline-code">code</span>.</p><ul><li>One</li><li>Two</li></ul></hex-prose>',
+        text: "Wrap **rendered DText** in `hex-markup`. dmark emits ordinary HTML carrying `dtext-*` classes, so this styles that output in place instead of asking you to swap every node for a custom element.",
+        demo: '<hex-markup><h3>Heading</h3><p>A paragraph with a <a class="dtext-link" href="#">link</a> and <span class="inline-code">code</span>.</p><ul><li>One</li><li>Two</li></ul></hex-markup>',
       },
       {
         text: "Reference links carry their own colour, so an artist link reads gold and a tag search reads blue, matching the site they came from. External links get an arrow.",
-        demo: '<hex-prose><p><a class="dtext-link dtext-artist-id-link" href="#">artist</a> &middot; <a class="dtext-link dtext-post-search-link" href="#">tag search</a> &middot; <a class="dtext-link dtext-external-link" href="#">external</a></p></hex-prose>',
+        demo: '<hex-markup><p><a class="dtext-link dtext-artist-id-link" href="#">artist</a> &middot; <a class="dtext-link dtext-post-search-link" href="#">tag search</a> &middot; <a class="dtext-link dtext-external-link" href="#">external</a></p></hex-markup>',
       },
       {
         text: "Use **dense** inside a comment or a list row, where full paragraph spacing would waste the space.",
-        demo: '<hex-prose dense><p>First paragraph.</p><p>Second paragraph, tightened.</p></hex-prose>',
+        demo: '<hex-markup dense><p>First paragraph.</p><p>Second paragraph, tightened.</p></hex-markup>',
       },
     ],
     props: [{ name: "dense", kind: "boolean", default: false }],

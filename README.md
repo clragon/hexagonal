@@ -59,7 +59,7 @@ Without that stylesheet, the system falls back to the Verdana installed on the u
 | `<hex-popover>` | Positioning primitive on the native Popover API, flips and shifts |
 | `<hex-tooltip>` | Description for the element before it, on hover and focus |
 | `<hex-menu>` | Menu anchored to the element before it, full keyboard navigation |
-| `<hex-prose>` | Scopes typography for rendered DText |
+| `<hex-markup>` | Scopes typography for rendered DText |
 
 ## Brand surfaces
 
@@ -84,7 +84,7 @@ it. `hex-page`, `hex-card` and `hex-dialog` already handle this.
 
 ## Rendering DText
 
-`dmark` emits ordinary HTML. Wrap it in `<hex-prose>` for typography, and pass
+`dmark` emits ordinary HTML. Wrap it in `<hex-markup>` for typography, and pass
 `dmarkHandlers` to its renderer so quotes, spoilers, sections and code render as
 components with their own reveal, collapse and keyboard behaviour rather than as inert markup.
 
