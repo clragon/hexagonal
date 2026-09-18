@@ -10,7 +10,8 @@ export type HexTagCategory =
   | "general"
   | "meta"
   | "lore"
-  | "invalid";
+  | "invalid"
+  | "contributor";
 
 // Category-tinted tag. Renders as a dark-bg chip with a 1px currentColor
 // border + a category-color dot. Label color follows the category color
@@ -54,6 +55,9 @@ export class HexTag extends HexElement {
       }
       :host([category="invalid"]) {
         --tag-color: var(--hex-tag-invalid);
+      }
+      :host([category="contributor"]) {
+        --tag-color: var(--hex-tag-contributor);
       }
       :host([category="meta"]) {
         --tag-color: var(--hex-tag-meta);
