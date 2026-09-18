@@ -28,13 +28,20 @@ export class HexDialog extends HexElement {
         display: contents;
       }
       dialog {
-        position: relative;
         isolation: isolate;
         background: var(--hex-bg-card);
         color: var(--hex-fg-1);
         border: 1px solid var(--hex-border);
         border-radius: var(--hex-radius-lg);
         box-shadow: var(--hex-shadow-popover);
+        padding: 0;
+        font-family: var(--hex-font-family);
+        font-size: var(--hex-fs-md);
+        line-height: var(--hex-line-normal);
+        max-width: min(92vw, 640px);
+        max-height: 92vh;
+        width: 480px;
+        outline: none;
       }
       dialog::before {
         content: "";
@@ -47,14 +54,6 @@ export class HexDialog extends HexElement {
         background-repeat: repeat;
         -webkit-mask-image: linear-gradient(to bottom, #000 0, transparent var(--hex-texture-fade));
         mask-image: linear-gradient(to bottom, #000 0, transparent var(--hex-texture-fade));
-        padding: 0;
-        font-family: var(--hex-font-family);
-        font-size: var(--hex-fs-md);
-        line-height: var(--hex-line-normal);
-        max-width: min(92vw, 640px);
-        max-height: 92vh;
-        width: 480px;
-        outline: none;
       }
       dialog:focus,
       dialog:focus-visible {
