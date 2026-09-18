@@ -209,6 +209,7 @@ export const components: ComponentEntry[] = [
     ],
     props: [
       { name: "label", kind: "text", default: "Cluster name" },
+      { name: "size", kind: "select", options: ["sm", "md", "lg"], default: "md" },
       { name: "placeholder", kind: "text", default: "prod-east-1" },
       { name: "value", kind: "text", default: "" },
       { name: "hint", kind: "text", default: "Lowercase, dashes ok." },
@@ -301,6 +302,7 @@ export const components: ComponentEntry[] = [
     ],
     props: [
       { name: "label", kind: "text", default: "Region" },
+      { name: "size", kind: "select", options: ["sm", "md", "lg"], default: "md" },
       { name: "value", kind: "text", default: "" },
       { name: "placeholder", kind: "text", default: "Choose a region" },
       { name: "hint", kind: "text", default: "Pick the closest data center." },
@@ -335,6 +337,7 @@ export const components: ComponentEntry[] = [
     ],
     props: [
       { name: "label", kind: "text", default: "Tag" },
+      { name: "size", kind: "select", options: ["sm", "md", "lg"], default: "md" },
       { name: "value", kind: "text", default: "" },
       { name: "placeholder", kind: "text", default: "Start typing" },
       {
