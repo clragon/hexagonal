@@ -68,7 +68,7 @@ export interface ComponentEntry {
 
 export const DEFAULT_PREVIEW_HEIGHT = 180;
 
-const userRoles = ["member", "privileged", "blocked", "former-staff", "janitor", "moderator", "admin"];
+const userRoles = ["member", "privileged", "blocked", "former-staff", "staff", "janitor", "moderator", "admin"];
 const tagCategories = ["artist", "contributor", "copyright", "character", "species", "general", "meta", "lore", "invalid"];
 
 export const components: ComponentEntry[] = [

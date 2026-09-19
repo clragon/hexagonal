@@ -7,6 +7,7 @@ export type HexUserRole =
   | "privileged"
   | "blocked"
   | "former-staff"
+  | "staff"
   | "janitor"
   | "moderator"
   | "admin";
@@ -53,6 +54,9 @@ export class HexAvatar extends HexElement {
       }
       :host([role-color="former-staff"]) {
         --_hex-av-color: var(--hex-role-former-staff);
+      }
+      :host([role-color="staff"]) {
+        --_hex-av-color: var(--hex-role-staff);
       }
       :host([role-color="janitor"]) {
         --_hex-av-color: var(--hex-role-janitor);

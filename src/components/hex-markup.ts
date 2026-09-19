@@ -40,6 +40,10 @@ hex-markup a:hover,
 hex-markup .dtext-link:hover {
   color: var(--hex-fg-link-hover);
 }
+hex-markup a:active,
+hex-markup .dtext-link:active {
+  color: var(--hex-fg-link-active);
+}
 hex-markup a:focus-visible { outline: none; box-shadow: var(--hex-shadow-focus); border-radius: var(--hex-radius-sm); }
 hex-markup .dtext-external-link::after {
   content: "\\2197";

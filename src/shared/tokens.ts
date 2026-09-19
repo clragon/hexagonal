@@ -30,9 +30,19 @@ export const tokensCss = /* css */ `
   --hex-role-privileged:   #b4c7d9;
   --hex-role-blocked:      #6b7f93;
   --hex-role-former-staff: #78dca5;
+  --hex-role-staff:        #d82828;
   --hex-role-janitor:      #d82828;
   --hex-role-moderator:    #d82828;
   --hex-role-admin:        #e69500;
+
+  --hex-role-member-alt:       #2e76b4;
+  --hex-role-privileged-alt:   #2e76b4;
+  --hex-role-blocked-alt:      #2e76b4;
+  --hex-role-former-staff-alt: #4da073;
+  --hex-role-staff-alt:        #cc5151;
+  --hex-role-janitor-alt:      #cc5151;
+  --hex-role-moderator-alt:    #cc5151;
+  --hex-role-admin-alt:        #9d6703;
 
   --hex-tag-artist:    #f2ac08;
   --hex-tag-copyright: #dd00dd;
@@ -71,7 +81,8 @@ export const tokensCss = /* css */ `
   --hex-fg-1: var(--hex-color-text);
   --hex-fg-2: var(--hex-color-text-muted);
   --hex-fg-link: var(--hex-color-secondary);
-  --hex-fg-link-hover: var(--hex-color-primary);
+  --hex-fg-link-hover: #e9f2fa;
+  --hex-fg-link-active: var(--hex-color-primary);
   --hex-fg-on-primary: var(--hex-color-background);
 
   --hex-border:        var(--hex-color-section);

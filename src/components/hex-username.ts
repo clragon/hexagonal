@@ -30,25 +30,36 @@ export class HexUsername extends HexElement {
         font-weight: var(--hex-font-weight-bold);
         font-size: var(--hex-fs-md);
         --_hex-uname-color: var(--hex-role-member);
+        --_hex-uname-color-alt: var(--hex-role-member-alt);
         color: var(--_hex-uname-color);
       }
       :host([role-color="privileged"]) {
         --_hex-uname-color: var(--hex-role-privileged);
+        --_hex-uname-color-alt: var(--hex-role-privileged-alt);
       }
       :host([role-color="blocked"]) {
         --_hex-uname-color: var(--hex-role-blocked);
+        --_hex-uname-color-alt: var(--hex-role-blocked-alt);
       }
       :host([role-color="former-staff"]) {
         --_hex-uname-color: var(--hex-role-former-staff);
+        --_hex-uname-color-alt: var(--hex-role-former-staff-alt);
+      }
+      :host([role-color="staff"]) {
+        --_hex-uname-color: var(--hex-role-staff);
+        --_hex-uname-color-alt: var(--hex-role-staff-alt);
       }
       :host([role-color="janitor"]) {
         --_hex-uname-color: var(--hex-role-janitor);
+        --_hex-uname-color-alt: var(--hex-role-janitor-alt);
       }
       :host([role-color="moderator"]) {
         --_hex-uname-color: var(--hex-role-moderator);
+        --_hex-uname-color-alt: var(--hex-role-moderator-alt);
       }
       :host([role-color="admin"]) {
         --_hex-uname-color: var(--hex-role-admin);
+        --_hex-uname-color-alt: var(--hex-role-admin-alt);
       }
 
       .name {
@@ -61,7 +72,7 @@ export class HexUsername extends HexElement {
         text-decoration-color: currentColor;
       }
       a.name:hover {
-        color: color-mix(in srgb, var(--_hex-uname-color) 55%, #ffffff);
+        color: var(--_hex-uname-color-alt);
       }
       hex-chexagon {
         transform: translateY(2px);
