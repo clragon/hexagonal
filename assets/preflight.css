@@ -506,6 +506,11 @@ hex-textarea[size="lg"][label][counter]:not(:defined) {
   min-height: 178px;
 }
 
+hex-time:not(:defined) {
+  display: inline;
+  visibility: hidden;
+}
+
 hex-username:not(:defined) {
   display: inline-flex;
   vertical-align: middle;

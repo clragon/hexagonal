@@ -37,6 +37,7 @@ import "./components/hex-status-pill.js";
 import "./components/hex-switch.js";
 import "./components/hex-tag.js";
 import "./components/hex-textarea.js";
+import "./components/hex-time.js";
 import "./components/hex-tooltip.js";
 import "./components/hex-username.js";
 
@@ -66,6 +67,7 @@ export {
 } from "./shared/icons.js";
 export { dmarkHandlers } from "./shared/dmark-handlers.js";
 export { assets } from "./shared/assets.js";
+export { formatRelativeTime, relativeTimeInterval } from "./shared/relative-time.js";
 
 export { HexAlert } from "./components/hex-alert.js";
 export type { HexAlertVariant } from "./components/hex-alert.js";
@@ -117,5 +119,7 @@ export { HexSwitch } from "./components/hex-switch.js";
 export { HexTag } from "./components/hex-tag.js";
 export type { HexTagCategory } from "./components/hex-tag.js";
 export { HexTextarea } from "./components/hex-textarea.js";
+export { HexTime } from "./components/hex-time.js";
+export type { HexTimeFormat } from "./components/hex-time.js";
 export { HexTooltip } from "./components/hex-tooltip.js";
 export { HexUsername } from "./components/hex-username.js";

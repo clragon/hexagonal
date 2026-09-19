@@ -907,6 +907,36 @@ export const components: ComponentEntry[] = [
     props: [{ name: "block", kind: "boolean", default: false }],
   },
   {
+    tag: "hex-time",
+    title: "Time",
+    group: "Content",
+    previewHeight: 140,
+    description: "A timestamp written the way a reader thinks about it.",
+    usage: [
+      {
+        text: "Leave it on **relative** where the reader cares how long ago something happened, which is most of the time. Switch to **datetime** or **date** where the exact moment is the point, such as a record someone will quote back.",
+        demo: '<div style="display:flex;flex-direction:column;gap:6px"><span>Uploaded <hex-time datetime="2026-09-14T09:12:00Z"></hex-time></span><span>Uploaded <hex-time format="datetime" datetime="2026-09-14T09:12:00Z"></hex-time></span></div>',
+      },
+      {
+        text: "The exact timestamp stays in the tooltip, so a reader who needs the precise moment can hover for it at no cost in layout space.",
+        demo: '<span>Hover this: <hex-time datetime="2026-06-01T17:45:00Z"></hex-time></span>',
+      },
+      {
+        text: "It takes the colour and font of its surroundings, so it sits in a sentence, a caption or a table cell without configuration.",
+        demo: '<div style="display:flex;flex-direction:column;gap:6px"><span style="color:var(--hex-fg-2);font-size:12px">Posted <hex-time datetime="2026-09-17T11:00:00Z"></hex-time></span><strong style="color:var(--hex-color-primary)">Flagged <hex-time datetime="2026-09-19T08:30:00Z"></hex-time></strong></div>',
+      },
+      {
+        text: "Add **live** where the page stays open and the reader keeps watching, such as a queue or a dashboard. Leave it off for a list that gets re-fetched anyway, so no timer runs for text nobody is reading.",
+        demo: '<span>Updated <hex-time live datetime="2026-09-19T11:59:30Z"></hex-time></span>',
+      },
+    ],
+    props: [
+      { name: "datetime", kind: "text", default: "2026-09-14T09:12:00Z" },
+      { name: "format", kind: "select", options: ["relative", "datetime", "date"], default: "relative" },
+      { name: "live", kind: "boolean", default: false },
+    ],
+  },
+  {
     tag: "hex-spoiler",
     title: "Spoiler",
     group: "Content",
