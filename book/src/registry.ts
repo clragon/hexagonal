@@ -210,6 +210,18 @@ export const components: ComponentEntry[] = [
         text: "Use **hint** for guidance that is always true, and **error** for what went wrong this time. Setting `error` marks the field invalid and announces the message.",
         demo: '<div style="width:280px;display:flex;flex-direction:column;gap:10px"><hex-input label="Name" hint="Lowercase, no spaces"></hex-input><hex-input label="Name" value="Bad Name" error="Lowercase letters only"></hex-input></div>',
       },
+      {
+        text: "Put the range in **min** and **max**, and the granularity in **step**. The bounds apply whether or not the hint gets read.",
+        demo: '<div style="width:280px"><hex-input type="number" label="Score" min="0" max="10" step="0.5" value="7.5" hint="0 to 10, in halves"></hex-input></div>',
+      },
+      {
+        text: "Use **readonly** where the value matters to the reader but is not theirs to change, such as a generated key. Use **disabled** where the value is beside the point until something else changes, because a disabled field leaves the form and the tab order with it.",
+        demo: '<div style="width:280px"><hex-input label="API key" readonly value="hx_live_8f2b01c4d9"></hex-input></div>',
+      },
+      {
+        text: "Set **autocomplete** so a password manager fills the right value. `new-password` suppresses the existing password on a signup field, and `one-time-code` fills from a code the device already holds.",
+        demo: '<div style="width:280px;display:flex;flex-direction:column;gap:10px"><hex-input type="password" label="New password" autocomplete="new-password"></hex-input><hex-input label="Verification code" autocomplete="one-time-code"></hex-input></div>',
+      },
     ],
     props: [
       { name: "label", kind: "text", default: "Cluster name" },
@@ -225,6 +237,12 @@ export const components: ComponentEntry[] = [
         options: ["text", "email", "password", "number", "search", "url"],
         default: "text",
       },
+      { name: "min", kind: "text", default: "" },
+      { name: "max", kind: "text", default: "" },
+      { name: "step", kind: "text", default: "" },
+      { name: "autocomplete", kind: "text", default: "" },
+      { name: "readonly", kind: "boolean", default: false },
+      { name: "required", kind: "boolean", default: false },
       { name: "disabled", kind: "boolean", default: false },
     ],
   },
@@ -251,6 +269,10 @@ export const components: ComponentEntry[] = [
         text: "It carries the same chrome as the other fields, so **size**, an **icon** and the prefix and suffix slots all work here. Affixes align with the first line rather than the middle of the box.",
         demo: '<div style="width:340px"><hex-textarea size="sm" label="Reason" icon="settings" rows="3" hint="Kept on the record"></hex-textarea></div>',
       },
+      {
+        text: "Set **minlength** where a one-word answer is unusable, such as a ban reason another moderator has to act on. State the minimum in the **hint** as well, because the browser only mentions it after a failed submit.",
+        demo: '<div style="width:340px"><hex-textarea label="Ban reason" minlength="20" rows="3" hint="At least 20 characters" value="spam"></hex-textarea></div>',
+      },
     ],
     props: [
       { name: "label", kind: "text", default: "" },
@@ -261,9 +283,11 @@ export const components: ComponentEntry[] = [
       { name: "size", kind: "select", options: ["sm", "md", "lg"], default: "md" },
       { name: "icon", kind: "select", options: ICON_OPTIONS, default: "" },
       { name: "rows", kind: "number", default: 6 },
+      { name: "minlength", kind: "number", default: "" },
       { name: "maxlength", kind: "number", default: "" },
       { name: "counter", kind: "boolean", default: false },
       { name: "required", kind: "boolean", default: false },
+      { name: "readonly", kind: "boolean", default: false },
       { name: "disabled", kind: "boolean", default: false },
     ],
   },
@@ -394,9 +418,14 @@ export const components: ComponentEntry[] = [
         text: "Label the thing being switched, not the action. Safe mode reads correctly in both states, where Enable safe mode reads as a button and goes wrong once it is already on.",
         demo: '<div style="display:flex;flex-direction:column;gap:8px"><hex-switch>Compact rows</hex-switch><hex-switch checked disabled>Locked by policy</hex-switch></div>',
       },
+      {
+        text: "Reserve **required** for a consent the reader gives once, such as accepting terms. A switch reports a change that already took effect, so holding a form on one that is off conflicts with that meaning.",
+        demo: '<hex-switch required name="tos">I accept the terms</hex-switch>',
+      },
     ],
     props: [
       { name: "checked", kind: "boolean", default: true },
+      { name: "required", kind: "boolean", default: false },
       { name: "disabled", kind: "boolean", default: false },
     ],
   },
@@ -420,11 +449,16 @@ export const components: ComponentEntry[] = [
         text: "Use horizontal direction only for two or three short labels. Beyond that the eye loses the association between a label and its control.",
         demo: '<hex-radio-group label="Sort" name="sort" value="new" direction="horizontal"><hex-radio value="new">Newest</hex-radio><hex-radio value="old">Oldest</hex-radio></hex-radio-group>',
       },
+      {
+        text: "Set **required** on the group. A selection anywhere in it satisfies the requirement.",
+        demo: '<hex-radio-group label="Rating" name="rating" required><hex-radio value="s">Safe</hex-radio><hex-radio value="q">Questionable</hex-radio><hex-radio value="e">Explicit</hex-radio></hex-radio-group>',
+      },
     ],
     props: [
       { name: "label", kind: "text", default: "Client type" },
       { name: "name", kind: "text", default: "client-type" },
       { name: "value", kind: "text", default: "public" },
+      { name: "required", kind: "boolean", default: false },
       {
         name: "direction",
         kind: "select",
