@@ -48,7 +48,7 @@ page.on("pageerror", (e) => console.error("[hero] page error:", e.message));
 await page.goto(`http://127.0.0.1:${port}/assets/hero.html`, { waitUntil: "load" });
 await page.evaluate(async () => {
   await document.fonts.ready;
-  await customElements.whenDefined("hex-logo");
+  await customElements.whenDefined("hex-page");
   const pending = [...document.querySelectorAll("*")]
     .filter((el) => el.tagName.startsWith("HEX-"))
     .map((el) => el.updateComplete)

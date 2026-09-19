@@ -124,7 +124,6 @@ export const tokensCss = /* css */ `
   --hex-z-toast:   600;
 
   --hex-font-family: Verdana, "Noto Sans", "Helvetica Neue", Arial, sans-serif;
-  --hex-font-logo:   "Paulistana Ipe", Verdana, "Noto Sans", sans-serif;
   --hex-font-mono:   "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
 
   --hex-font-weight-regular: 400;

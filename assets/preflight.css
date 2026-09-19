@@ -256,13 +256,6 @@ hex-listbox:not(:defined) {
   padding: 4px 0;
 }
 
-hex-logo:not(:defined) {
-  display: inline-flex;
-  vertical-align: middle;
-  visibility: hidden;
-  min-height: 42.66px;
-}
-
 hex-markup:not(:defined) {
   display: flex;
   flex-direction: column;

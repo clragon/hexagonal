@@ -230,7 +230,7 @@ export class BookShell extends LitElement {
     return html`
       <aside>
         <div class="brand">
-          <hex-logo class="brand-mark" mark-only width="32"></hex-logo>
+          <img class="brand-mark" src="../assets/logo-mark.svg" width="32" height="32" alt="" />
           <div class="brand-text">
             <div class="brand-title">Hexagonal</div>
             <div class="brand-sub">Components</div>

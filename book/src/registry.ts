@@ -81,7 +81,7 @@ export const components: ComponentEntry[] = [
     defaultSlot: `
       <div style="padding: 36px 24px; max-width: 460px; margin: 0 auto;">
         <hex-card style="text-align: center">
-          <hex-logo width="200"></hex-logo>
+          <img src="../assets/logo.svg" width="200" alt="Hexagonal" />
           <p style="margin: 14px 0 0; opacity: 0.85; line-height: 1.5; font-size: 13px;">
             A design for a blue honeycomb world.
           </p>
@@ -453,34 +453,6 @@ export const components: ComponentEntry[] = [
       { name: "name", kind: "select", options: Object.keys(iconPaths) as IconName[], default: "settings" },
       { name: "size", kind: "number", default: 16 },
       { name: "stroke-width", kind: "number", default: 1.6 },
-    ],
-  },
-  {
-    tag: "hex-logo",
-    title: "Logo",
-    group: "Brand",
-    previewHeight: 180,
-    previewSurface: "page",
-    description: "The Hexagonal wordmark, and the mark on its own.",
-    usage: [
-      {
-        text: "Set **width** and leave height alone. The element keeps its aspect ratio, so nothing reflows once it paints.",
-        demo: '<hex-logo width="200"></hex-logo>',
-      },
-      {
-        text: "Use **mark-only** where the wordmark will not fit or would repeat something already on screen, such as a collapsed sidebar or a favicon-sized slot.",
-        demo: '<div style="display:flex;gap:20px;align-items:center"><hex-logo width="150"></hex-logo><hex-logo mark-only width="40"></hex-logo></div>',
-      },
-      {
-        text: "Both colours are overridable for placement on an unusual surface, but leave them alone by default: the amber mark on white wordmark is the brand.",
-        demo: '<hex-logo width="170" color="#b4c7d9" mark-color="#b4c7d9"></hex-logo>',
-      },
-    ],
-    props: [
-      { name: "width", kind: "number", default: 160 },
-      { name: "mark-only", kind: "boolean", default: false },
-      { name: "color", kind: "text", default: "#fff" },
-      { name: "mark-color", kind: "text", default: "" },
     ],
   },
   {

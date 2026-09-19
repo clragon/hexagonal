@@ -3,14 +3,10 @@
 
 import hexTileUri from "../../assets/hex-tile.svg?inline";
 import hexTextureUri from "../../assets/hex-texture.svg?inline";
-import logoSvgUri from "../../assets/logo.svg?inline";
-import logoMarkSvgUri from "../../assets/logo-mark.svg?inline";
 import chexagonSvgUri from "../../assets/chexagon.svg?inline";
 
 export const assets = {
   hexTile: hexTileUri,
   hexTexture: hexTextureUri,
-  logo: logoSvgUri,
-  logoMark: logoMarkSvgUri,
   chexagon: chexagonSvgUri,
 } as const;

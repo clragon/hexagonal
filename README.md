@@ -49,7 +49,7 @@ with the font installed.
 | Content | [`hex-alert`][alert] [`hex-code`][code] [`hex-markup`][markup] [`hex-quote`][quote] [`hex-spoiler`][spoiler] |
 | Tokens | [`hex-chip`][chip] [`hex-kbd`][kbd] [`hex-status-pill`][status-pill] [`hex-tag`][tag] |
 | User | [`hex-avatar`][avatar] [`hex-username`][username] |
-| Brand | [`hex-chexagon`][chexagon] [`hex-icon`][icon] [`hex-logo`][logo] |
+| Brand | [`hex-chexagon`][chexagon] [`hex-icon`][icon] |
 
 [alert]: https://clragon.github.io/hexagonal/#alert
 [autocomplete]: https://clragon.github.io/hexagonal/#autocomplete
@@ -65,7 +65,6 @@ with the font installed.
 [icon]: https://clragon.github.io/hexagonal/#icon
 [input]: https://clragon.github.io/hexagonal/#input
 [kbd]: https://clragon.github.io/hexagonal/#kbd
-[logo]: https://clragon.github.io/hexagonal/#logo
 [markup]: https://clragon.github.io/hexagonal/#markup
 [menu]: https://clragon.github.io/hexagonal/#menu
 [page]: https://clragon.github.io/hexagonal/#page
