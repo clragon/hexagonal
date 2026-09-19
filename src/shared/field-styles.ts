@@ -78,6 +78,15 @@ export const fieldStyles = css`
     pointer-events: none;
   }
 
+  .control[type="number"] {
+    appearance: textfield;
+  }
+  .control[type="number"]::-webkit-outer-spin-button,
+  .control[type="number"]::-webkit-inner-spin-button {
+    appearance: none;
+    margin: 0;
+  }
+
   :host([size="sm"]) .control {
     font-size: var(--hex-fs-xs);
     padding: 6px 10px;
