@@ -31,7 +31,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: '24'
           cache: npm
 
       - run: npm ci
@@ -83,6 +83,13 @@ jobs:
           upload dist/hexagonal-tokens.css "text/css; charset=utf-8"
           upload dist/hexagonal-fonts.css  "text/css; charset=utf-8"
           upload dist/hexagonal-preflight.css "text/css; charset=utf-8"
+
+      - name: publish to npm registry
+        run: |
+          npm config set //npm.clynamic.net/:_authToken "${NODE_AUTH_TOKEN}"
+          npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
 
       - name: commit version bump
         uses: EndBug/add-and-commit@v9
