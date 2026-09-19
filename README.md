@@ -9,7 +9,7 @@ A design for a blue honeycomb world.
 The bundle is 35 KB gzipped.
 
 ```html
-<script type="module" src="https://libs.cdn.clynamic.net/hexagonal/0.2.0/hexagonal.min.js"></script>
+<script type="module" src="https://libs.cdn.clynamic.net/hexagonal/0.3.0/hexagonal.min.js"></script>
 
 <hex-page>
   <hex-card>
@@ -26,8 +26,8 @@ Tokens are defined as `--hex-*` on `:root`.
 To prevent FOUC and layout shift, link the tokens and preflight stylesheets:
 
 ```html
-<link rel="stylesheet" href="https://libs.cdn.clynamic.net/hexagonal/0.2.0/hexagonal-tokens.css" />
-<link rel="stylesheet" href="https://libs.cdn.clynamic.net/hexagonal/0.2.0/hexagonal-preflight.css" />
+<link rel="stylesheet" href="https://libs.cdn.clynamic.net/hexagonal/0.3.0/hexagonal-tokens.css" />
+<link rel="stylesheet" href="https://libs.cdn.clynamic.net/hexagonal/0.3.0/hexagonal-preflight.css" />
 <style>html { background: var(--hex-color-background) }</style>
 ```
 
@@ -35,7 +35,7 @@ The fonts stylesheet serves Verdana, at 108 KB gzipped. Windows and macOS come
 with the font installed.
 
 ```html
-<link rel="stylesheet" href="https://libs.cdn.clynamic.net/hexagonal/0.2.0/hexagonal-fonts.css" />
+<link rel="stylesheet" href="https://libs.cdn.clynamic.net/hexagonal/0.3.0/hexagonal-fonts.css" />
 ```
 
 ## Components
