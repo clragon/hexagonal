@@ -778,19 +778,29 @@ export const components: ComponentEntry[] = [
     description: "Stands in for a person beside their name or in a row, tinted by their role.",
     usage: [
       {
-        text: "Use **initials** as the fallback when there is no image. An avatar that silently renders empty is worse than one that shows two letters.",
-        demo: '<div style="display:flex;gap:8px;align-items:center"><hex-avatar initials="VO"></hex-avatar><hex-avatar initials="BC" role-color="moderator"></hex-avatar><hex-avatar initials="ML" role-color="admin"></hex-avatar></div>',
+        text: "Pass the **name** and let it derive the letter. A username is a single token, so there are no initials to take, and deriving in one place keeps the rule off every call site. A blank name shows a question mark.",
+        demo: '<div style="display:flex;gap:8px;align-items:center"><hex-avatar name="velvet_otter"></hex-avatar><hex-avatar name="binaryfloof" role-color="moderator"></hex-avatar><hex-avatar name="rowan" role-color="admin"></hex-avatar><hex-avatar></hex-avatar></div>',
+      },
+      {
+        text: "Give it a **src** without worrying about whether the image resolves. The letter is painted underneath and the image covers it, so a deleted post or a dead URL settles back to the letter instead of a broken glyph.",
+        demo:
+          '<div style="display:flex;gap:8px;align-items:center"><hex-avatar name="rowan" src="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2024%2024%27%3E%3Crect%20width%3D%2724%27%20height%3D%2724%27%20fill%3D%27%234a6fa5%27%2F%3E%3Cpath%20d%3D%27M8.25%209.1%208.85%204.3%2010.6%206.75z%27%20fill%3D%27%23cfe0f0%27%2F%3E%3Cpath%20d%3D%27M15.75%209.1%2015.15%204.3%2013.4%206.75z%27%20fill%3D%27%23cfe0f0%27%2F%3E%3Ccircle%20cx%3D%2712%27%20cy%3D%2710.5%27%20r%3D%274%27%20fill%3D%27%23cfe0f0%27%2F%3E%3Cpath%20d%3D%27M2%2024c1.6-6%2018.4-6%2020%200z%27%20fill%3D%27%23cfe0f0%27%2F%3E%3C%2Fsvg%3E"></hex-avatar><hex-avatar name="velvet_otter" src="/deleted.png" role-color="admin"></hex-avatar></div>',
+      },
+      {
+        text: "Set **href** where the avatar leads to a profile. It renders an anchor, so middle-click and Open in new tab work, and the name supplies the accessible label.",
+        demo: '<div style="display:flex;gap:8px;align-items:center"><hex-avatar name="rowan" href="#avatar" role-color="admin"></hex-avatar><hex-avatar name="velvet_otter" href="#avatar"></hex-avatar></div>',
       },
       {
         text: "Size by context rather than by importance. **xs** and **sm** sit inline beside text, while **md** suits a row. **lg** and **xl** belong on a profile.",
-        demo: '<div style="display:flex;gap:8px;align-items:center"><hex-avatar size="xs" initials="A"></hex-avatar><hex-avatar size="sm" initials="B"></hex-avatar><hex-avatar size="md" initials="C"></hex-avatar><hex-avatar size="lg" initials="D"></hex-avatar></div>',
+        demo: '<div style="display:flex;gap:8px;align-items:center"><hex-avatar size="xs" name="anna"></hex-avatar><hex-avatar size="sm" name="bran"></hex-avatar><hex-avatar size="md" name="cleo"></hex-avatar><hex-avatar size="lg" name="dorn"></hex-avatar><hex-avatar size="xl" name="esk"></hex-avatar></div>',
       },
     ],
     props: [
       { name: "role-color", kind: "select", options: userRoles, default: "member" },
       { name: "size", kind: "select", options: ["xs", "sm", "md", "lg", "xl"], default: "md" },
-      { name: "initials", kind: "text", default: "RK" },
+      { name: "name", kind: "text", default: "rowan" },
       { name: "src", kind: "text", default: "" },
+      { name: "href", kind: "text", default: "" },
     ],
   },
   {
