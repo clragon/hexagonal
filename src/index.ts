@@ -69,6 +69,8 @@ export {
 export { dmarkHandlers } from "./shared/dmark-handlers.js";
 export { assets } from "./shared/assets.js";
 export { formatRelativeTime, relativeTimeInterval } from "./shared/relative-time.js";
+export { userLevels, roleForLevel } from "./shared/user-levels.js";
+export type { HexUserLevels } from "./shared/user-levels.js";
 
 export { HexAlert } from "./components/hex-alert.js";
 export type { HexAlertVariant } from "./components/hex-alert.js";
