@@ -80,7 +80,10 @@ export class HexTextarea extends HexFieldElement {
   @property({ type: String }) value = "";
   @property({ type: String }) placeholder = "";
   @property({ type: Number }) rows = 6;
+  @property({ type: Number, attribute: "minlength" }) minLength?: number;
   @property({ type: Number, attribute: "maxlength" }) maxLength?: number;
+  @property({ type: String }) autocomplete?: string;
+  @property({ type: Boolean, reflect: true, attribute: "readonly" }) readOnly = false;
   @property({ type: Boolean, reflect: true }) counter = false;
 
   @query("textarea") private _textarea!: HTMLTextAreaElement;
@@ -145,7 +148,10 @@ export class HexTextarea extends HexFieldElement {
           placeholder=${this.placeholder}
           ?disabled=${this.disabled}
           ?required=${this.required}
+          ?readonly=${this.readOnly}
+          minlength=${ifDefined(this.minLength)}
           maxlength=${ifDefined(this.maxLength)}
+          autocomplete=${ifDefined(this.autocomplete)}
           aria-describedby=${ifDefined(this.describedBy)}
           aria-invalid=${this.error ? "true" : "false"}
           @input=${this.onInput}

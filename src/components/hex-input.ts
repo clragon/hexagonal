@@ -34,6 +34,11 @@ export class HexInput extends HexFieldElement {
   @property({ type: String }) pattern?: string;
   @property({ type: Number, attribute: "minlength" }) minLength?: number;
   @property({ type: Number, attribute: "maxlength" }) maxLength?: number;
+  @property({ type: String }) min?: string;
+  @property({ type: String }) max?: string;
+  @property({ type: String }) step?: string;
+  @property({ type: String }) autocomplete?: string;
+  @property({ type: Boolean, reflect: true, attribute: "readonly" }) readOnly = false;
 
   @query("input") private _input!: HTMLInputElement;
 
@@ -76,6 +81,10 @@ export class HexInput extends HexFieldElement {
     );
   };
 
+  private onWheel = () => {
+    if (this.type === "number") this._input?.blur();
+  };
+
   override render() {
     return html`
       ${this.label ? html`<label for="input">${this.label}</label>` : nothing}
@@ -96,13 +105,19 @@ export class HexInput extends HexFieldElement {
           placeholder=${this.placeholder}
           ?disabled=${this.disabled}
           ?required=${this.required}
+          ?readonly=${this.readOnly}
           pattern=${ifDefined(this.pattern)}
           minlength=${ifDefined(this.minLength)}
           maxlength=${ifDefined(this.maxLength)}
+          min=${ifDefined(this.min)}
+          max=${ifDefined(this.max)}
+          step=${ifDefined(this.step)}
+          autocomplete=${ifDefined(this.autocomplete)}
           aria-describedby=${ifDefined(this.describedBy)}
           aria-invalid=${this.error ? "true" : "false"}
           @input=${this.onInput}
           @change=${this.onChange}
+          @wheel=${this.onWheel}
         />
         ${this.renderSuffix()}
       </div>
