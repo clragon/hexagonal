@@ -166,6 +166,10 @@ export const components: ComponentEntry[] = [
         demo: '<hex-button variant="outline" color="secondary" icon-only aria-label="More"><hex-icon slot="icon" size="14"><svg viewBox=\"0 0 24 24\" fill=\"currentColor\"><circle cx=\"12\" cy=\"5\" r=\"1.6\"/><circle cx=\"12\" cy=\"12\" r=\"1.6\"/><circle cx=\"12\" cy=\"19\" r=\"1.6\"/></svg></hex-icon></hex-button> <hex-button variant="outline" color="secondary"><hex-icon slot="icon" size="14"><svg viewBox=\"0 0 24 24\" fill=\"currentColor\"><circle cx=\"12\" cy=\"5\" r=\"1.6\"/><circle cx=\"12\" cy=\"12\" r=\"1.6\"/><circle cx=\"12\" cy=\"19\" r=\"1.6\"/></svg></hex-icon>More</hex-button>',
       },
       {
+        text: "Give it an **href** where the action is navigation. It renders a real anchor, so middle-click, ctrl-click and Open in new tab behave as a reader expects of a link, which a click handler cannot reproduce. Setting `target=\"_blank\"` supplies `rel=\"noopener noreferrer\"`, and passing **rel** replaces that.",
+        demo: '<div style="display:flex;gap:10px;align-items:center"><hex-button href="/posts/42">Open post</hex-button><hex-button href="https://e621.net" target="_blank" variant="outline" color="secondary">Open upstream</hex-button></div>',
+      },
+      {
         text: "Use **icon-only** for compact toolbars and action rails. Always pass `aria-label` so screen readers announce the action.",
         demo:
           '<hex-button icon-only icon="plus" aria-label="Add"></hex-button> <hex-button variant="outline" color="secondary" icon-only icon="refresh" aria-label="Reload"></hex-button> <hex-button variant="ghost" color="danger" icon-only icon="trash" aria-label="Delete"></hex-button>',
@@ -187,6 +191,9 @@ export const components: ComponentEntry[] = [
       { name: "size", kind: "select", options: ["sm", "md", "lg"], default: "md" },
       { name: "icon", kind: "select", options: ICON_OPTIONS, default: "" },
       { name: "icon-only", kind: "boolean", default: false },
+      { name: "href", kind: "text", default: "" },
+      { name: "target", kind: "text", default: "" },
+      { name: "rel", kind: "text", default: "" },
       { name: "disabled", kind: "boolean", default: false },
       { name: "full", kind: "boolean", default: false, description: "Stretches to full container width." },
     ],

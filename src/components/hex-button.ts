@@ -1,5 +1,6 @@
 import { html, css, nothing } from "lit";
 import { customElement, property } from "lit/decorators.js";
+import { ifDefined } from "lit/directives/if-defined.js";
 import { HexElement } from "../shared/base.js";
 import "./hex-icon.js";
 import "./hex-spinner.js";
@@ -84,21 +85,21 @@ export class HexButton extends HexElement {
         opacity: 0.4;
         cursor: not-allowed;
       }
-      :host([disabled]) button {
+      :host([disabled]) .base {
         pointer-events: none;
       }
-      :host([loading]) button {
+      :host([loading]) .base {
         cursor: progress;
         pointer-events: none;
       }
       :host([loading][variant="raised"]) {
         top: var(--hex-raise-press);
       }
-      :host([loading][variant="raised"]) button {
+      :host([loading][variant="raised"]) .base {
         box-shadow: 0 var(--hex-raise-press) 0 var(--_hex-btn-color-dark);
       }
 
-      button {
+      .base {
         all: unset;
         flex: 1 1 auto;
         box-sizing: border-box;
@@ -122,60 +123,60 @@ export class HexButton extends HexElement {
           box-shadow var(--hex-dur-fast) var(--hex-ease);
         border: 1px solid transparent;
       }
-      :host([full]) button {
+      :host([full]) .base {
         width: 100%;
         justify-content: center;
       }
-      button:focus-visible {
+      .base:focus-visible {
         outline: none;
         box-shadow: var(--hex-shadow-focus);
       }
 
       /* solid: filled bg, dark text on bright bg */
-      :host([variant="solid"]) button,
-      :host(:not([variant])) button {
+      :host([variant="solid"]) .base,
+      :host(:not([variant])) .base {
         background: var(--_hex-btn-color);
         color: var(--_hex-btn-fg-on);
         border-color: var(--_hex-btn-color);
       }
-      :host([variant="solid"]) button:hover,
-      :host(:not([variant])) button:hover {
+      :host([variant="solid"]) .base:hover,
+      :host(:not([variant])) .base:hover {
         background: var(--_hex-btn-color-light);
         border-color: var(--_hex-btn-color-light);
       }
-      :host([variant="solid"]) button:active,
-      :host(:not([variant])) button:active {
+      :host([variant="solid"]) .base:active,
+      :host(:not([variant])) .base:active {
         background: var(--_hex-btn-color-dark);
         border-color: var(--_hex-btn-color-dark);
       }
 
       /* outline: transparent bg, colored border + text, tinted hover */
-      :host([variant="outline"]) button {
+      :host([variant="outline"]) .base {
         background: transparent;
         color: var(--_hex-btn-color);
         border-color: var(--_hex-btn-color);
       }
-      :host([variant="outline"]) button:hover,
-      :host([variant="outline"]) button:active {
+      :host([variant="outline"]) .base:hover,
+      :host([variant="outline"]) .base:active {
         background: color-mix(in oklch, var(--_hex-btn-color) 14%, transparent);
         color: var(--_hex-btn-color-light);
         border-color: var(--_hex-btn-color-light);
       }
 
       /* ghost: no border, transparent bg, tinted hover */
-      :host([variant="ghost"]) button {
+      :host([variant="ghost"]) .base {
         background: transparent;
         color: var(--_hex-btn-color);
         padding: 8px 10px;
       }
-      :host([variant="ghost"]) button:hover,
-      :host([variant="ghost"]) button:active {
+      :host([variant="ghost"]) .base:hover,
+      :host([variant="ghost"]) .base:active {
         background: color-mix(in oklch, var(--_hex-btn-color) 12%, transparent);
         color: var(--_hex-btn-color-light);
       }
 
       /* sizes */
-      :host([variant="raised"]) button {
+      :host([variant="raised"]) .base {
         transition:
           background var(--hex-dur-fast) var(--hex-ease),
           color var(--hex-dur-fast) var(--hex-ease),
@@ -186,11 +187,11 @@ export class HexButton extends HexElement {
         border-color: var(--_hex-btn-color);
         box-shadow: 0 var(--hex-raise-depth) 0 var(--_hex-btn-color-dark);
       }
-      :host([variant="raised"]) button:hover {
+      :host([variant="raised"]) .base:hover {
         background: var(--_hex-btn-color-light);
         border-color: var(--_hex-btn-color-light);
       }
-      :host([variant="raised"]) button:focus-visible {
+      :host([variant="raised"]) .base:focus-visible {
         box-shadow:
           0 var(--hex-raise-depth) 0 var(--_hex-btn-color-dark),
           var(--hex-shadow-focus);
@@ -198,19 +199,19 @@ export class HexButton extends HexElement {
       :host([variant="raised"]:active:not([disabled])) {
         top: var(--hex-raise-press);
       }
-      :host([variant="raised"]) button:active {
+      :host([variant="raised"]) .base:active {
         background: var(--_hex-btn-color);
         border-color: var(--_hex-btn-color);
         box-shadow: 0 var(--hex-raise-press) 0 var(--_hex-btn-color-dark);
       }
-      :host([variant="raised"]) button:active:focus-visible {
+      :host([variant="raised"]) .base:active:focus-visible {
         box-shadow:
           0 var(--hex-raise-press) 0 var(--_hex-btn-color-dark),
           var(--hex-shadow-focus);
       }
       /* e621ng .st-button.kinetic covers this gap: the press offset moves
          the hit box down, so clicks on the old top edge miss. */
-      :host([variant="raised"]) button:active::before {
+      :host([variant="raised"]) .base:active::before {
         content: "";
         position: absolute;
         left: 0;
@@ -219,7 +220,7 @@ export class HexButton extends HexElement {
         height: var(--hex-raise-depth);
         background: transparent;
       }
-      :host([variant="raised"][disabled]) button {
+      :host([variant="raised"][disabled]) .base {
         box-shadow: none;
       }
 
@@ -229,39 +230,39 @@ export class HexButton extends HexElement {
       :host([size="lg"]) {
         --_hex-control-line: var(--hex-control-line-lg);
       }
-      :host([size="sm"]) button {
+      :host([size="sm"]) .base {
         font-size: var(--hex-fs-xs);
         padding: 6px 10px;
       }
-      :host([size="lg"]) button {
+      :host([size="lg"]) .base {
         font-size: 14px;
         padding: 10px 20px;
       }
-      :host([size="sm"][variant="ghost"]) button {
+      :host([size="sm"][variant="ghost"]) .base {
         padding: 6px 8px;
       }
-      :host([size="lg"][variant="ghost"]) button {
+      :host([size="lg"][variant="ghost"]) .base {
         padding: 10px 14px;
       }
 
       /* icon-only: square padding, 1:1 aspect, no slot/gap */
-      :host([icon-only]) button {
+      :host([icon-only]) .base {
         padding: 8px;
         aspect-ratio: 1 / 1;
         justify-content: center;
         gap: 0;
       }
-      :host([icon-only]) button > *,
+      :host([icon-only]) .base > *,
       :host([icon-only]) ::slotted([slot="icon"]) {
         width: var(--_hex-control-line);
         height: var(--_hex-control-line);
         align-items: center;
         justify-content: center;
       }
-      :host([icon-only][size="sm"]) button {
+      :host([icon-only][size="sm"]) .base {
         padding: 6px;
       }
-      :host([icon-only][size="lg"]) button {
+      :host([icon-only][size="lg"]) .base {
         padding: 10px;
       }
     `,
@@ -276,6 +277,9 @@ export class HexButton extends HexElement {
   @property({ type: Boolean, reflect: true }) full = false;
   @property({ type: Boolean, reflect: true }) loading = false;
   @property({ type: Boolean, reflect: true, attribute: "icon-only" }) iconOnly = false;
+  @property({ type: String }) href?: string;
+  @property({ type: String }) target?: string;
+  @property({ type: String }) rel?: string;
 
   // ARIA attributes set on the host don't reach the focusable inner <button>
   // by default. Forward the common interactive ones so screen readers
@@ -306,7 +310,7 @@ export class HexButton extends HexElement {
   }
 
   override updated() {
-    const inner = this.shadowRoot?.querySelector("button");
+    const inner = this.shadowRoot?.querySelector(".base");
     if (!inner) return;
     for (const name of HexButton.FORWARDED_ARIA) {
       const v = this.getAttribute(name);
@@ -321,6 +325,7 @@ export class HexButton extends HexElement {
       e.stopPropagation();
       return;
     }
+    if (this.href) return;
     if (this.type === "submit") {
       const form = this.closest("form");
       form?.requestSubmit();
@@ -329,22 +334,52 @@ export class HexButton extends HexElement {
     }
   };
 
+  private renderContent(iconSize: number) {
+    return html`
+      ${this.loading
+        ? html`<hex-spinner size=${iconSize} duration="1200"></hex-spinner>`
+        : this.icon
+          ? html`<hex-icon name=${this.icon} size=${iconSize}></hex-icon>`
+          : html`<slot name="icon"></slot>`}
+      ${this.iconOnly ? nothing : html`<slot></slot>`}
+    `;
+  }
+
+  private get linkRel(): string | undefined {
+    if (this.rel !== undefined) return this.rel;
+    return this.target === "_blank" ? "noopener noreferrer" : undefined;
+  }
+
   override render() {
     const iconSize = this.size === "lg" ? 16 : 14;
+    const inert = this.disabled || this.loading;
+    if (this.href !== undefined) {
+      return html`
+        <a
+          class="base"
+          part="base"
+          href=${ifDefined(inert ? undefined : this.href)}
+          target=${ifDefined(this.target)}
+          rel=${ifDefined(this.linkRel)}
+          role="button"
+          aria-disabled=${inert ? "true" : "false"}
+          aria-busy=${this.loading ? "true" : "false"}
+          tabindex=${inert ? "-1" : "0"}
+          @click=${this.onClick}
+          >${this.renderContent(iconSize)}</a
+        >
+      `;
+    }
     return html`
       <button
+        class="base"
         part="base"
         type=${this.type}
         ?disabled=${this.disabled}
         aria-busy=${this.loading ? "true" : "false"}
         @click=${this.onClick}
       >
-        ${this.loading
-          ? html`<hex-spinner size=${iconSize} duration="1200"></hex-spinner>`
-          : this.icon
-            ? html`<hex-icon name=${this.icon} size=${iconSize}></hex-icon>`
-            : html`<slot name="icon"></slot>`}
-        ${this.iconOnly ? nothing : html`<slot></slot>`}
+        ${this.renderContent(iconSize)}
       </button>
     `;
   }
