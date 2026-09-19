@@ -60,8 +60,6 @@ export class HexOption extends HexElement {
         background: transparent;
         color: inherit;
         font-weight: var(--hex-font-weight-bold);
-        text-decoration: underline;
-        text-underline-offset: 2px;
       }
     `,
   ];
