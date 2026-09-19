@@ -26,8 +26,13 @@
     "./fonts.css": "./dist/hexagonal-fonts.css"
   },
   "files": [
-    "dist",
-    "assets"
+    "dist/hexagonal.js",
+    "dist/hexagonal.js.map",
+    "dist/hexagonal.min.js",
+    "dist/hexagonal-tokens.css",
+    "dist/hexagonal-fonts.css",
+    "dist/hexagonal-preflight.css",
+    "dist/types"
   ],
   "engines": {
     "node": ">=20"
