@@ -6,7 +6,7 @@ A design for a blue honeycomb world.
 
 ## Use
 
-The bundle is 34 KB gzipped.
+The bundle is 35 KB gzipped.
 
 ```html
 <script type="module" src="https://libs.cdn.clynamic.net/hexagonal/0.2.0/hexagonal.min.js"></script>
@@ -139,15 +139,15 @@ registerIcon("blip", svg`<circle cx="12" cy="12" r="8" />`);
 ## Develop
 
 ```sh
-yarn install
-yarn dev            # book at http://localhost:47312, rebuilt on change
-yarn build          # dist bundles, types, fonts.css, preflight.css, book.js
-yarn verify         # fmt, lint, types, preflight freshness
-yarn preflight      # regenerate assets/preflight.css from component metadata
-yarn hero           # regenerate assets/hero.png from assets/hero.html
-yarn test           # component behaviour, in chromium
-yarn test:preflight # upgrade layout shift, against the built bundle
-yarn test:mutation  # stryker over the component suite
+npm install
+npm run dev             # book at http://localhost:47312, rebuilt on change
+npm run build           # dist bundles, types, fonts.css, preflight.css, book.js
+npm run verify          # fmt, lint, types, preflight freshness
+npm run preflight       # regenerate assets/preflight.css from component metadata
+npm run hero            # regenerate assets/hero.png from assets/hero.html
+npm test                # component behaviour, in chromium
+npm run test:preflight  # upgrade layout shift, against the built bundle
+npm run test:mutation   # stryker over the component suite
 ```
 
 The toolchain is Lit 3 and TypeScript, bundled by esbuild, with tsc emitting

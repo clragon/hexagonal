@@ -100,7 +100,7 @@ const css = generate();
 if (process.argv.includes("--check")) {
   const current = readFileSync(target, "utf8");
   if (current !== css) {
-    console.error("assets/preflight.css is stale. Run `yarn preflight` and commit the result.");
+    console.error("assets/preflight.css is stale. Run `npm run preflight` and commit the result.");
     process.exit(1);
   }
   console.log("assets/preflight.css is current");

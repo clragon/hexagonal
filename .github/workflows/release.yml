@@ -32,15 +32,15 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-          cache: yarn
+          cache: npm
 
-      - run: yarn install --frozen-lockfile
+      - run: npm ci
 
-      - run: yarn verify
+      - run: npm run verify
 
       - run: npx playwright install --with-deps chromium
 
-      - run: yarn test:all
+      - run: npm run test:all
 
       - name: bump version
         run: |
@@ -48,7 +48,7 @@ jobs:
           NEW_VERSION=$(node -p "require('./package.json').version")
           echo "VERSION=$NEW_VERSION" >> $GITHUB_ENV
 
-      - run: yarn build
+      - run: npm run build
 
       - name: refuse-overwrite check
         run: |

@@ -14,14 +14,14 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-          cache: yarn
+          cache: npm
 
-      - run: yarn install --frozen-lockfile
+      - run: npm ci
 
-      - run: yarn verify
+      - run: npm run verify
 
-      - run: yarn build
+      - run: npm run build
 
       - run: npx playwright install --with-deps chromium
 
-      - run: yarn test:all
+      - run: npm run test:all

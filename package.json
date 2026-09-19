@@ -1,6 +1,9 @@
 {
   "name": "@clynamic/hexagonal",
   "version": "0.2.0",
+  "publishConfig": {
+    "registry": "https://npm.clynamic.net/"
+  },
   "description": "A design for a blue honeycomb world.",
   "homepage": "https://clragon.github.io/hexagonal/",
   "repository": {
@@ -29,7 +32,6 @@
   "engines": {
     "node": ">=20"
   },
-  "packageManager": "yarn@1.22.22",
   "scripts": {
     "build": "node scripts/build.mjs",
     "build:watch": "node scripts/build.mjs --watch",
@@ -39,7 +41,7 @@
     "fmt:check": "oxfmt --check src scripts",
     "lint": "oxlint src",
     "lint:fix": "oxlint --fix src",
-    "verify": "yarn fmt:check && yarn lint && yarn typecheck && yarn preflight:check",
+    "verify": "npm run fmt:check && npm run lint && npm run typecheck && npm run preflight:check",
     "preflight": "node scripts/preflight.mjs",
     "preflight:check": "node scripts/preflight.mjs --check",
     "hero": "node scripts/hero.mjs",
@@ -47,8 +49,8 @@
     "dev": "node scripts/dev.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:preflight": "yarn build && vitest run --config vitest.preflight.config.ts",
-    "test:all": "yarn test && yarn test:preflight",
+    "test:preflight": "npm run build && vitest run --config vitest.preflight.config.ts",
+    "test:all": "npm run test && npm run test:preflight",
     "test:mutation": "stryker run"
   },
   "dependencies": {
@@ -60,7 +62,7 @@
     "@types/node": "^22.9.0",
     "@vitest/browser": "^5.0.1",
     "@vitest/browser-playwright": "^5.0.1",
-    "esbuild": "^0.24.0",
+    "esbuild": "^0.28.0",
     "marked": "^18.0.3",
     "oxfmt": "^0.48.0",
     "oxlint": "^1.63.0",
