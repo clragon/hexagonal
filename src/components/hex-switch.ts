@@ -145,6 +145,7 @@ export class HexSwitch extends HexFormElement {
           .value=${this.value}
           .checked=${this.checked}
           ?disabled=${this.disabled}
+          ?required=${this.required}
           @change=${this.onToggle}
         />
         <span class="track" part="track"><span class="thumb" part="thumb"></span></span>

@@ -126,6 +126,7 @@ export class HexRadio extends HexFormElement {
           .value=${this.value}
           .checked=${this.checked}
           ?disabled=${this.disabled}
+          ?required=${this.required}
           @change=${this.onSelect}
         />
         <span class="dot" part="dot"></span>

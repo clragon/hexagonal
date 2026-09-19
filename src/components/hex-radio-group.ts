@@ -52,6 +52,7 @@ export class HexRadioGroup extends HexElement {
   @property({ type: String }) name = "";
   @property({ type: String }) value = "";
   @property({ type: String, reflect: true }) direction: HexRadioGroupDirection = "vertical";
+  @property({ type: Boolean, reflect: true }) required = false;
 
   override connectedCallback() {
     super.connectedCallback();
@@ -60,7 +61,9 @@ export class HexRadioGroup extends HexElement {
   }
 
   override updated(changed: Map<string, unknown>) {
-    if (changed.has("value") || changed.has("name")) this.syncChildren();
+    if (changed.has("value") || changed.has("name") || changed.has("required")) {
+      this.syncChildren();
+    }
   }
 
   private getRadios(): HexRadio[] {
@@ -68,9 +71,17 @@ export class HexRadioGroup extends HexElement {
   }
 
   private syncChildren() {
-    for (const radio of this.getRadios()) {
+    const radios = this.getRadios();
+    let selected = false;
+    for (const radio of radios) {
       radio.name = this.name;
       radio.checked = radio.value === this.value;
+      if (radio.checked) selected = true;
+    }
+    for (const radio of radios) {
+      // Native radio grouping is per shadow root, so required on an unselected
+      // radio reports valueMissing even when the group has a selection.
+      radio.required = this.required && !selected;
     }
   }
 
