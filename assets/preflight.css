@@ -172,6 +172,12 @@ hex-divider[orientation="vertical"]:not(:defined) {
   width: 1px;
 }
 
+hex-error:not(:defined) {
+  display: block;
+  visibility: hidden;
+  min-height: 120px;
+}
+
 hex-icon:not(:defined) {
   display: inline-flex;
   vertical-align: middle;

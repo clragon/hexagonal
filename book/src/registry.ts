@@ -1029,6 +1029,32 @@ export const components: ComponentEntry[] = [
     ],
   },
   {
+    tag: "hex-error",
+    title: "Error",
+    group: "Content",
+    previewHeight: 260,
+    previewSurface: "card",
+    description: "Fills a region that failed, so the space reads as broken instead of empty.",
+    usage: [
+      {
+        text: "This renders a failure, and catching one stays with the app. Web components have no counterpart to a framework error boundary, so reach for this inside whatever already catches, such as a React boundary's fallback.",
+        demo: '<div style="height:160px"><hex-error heading="Something went wrong :(" style="height:100%">Please inform us about this issue.</hex-error></div>',
+      },
+      {
+        text: "Keep **crash** for a failure nobody expected, where the reader can do little beyond reporting it. The stripes claim the whole region, which is what separates a broken panel from one that happens to be empty.",
+        demo: '<div style="height:150px"><hex-error heading="Something went wrong :(" style="height:100%">Please inform us about this issue.</hex-error></div>',
+      },
+      {
+        text: "Switch to **hint** for a failure you can name, such as a request that came back 503. Stripes on a handled error overstate it, and the reader stops trusting them on the one that matters.",
+        demo: '<div style="height:150px"><hex-error variant="hint" heading="503: Server is offline" style="height:100%"></hex-error></div>',
+      },
+    ],
+    props: [
+      { name: "variant", kind: "select", options: ["crash", "hint"], default: "crash" },
+      { name: "heading", kind: "text", default: "Something went wrong :(" },
+    ],
+  },
+  {
     tag: "hex-alert",
     title: "Alert",
     group: "Content",
