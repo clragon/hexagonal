@@ -39,7 +39,6 @@ hex-markup .dtext-link {
 hex-markup a:hover,
 hex-markup .dtext-link:hover {
   color: var(--hex-fg-link-hover);
-  text-decoration: underline;
 }
 hex-markup a:focus-visible { outline: none; box-shadow: var(--hex-shadow-focus); border-radius: var(--hex-radius-sm); }
 hex-markup .dtext-external-link::after {

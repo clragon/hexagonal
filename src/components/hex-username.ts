@@ -61,11 +61,7 @@ export class HexUsername extends HexElement {
         text-decoration-color: currentColor;
       }
       a.name:hover {
-        text-decoration: underline;
-      }
-      :host([role-color="blocked"]) a.name:hover {
-        text-decoration: line-through underline;
-        text-decoration-thickness: 1.5px;
+        color: color-mix(in srgb, var(--_hex-uname-color) 55%, #ffffff);
       }
       hex-chexagon {
         transform: translateY(2px);

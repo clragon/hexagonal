@@ -71,7 +71,7 @@ export const tokensCss = /* css */ `
   --hex-fg-1: var(--hex-color-text);
   --hex-fg-2: var(--hex-color-text-muted);
   --hex-fg-link: var(--hex-color-secondary);
-  --hex-fg-link-hover: var(--hex-color-secondary-light);
+  --hex-fg-link-hover: var(--hex-color-primary);
   --hex-fg-on-primary: var(--hex-color-background);
 
   --hex-border:        var(--hex-color-section);
